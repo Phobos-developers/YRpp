@@ -419,6 +419,9 @@ public:
 
 	bool IsLocationFogged(CoordStruct* pCoord)
 		{ JMP_THIS(0x5865E0); }
+	
+	bool Place_Crate(CellStruct where , int whatcrate) 
+	    {JMP_THIS(0x56BEC0);} 
 
 protected:
 	//Constructor
