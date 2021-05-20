@@ -270,8 +270,8 @@ public:
 	int             MindClearedSound;
 	MovementZone    MovementZone;
 	int             GuardRange;
-	int             MinDebris;
 	int             MaxDebris;
+	int             MinDebris;
 	TypeList<AnimTypeClass*> DebrisAnims;
 	int             Passengers;
 	bool            OpenTopped;

@@ -22,7 +22,7 @@ public:
 	~Kamikaze()
 		{ JMP_THIS(0x54E690); }
 
-	void Add(AircraftClass* pAircraft)
+	void Add(AircraftClass* pAircraft , AbstractClass * target)
 		{ JMP_THIS(0x54E3B0); }
 
 	void Remove(AircraftClass* pAircraft)

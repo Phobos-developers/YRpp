@@ -204,6 +204,9 @@ public:
 	CellClass* CellIteratorNext()
 		{ JMP_THIS(0x578290); }
 
+	CellClass* GetTargetCell(Point2D* pLocation)
+		{ JMP_THIS(0x565730); }
+
 // the key damage delivery
 /*! The key damage delivery function.
 	\param Coords Location of the impact/center of damage.
@@ -423,6 +426,12 @@ public:
 	bool Place_Crate(CellStruct where , int whatcrate) 
 	    {JMP_THIS(0x56BEC0);} 
 
+    bool Remove_Crate(CellStruct *where)
+        { JMP_THIS(0x56C020); }
+		
+    bool Place_Random_Crate()
+        { JMP_THIS(0x56BD40); }
+		
 protected:
 	//Constructor
 	MapClass() {}	//don't need this
