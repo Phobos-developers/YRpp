@@ -74,7 +74,7 @@ public:
 	int CountLaunchingSpawns() const
 		{ JMP_THIS(0x6B7D80); }
 
-	void UnlinkPointer(AbstractClass* abs)
+	void UnlinkPointer(AbstractClass* pAbs)
 		{ JMP_THIS(0x6B7C60); }
 
 	//Constructor
