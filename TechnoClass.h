@@ -390,10 +390,8 @@ public:
 		DWORD dwUnk3)
 			{ JMP_THIS(0x6F8960); }
 
-	int EvaluateJustCell(CellStruct &coords) const
-	{
-		JMP_THIS(0x6F8C10);
-	}
+int EvaluateJustCell(CellStruct& coords) const
+	{ JMP_THIS(0x6F8C10); }
 
 	void Reactivate()
 		{ JMP_THIS(0x70FBE0); }
