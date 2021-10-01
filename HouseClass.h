@@ -655,6 +655,9 @@ public:
 		return Player && Player->IsObserver();
 	}
 
+	int CalculateCostMultipliers()
+		{ JMP_THIS(0x50BF60); }
+
 	//Constructor
 	HouseClass(HouseTypeClass* pCountry) noexcept
 		: HouseClass(noinit_t())
