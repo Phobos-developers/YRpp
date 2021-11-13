@@ -50,8 +50,9 @@ public:
 	virtual bool ForceCreate(CoordStruct& coord, DWORD dwUnk = 0) R0;
 
 	//BuildingClass
-	virtual CellStruct* vt_entry_4D4(CellStruct* pCellStruct, DWORD dwUnk, DWORD dwUnk2) const R0;
+	virtual CellStruct* FindExitCell(CellStruct* pCellStruct, DWORD dwUnk, DWORD dwUnk2) const R0;
 	virtual int vt_entry_4D8(ObjectClass* pObj) const R0;
+	virtual void Place(bool captured) RX;
 	virtual void UpdateConstructionOptions() RX;
 	virtual void vt_entry_4E4(DWORD dwUnk, DWORD dwUnk2) RX;
 	virtual CellStruct* vt_entry_4E8(CellStruct* pCellStruct, DWORD dwUnk) const R0;
@@ -64,9 +65,6 @@ public:
 	virtual DWORD vt_entry_504() R0;
 
 	// non-vt
-
-	void Place(bool captured)
-		{ JMP_THIS(0x445F80); }
 
 	int GetCurrentFrame() { JMP_THIS(0x43EF90); }
 
