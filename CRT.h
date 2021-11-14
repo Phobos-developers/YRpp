@@ -90,6 +90,9 @@ public:
 		static void *__cdecl bsearch(const void *, const void *, size_t, size_t, int (__cdecl *)(const void *, const void *))
 			{ JMP_STD(0x7C8E25); }
 
+		static void __cdecl makepath(char *, const char *, const char *, const char *, const char *)
+			{ JMP_STD(0x7C9FF0); }
+
 
 		// files
 		static FILE *__cdecl fopen(const char *, const char *)

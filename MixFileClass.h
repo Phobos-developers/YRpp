@@ -75,6 +75,9 @@ public:
 		THISCALL(0x5B3C20);
 	}
 
+	static void* Retrieve(char* name, bool forceShapeCache)
+		{ JMP_STD(0x5B40B0); }
+
 protected:
 	/*PROPERTY(MixFileClass*, Next);
 	MixFileClass* Prev;*/
