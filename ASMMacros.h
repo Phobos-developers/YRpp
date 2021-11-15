@@ -30,14 +30,6 @@ MSVC++
 	{ EPILOG_STDCALL; \
 	JMP(address); }
 
-#define FASTCALL_ARGS(arg1, arg2) \
-	_asm{mov ecx, arg1} \
-	_asm{mov dl, arg2}
-
-#define JMP_FAST(address, arg1, arg2) \
-	{ FASTCALL_ARGS(arg1, arg2); \
-	JMP_STD(address); }
-
 //Get/set register to a variable
 #define GET_REG32(dst,reg) _asm{mov dst, reg}
 #define SET_REG32(reg,src) _asm{mov reg, src}
