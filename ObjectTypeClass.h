@@ -45,6 +45,8 @@ public:
 	static TechnoTypeClass * __fastcall GetTechnoType(AbstractType abstractID, int idx)
 		{ JMP_STD(0x48DCD0); }
 
+	void LoadVoxel()
+		{ JMP_STD(0x5F8110); }
 
 	//Constructor
 	ObjectTypeClass(const char* pID) noexcept
