@@ -76,7 +76,7 @@ public:
 	}
 
 	static void* Retrieve(char* name, bool forceShapeCache)
-		{ JMP_STD(0x5B40B0); }
+		{ JMP_FAST(0x5B40B0, name, forceShapeCache); }
 
 protected:
 	/*PROPERTY(MixFileClass*, Next);
