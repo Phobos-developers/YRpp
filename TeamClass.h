@@ -34,6 +34,10 @@ public:
 	void LiberateMember(FootClass* pFoot, int idx=-1, byte count=0)
 		{ JMP_THIS(0x6EA870); }
 
+	// if bKeepQuantity is false, this will not change the quantity of each techno member
+	bool AddMember(FootClass* pFoot, bool bForce) 
+		{ JMP_THIS(0x6EA500); }
+
 	//AbstractClass
 	virtual AbstractType WhatAmI() const RT(AbstractType);
 	virtual int Size() const R0;
