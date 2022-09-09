@@ -4,6 +4,17 @@
 
 class TechnoClass;
 
+class PlanningNode
+{
+public:
+	DWORD field_0;
+	DWORD field_4;
+	DWORD field_8;
+	DWORD field_C;
+	int field_10;
+	DWORD field_14;
+};
+
 class PlanningTokenClass
 {
 public:
@@ -17,5 +28,13 @@ public:
 
 public:
 	TechnoClass * OwnerUnit;
-	// more fields should be here
+	DynamicVectorClass<PlanningNode*> PlanningNodes;
+
+	DECLARE_PROPERTY_ARRAY(DWORD, unknown, 0x1C);
+
+	int field_8C;
+	int ClosedLoopNodeCount;
+	int StepsToClosedLoop;
+	DWORD field_98;
 };
+static_assert(sizeof(PlanningTokenClass) == 0x9C);

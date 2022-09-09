@@ -52,9 +52,9 @@ public:
 	void UpdateVisceroid() JMP_THIS(0x737180);
 	void UpdateDisguise() JMP_THIS(0x7468C0);
 	void Update() JMP_THIS(0x7360C0);
-	
+
 	void Explode() JMP_THIS(0x738680);
-	
+
 	bool GotoClearSpot() JMP_THIS(0x738D30);
 	bool TryToDeploy() JMP_THIS(0x7393C0);
 	void Deploy() JMP_THIS(0x739AC0);

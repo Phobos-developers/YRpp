@@ -35,7 +35,7 @@ public:
 	virtual void RemoveGunner(FootClass* Gunner) RX;
 	virtual bool IsLeavingMap() const R0;
 	virtual bool vt_entry_4E0() const R0;
-	virtual bool vt_entry_4E4() const R0;
+	virtual bool CanDeployNow() const R0;
 	virtual void vt_entry_4E8(CellStruct* pCell) RX;
 	virtual void vt_entry_4EC(CellStruct* pCell) RX;
 	virtual CoordStruct* vt_entry_4F0(CoordStruct* pCrd) R0;
