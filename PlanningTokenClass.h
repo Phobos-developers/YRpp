@@ -18,23 +18,25 @@ public:
 class PlanningTokenClass
 {
 public:
-
 	void Clear()
-		{ JMP_THIS(0x636310); }
+	{
+		JMP_THIS(0x636310);
+	}
 
 	//===========================================================================
 	//===== Properties ==========================================================
 	//===========================================================================
 
 public:
-	TechnoClass * OwnerUnit;
-	DynamicVectorClass<PlanningNode*> PlanningNodes;
+	TechnoClass *OwnerUnit;
+	DynamicVectorClass<PlanningNode *> PlanningNodes;
 
 	DECLARE_PROPERTY_ARRAY(DWORD, unknown, 0x1C);
 
 	int field_8C;
 	int ClosedLoopNodeCount;
 	int StepsToClosedLoop;
-	DWORD field_98;
+
+	DECLARE_PROPERTY(DWORD, field_98);
 };
 static_assert(sizeof(PlanningTokenClass) == 0x9C);

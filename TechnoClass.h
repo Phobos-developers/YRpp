@@ -196,7 +196,7 @@ public:
 	virtual int GetThreatValue() const R0;
 	virtual bool vt_entry_2C4(DWORD dwUnk) R0;
 	virtual DWORD vt_entry_2C8(DWORD dwUnk, DWORD dwUnk2) R0;
-	virtual bool CanReachLocation(CoordStruct* pCoord) R0;
+	virtual bool CanReachLocation(const CoordStruct& coord) R0;
 	virtual int GetCrewCount() const R0;
 	virtual int GetAntiAirValue() const R0;
 	virtual int GetAntiArmorValue() const R0;
