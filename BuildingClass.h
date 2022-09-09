@@ -321,7 +321,7 @@ public:
 	bool IsDamaged; // AI handholder for repair logic,
 	bool IsFogged;
 	bool IsBeingRepaired; // show animooted repair wrench
-	bool unknown_bool_6E9;
+	bool HasBuildUp;
 	bool StuffEnabled; // status set by EnableStuff() and DisableStuff()
 	char HasCloakingData; // some fugly buffers
 	byte CloakRadius; // from Type->CloakRadiusInCells
