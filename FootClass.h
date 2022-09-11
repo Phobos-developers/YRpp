@@ -36,8 +36,8 @@ public:
 	virtual bool IsLeavingMap() const R0;
 	virtual bool vt_entry_4E0() const R0;
 	virtual bool CanDeployNow() const R0;
-	virtual void vt_entry_4E8(CellStruct* pCell) RX;
-	virtual void vt_entry_4EC(CellStruct* pCell) RX;
+	virtual void AddSensorsAt(CellStruct cell) RX;
+	virtual void RemoveSensorsAt(CellStruct cell) RX;
 	virtual CoordStruct* vt_entry_4F0(CoordStruct* pCrd) R0;
 	virtual void vt_entry_4F4() RX;
 	virtual bool vt_entry_4F8() R0;
@@ -55,7 +55,7 @@ public:
 		VoxelStruct *VXL, int HVAFrameIndex, int Flags, IndexClass<int, int> *Cache, RectangleStruct *Rectangle,
 		Point2D *CenterPoint, Matrix3D *Matrix, DWORD dwUnk8, DWORD DrawFlags, DWORD dwUnk10) RX;
 
-	virtual void vt_entry_514() RX;
+	virtual void GoBerzerk() RX;
 	virtual void Panic() RX;
 	virtual void UnPanic() RX; //never
 	virtual void PlayIdleAnim(int nIdleAnimNumber) RX;
