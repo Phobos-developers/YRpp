@@ -9,18 +9,22 @@ class FacingClass
 {
 public:
 	explicit FacingClass() noexcept { }
+
 	explicit FacingClass(int rate) noexcept
 	{
 		Set_ROT(rate);
 	}
+
 	explicit FacingClass(const DirStruct& facing) noexcept
 	{
 		DesiredFacing = facing;
 	}
+
 	explicit FacingClass(DirType dir) noexcept
 	{
 		DesiredFacing.SetDir(dir);
 	}
+
 	explicit FacingClass(const FacingClass& another) noexcept
 		: DesiredFacing { another.DesiredFacing }
 		, StartFacing { another.StartFacing }
@@ -41,7 +45,7 @@ public:
 		return *this;
 	}
 
-	bool Set_Desired(const DirStruct& facing)
+	bool Set_Desired(const DirStruct& facing) //JMP_THIS(0x4C9220)
 	{
 		if (DesiredFacing == facing)
 			return false;
@@ -54,6 +58,7 @@ public:
 
 		return true;
 	}
+
 	bool Set_Current(const DirStruct& facing)
 	{
 		bool ret = Current() != facing;
@@ -70,7 +75,8 @@ public:
 	{
 		return DesiredFacing;
 	}
-	DirStruct Current() const
+
+	DirStruct Current() const //0x4C93D0
 	{
 		if (Is_Rotating())
 		{
@@ -85,18 +91,20 @@ public:
 		return DesiredFacing;
 	}
 
-	bool Is_Rotating() const
+	bool Is_Rotating() const // JMP_THIS(0x4C9480)
 	{
 		return static_cast<short>(ROT.Raw) > 0 && RotationTimer.GetTimeLeft();
 	}
-	bool Is_Rotating_L() const
+
+	bool Is_Rotating_CCW() const // JMP_THIS(0x4C94F0) counter-clockwise
 	{
 		if (!Is_Rotating())
 			return false;
 
 		return static_cast<short>(Difference().Raw) < 0;
 	}
-	bool Is_Rotating_G() const
+
+	bool Is_Rotating_CW() const // JMP_THIS(0x4C94B0) clockwise
 	{
 		if (!Is_Rotating())
 			return false;

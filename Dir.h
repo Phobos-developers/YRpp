@@ -23,9 +23,10 @@ public:
 	{
 		return Raw == another.Raw;
 	}
+
 	bool operator!=(const DirStruct& another) const
 	{
-		return !(*this == another);
+		return Raw != another.Raw;
 	}
 
 	void SetDir(DirType dir)
@@ -108,7 +109,7 @@ private:
 	{
 		if constexpr (X == 0)
 			return 0;
-		
+
 		size_t T = X;
 		size_t cnt = 0;
 		while (T)
