@@ -702,6 +702,12 @@ public:
 	void ForceEnd()
 		{ JMP_THIS(0x4FCDC0); }
 
+	void RemoveTracking(TechnoClass* pTechno)
+		{ JMP_THIS(0x4FF550); }
+
+	void AddTracking(TechnoClass* pTechno)
+		{ JMP_THIS(0x4FF700); }
+
 	//Constructor
 	HouseClass(HouseTypeClass* pCountry) noexcept
 		: HouseClass(noinit_t())

@@ -16,12 +16,12 @@ class RGBClass
 {
 public:
 	static constexpr reference<RGBClass, 0xA80220> White {};
-	static constexpr reference<int, 0x8A0DD0> RedShiftLeft {};
-	static constexpr reference<int, 0x8A0DD4> RedShiftRight {};
-	static constexpr reference<int, 0x8A0DE0> GreenShiftLeft {};
-	static constexpr reference<int, 0x8A0DE4> GreenShiftRight {};
-	static constexpr reference<int, 0x8A0DD8> BlueShiftLeft {};
-	static constexpr reference<int, 0x8A0DDC> BlueShiftRight {};
+	static constexpr reference<int, 0x8A0DD0> const RedShiftLeft {};
+	static constexpr reference<int, 0x8A0DD4> const RedShiftRight {};
+	static constexpr reference<int, 0x8A0DE0> const GreenShiftLeft {};
+	static constexpr reference<int, 0x8A0DE4> const GreenShiftRight {};
+	static constexpr reference<int, 0x8A0DD8> const BlueShiftLeft {};
+	static constexpr reference<int, 0x8A0DDC> const BlueShiftRight {};
 
 	unsigned char Red;
 	unsigned char Green;
@@ -107,12 +107,12 @@ class Drawing
 public:
 	constexpr static reference<DynamicVectorClass<DirtyAreaStruct>, 0xB0CE78> DirtyAreas {};
 	static constexpr reference<ColorStruct, 0xB0FA1C> const TooltipColor {};
-	static constexpr reference<int, 0x8A0DD0> const RedShiftLeft {};
-	static constexpr reference<int, 0x8A0DD4> const RedShiftRight {};
-	static constexpr reference<int, 0x8A0DE0> const GreenShiftLeft {};
-	static constexpr reference<int, 0x8A0DE4> const GreenShiftRight {};
-	static constexpr reference<int, 0x8A0DD8> const BlueShiftLeft {};
-	static constexpr reference<int, 0x8A0DDC> const BlueShiftRight {};
+	static constexpr int RedShiftLeft = 11;
+	static constexpr int RedShiftRight = 3;
+	static constexpr int GreenShiftLeft = 5;
+	static constexpr int GreenShiftRight = 2;
+	static constexpr int BlueShiftLeft = 0;
+	static constexpr int BlueShiftRight = 3;
 
 	//TextBox dimensions for tooltip-style boxes
 	static RectangleStruct* __fastcall GetTextDimensions(
@@ -162,9 +162,12 @@ public:
 		return buffer;
 	}
 
+	/*
 	static int __fastcall RGB_To_Int(int red, int green, int blue)
+	{ JMP_STD(0x4355D0); }
+	*/
+	constexpr static int RGB_To_Int(int red, int green, int blue)
 	{
-		// JMP_STD(0x4355D0);
 		return (red >> RedShiftRight << RedShiftLeft) | (green >> GreenShiftRight << GreenShiftLeft) | (blue >> BlueShiftRight << BlueShiftLeft);
 	}
 
@@ -206,7 +209,9 @@ public:
 #define		COLOR_GREEN  0x07E0
 #define		COLOR_BLUE   0x001F
 
+#define		COLOR_YELLOW (COLOR_RED | COLOR_GREEN)
 #define		COLOR_PURPLE (COLOR_RED | COLOR_BLUE)
+#define		COLOR_CYAN   (COLOR_BLUE | COLOR_GREEN)
 
 class NOVTABLE ABuffer
 {

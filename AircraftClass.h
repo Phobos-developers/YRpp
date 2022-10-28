@@ -63,7 +63,7 @@ public:
 	bool unknown_bool_6C8;
 	bool HasPassengers;	//parachutes
 	bool IsKamikaze; // when crashing down, duh
-	DWORD unknown_6CC;
+	BuildingClass* DockNowHeadingTo;
 	bool unknown_bool_6D0;
 	bool unknown_bool_6D1;
 	bool unknown_bool_6D2;
