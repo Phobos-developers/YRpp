@@ -341,6 +341,9 @@ public:
 	bool CoordinatesLegal(const CellStruct& cell) const
 		{ JMP_THIS(0x568300); }
 
+	bool IsLinkedBridgeDestroyed(const CellStruct& cell) const
+		{ JMP_THIS(0x587410); }
+
 // ====================================
 //         FIRESTORM RELATED
 // ====================================
