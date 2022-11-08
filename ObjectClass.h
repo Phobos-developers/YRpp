@@ -50,7 +50,7 @@ public:
 	virtual bool IsSelectable() const R0;
 	virtual VisualType VisualCharacter(VARIANT_BOOL SpecificOwner, HouseClass * WhoIsAsking) const RT(VisualType);
 	virtual SHPStruct* GetImage() const R0;
-	virtual Action MouseOverCell(CellStruct const& cell, bool checkFog = false, bool ignoreForce = false) const RT(Action);
+	virtual Action MouseOverCell(CellStruct const* pCell, bool checkFog = false, bool ignoreForce = false) const RT(Action);
 	virtual Action MouseOverObject(ObjectClass const* pObject, bool ignoreForce = false) const RT(Action);
 	virtual Layer InWhichLayer() const RT(Layer);
 	virtual bool IsSurfaced() R0; // opposed to being submerged
@@ -90,14 +90,11 @@ public:
 	// can the current player control this unit? (owned by him, not paralyzed, not spawned, not warping, not slaved...)
 	virtual bool IsControllable() const R0;
 
-	// stupid! return this->GetCoords(pCrd);
-	virtual CoordStruct* GetPosition_0(CoordStruct* pCrd) const R0;
-
+	// On non-buildings this is same as GetCenterCoord(), on buildings it returns the target coordinate that is affected by TargetCoordOffset.
+	virtual CoordStruct* GetTargetCoords(CoordStruct* pCrd) const R0;
 	// gets a building's free dock coordinates for a unit. falls back to this->GetCoords(pCrd);
 	virtual CoordStruct* GetDockCoords(CoordStruct* pCrd, TechnoClass* docker) const R0;
-
-	// stupid! guess what happens again?
-	virtual CoordStruct* GetCenterCoord(CoordStruct* pCrd) const R0;
+	virtual CoordStruct* GetRenderCoords(CoordStruct* pCrd) const R0;
 	virtual CoordStruct* GetFLH(CoordStruct *pDest, int idxWeapon, CoordStruct BaseCoords) const R0;
 	virtual CoordStruct* GetExitCoords(CoordStruct* pCrd, DWORD dwUnk) const R0;
 	virtual int GetYSort() const R0;
@@ -112,7 +109,7 @@ public:
 	virtual bool Limbo() R0;
 
 	// place the object on the map
-	virtual bool Unlimbo(const CoordStruct& Crd, Direction::Value dFaceDir) R0;
+	virtual bool Unlimbo(const CoordStruct& Crd, DirType dFaceDir) R0;
 
 	// cleanup things (lose line trail, deselect, etc). Permanently: destroyed/removed/gone opposed to just going out of sight.
 	virtual void Disappear(bool permanently) RX;
@@ -133,19 +130,19 @@ public:
 	virtual CellStruct const* GetFoundationData(bool includeBib = false) const R0;
 	virtual void DrawBehind(Point2D* pLocation, RectangleStruct* pBounds) const RX;
 	virtual void DrawExtras(Point2D* pLocation, RectangleStruct* pBounds) const RX; // draws ivan bomb, health bar, talk bubble, etc
-	virtual void Draw(Point2D* pLocation, RectangleStruct* pBounds) const RX;
-	virtual void DrawAgain(Point2D* pLocation, RectangleStruct* pBounds) const RX; // just forwards the call to Draw
+	virtual void DrawIt(Point2D* pLocation, RectangleStruct* pBounds) const RX;
+	virtual void DrawAgain(const Point2D& location, const RectangleStruct& bounds) const RX; // just forwards the call to Draw
 	virtual void Undiscover() RX;
 	virtual void See(DWORD dwUnk, DWORD dwUnk2) RX;
 	virtual bool UpdatePlacement(PlacementType value) R0;
-	virtual RectangleStruct* vt_entry_128(RectangleStruct* pRect) const R0;
+	virtual RectangleStruct* GetDimensions(RectangleStruct* pRect) const R0;
 	virtual RectangleStruct* GetRenderDimensions(RectangleStruct* pRect) R0;
 	virtual void DrawRadialIndicator(DWORD dwUnk) RX;
 	virtual void MarkForRedraw() RX;
 	virtual bool CanBeSelected() const R0;
 	virtual bool CanBeSelectedNow() const R0;
-	virtual bool vt_entry_140(DWORD dwUnk, DWORD dwUnk2, DWORD dwUnk3, DWORD dwUnk4) R0;
-	virtual bool ClickedAction(Action Action, ObjectClass *Target, bool bUnk) R0;
+	virtual bool CellClickedAction(Action action, CellStruct* pCell, CellStruct* pCell1, bool bUnk) R0;
+	virtual bool ObjectClickedAction(Action action, ObjectClass* pTarget, bool bUnk) R0;
 	virtual void Flash(int Duration) RX;
 	virtual bool Select() R0;
 	virtual void Deselect() RX;
@@ -206,6 +203,9 @@ public:
 	double GetHealthPercentage() const
 		{ return static_cast<double>(this->Health) / this->GetType()->Strength; }
 
+	void SetHealthPercentage(double percentage)
+		{ JMP_THIS(0x5F5C80); }
+
 	bool IsRedHP() const
 		{ JMP_THIS(0x5F5CD0); }
 
@@ -218,6 +218,9 @@ public:
 	HealthState GetHealthStatus() const
 		{ JMP_THIS(0x5F5DD0); }
 
+	bool AttachTrigger(TagClass* pTag)
+		{ JMP_THIS(0x5F5B50); }
+
 	void BecomeUntargetable()
 		{ JMP_THIS(0x70D4A0); }
 
@@ -226,6 +229,9 @@ public:
 
 	int GetCellLevel() const
 		{ JMP_THIS(0x5F5F00); }
+
+	int Get_YSort() const
+		{ JMP_THIS(0x5F6BD0); }
 
 	CellStruct GetMapCoords() const {
 		CellStruct ret;
@@ -239,16 +245,29 @@ public:
 		return ret;
 	}
 
-	CoordStruct GetFLH(int idxWeapon, const CoordStruct& base) const {
+	// On non-buildings this is same as GetCenterCoord(), on buildings it returns the target coordinate that is affected by TargetCoordOffset.
+	CoordStruct GetTargetCoords() const
+	{
 		CoordStruct ret;
-		this->GetFLH(&ret, 0, base);
+		this->GetTargetCoords(&ret);
 		return ret;
 	}
 
-	//Constructor
-	ObjectClass()  noexcept
-		: ObjectClass(noinit_t())
-	{ JMP_THIS(0x5F3900); }
+	CoordStruct GetRenderCoords() const {
+		CoordStruct ret;
+		this->GetRenderCoords(&ret);
+		return ret;
+	}
+
+	CoordStruct GetFLH(int idxWeapon, const CoordStruct& base) const {
+		CoordStruct ret;
+		this->GetFLH(&ret, idxWeapon, base);
+		return ret;
+	}
+
+	//Constructor NEVER CALL IT DIRECTLY
+	/*ObjectClass()  noexcept
+		{ JMP_THIS(0x5F3900); }*/
 
 protected:
 	explicit __forceinline ObjectClass(noinit_t)  noexcept
@@ -267,8 +286,8 @@ public:
 	ObjectClass*       NextObject;	//Next Object in the same cell or transport. This is a linked list of Objects.
 	TagClass*          AttachedTag; //Should be TagClass , TODO: change when implemented
 	BombClass*         AttachedBomb; //Ivan's little friends.
-	AudioController    AmbientSoundController; // the "mofo" struct, evil evil stuff
-	AudioController    CustomSoundController; // the "mofo" struct, evil evil stuff
+	DECLARE_PROPERTY(AudioController, AmbientSoundController); // the "mofo" struct, evil evil stuff
+	DECLARE_PROPERTY(AudioController, CustomSoundController); // the "mofo" struct, evil evil stuff
 	int                CustomSound;
 	bool               BombVisible; // In range of player's bomb seeing units, so should draw it
 	PROTECTED_PROPERTY(BYTE, align_69[0x3]);

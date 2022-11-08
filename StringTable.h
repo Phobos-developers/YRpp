@@ -78,9 +78,39 @@ public:
 	static const wchar_t* __fastcall LoadString(
 		const char* pLabel,
 		char* pOutExtraData = nullptr,
-		int nSourceCodeFileLine = 0,
-		const char* pSourceCodeFileName = "YR++")
+		const char* pSourceCodeFileName = __FILE__,
+		int nSourceCodeFileLine = __LINE__)
 			{ JMP_STD(0x734E60); }
+
+	static const wchar_t* FetchString(
+		const char* pLabel,
+		const wchar_t* pDefault = L"",
+		char* pSpeech = nullptr, 
+		const char* pFile = __FILE__, 
+		int nLine = __LINE__)
+	{
+		if (pLabel && strlen(pLabel) && _strcmpi(pLabel, "<none>") && _strcmpi(pLabel, "none"))
+			return LoadString(pLabel, pSpeech, pFile, nLine);
+		else
+			return pDefault;
+	}
+
+	static const wchar_t* TryFetchString(
+		const char* pLabel,
+		const wchar_t* pDefault = L"",
+		char* pSpeech = nullptr,
+		const char* pFile = __FILE__,
+		int nLine = __LINE__)
+	{
+		if (pLabel && strlen(pLabel) && _strcmpi(pLabel, "<none>") && _strcmpi(pLabel, "none"))
+		{
+			auto lpValue = LoadString(pLabel, pSpeech, pFile, nLine);
+			if (wcsncmp(lpValue, L"MISSING:", 8))
+				return lpValue;
+		}
+
+		return pDefault;
+	}
 
 	static bool __fastcall LoadFile(const char* pFileName)
 		{ JMP_STD(0x7346A0); }

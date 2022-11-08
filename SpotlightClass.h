@@ -1,5 +1,6 @@
 #pragma once
 
+#include <ArrayClasses.h>
 #include <GeneralStructures.h>
 
 #include <Helpers/CompileTime.h>

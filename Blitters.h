@@ -20,7 +20,7 @@ class BlitterCore {
 
 	// actual body: this->Blit(dst, src, length, zMin, zBuf, aBuf, aLvl, 0);
 	virtual void CallBlit0
-		(void *dst, byte *src, unsigned int length, WORD zMin, WORD *zBuf, WORD *aBuf, WORD aLvl, 
+		(void *dst, byte *src, unsigned int length, WORD zMin, WORD *zBuf, WORD *aBuf, WORD aLvl,
 			WORD unknownArg, DWORD useless) = 0;
 
 	// actual body: this->Blit(dst, src, length, zMin, zBuf, aBuf, aLvl, 0);
@@ -29,7 +29,7 @@ class BlitterCore {
 
 	// actual body: this->Blit(dst, src, length, zMin, zBuf, aBuf, aLvl, 0);
 	virtual void CallBlit2
-		(void *dst, byte *src, unsigned int length, WORD zMin, WORD *zBuf, WORD *aBuf, WORD aLvl, 
+		(void *dst, byte *src, unsigned int length, WORD zMin, WORD *zBuf, WORD *aBuf, WORD aLvl,
 			DWORD useless) = 0;
 
 };
@@ -51,7 +51,7 @@ class Blitter : public BlitterCore {
 
 	// actual body: this->Blit(dst, src, length, zMin, zBuf, aBuf, aLvl, 0);
 	virtual void CallBlit0
-		(void *dest, byte *src, unsigned int length, WORD zMin, WORD *zBuf, WORD *aBuf, WORD aLvl, 
+		(void *dest, byte *src, unsigned int length, WORD zMin, WORD *zBuf, WORD *aBuf, WORD aLvl,
 			WORD unknownArg, DWORD useless) = 0;
 
 	// actual body: this->Blit(dst, src, length, zMin, zBuf, aBuf, aLvl, 0);
@@ -60,7 +60,7 @@ class Blitter : public BlitterCore {
 
 	// actual body: this->Blit(dst, src, length, zMin, zBuf, aBuf, aLvl, 0);
 	virtual void CallBlit2
-		(void *dest, byte *src, unsigned int length, WORD zMin, WORD *zBuf, WORD *aBuf, WORD aLvl, 
+		(void *dest, byte *src, unsigned int length, WORD zMin, WORD *zBuf, WORD *aBuf, WORD aLvl,
 			DWORD useless) = 0;
 
 	byte *Data; // LightConvertClass's byte buffer

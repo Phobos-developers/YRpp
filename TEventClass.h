@@ -5,7 +5,7 @@
 //forward declarations
 class SuperClass;
 class TechnoClass;
-class AITeamTypeClass; // TODO: define
+class TeamTypeClass;
 
 class NOVTABLE TEventClass : public AbstractClass
 {
@@ -33,15 +33,14 @@ public:
 	// you are responsible for doing INI::ReadString and strtok'ing it before calling
 	// this func only calls strtok again, doesn't know anything about buffers
 	void LoadFromINI()
-		{ JMP_THIS(0x71F4A0); }
+		{ JMP_THIS(0x71F4E0); }
 
 	// you allocate the buffer for this, and save it to ini yourself after this returns
 	// this func only sprintf's the stuff it needs into buffer
 	void PrepareSaveToINI(char *buffer) const
 		{ JMP_THIS(0x71F390); }
 
-	// fuck if I know what's the purpose of this, returns a bitfield of flags for trigger logic
-	static int __fastcall GetFlags(int eventKind)
+	static TriggerAttachType __fastcall GetAttachType(int eventKind)
 		{ JMP_STD(0x71F680); }
 
 	// used in TriggerClass::HaveEventsOccured , when trigger is repeating
@@ -56,7 +55,7 @@ public:
 		int eventKind,
 		HouseClass *pHouse,
 		ObjectClass *Object,
-		TimerStruct *ActivationFrame,
+		CDTimerClass *ActivationFrame,
 		bool *isRepeating) const
 			{ JMP_THIS(0x71E940); }
 
@@ -75,14 +74,11 @@ protected:
 	//===========================================================================
 
 public:
-
-	int               indexInArray;
+	int               ArrayIndex;
 	TEventClass*      NextEvent;
 	TriggerEvent      EventKind;
-	void*             TeamType; // AITeamTypeClass*, really
+	TeamTypeClass*    TeamType; // If this event needs to reference a team type, then this is the pointer to the team type object.
 	int               Value;
-	char TechnoName [0x1C]; // YR introduced this sort of referencing
-	                                   // must've been to hard to follow the old convention of simple indexing
+	char		      String[0x1C];
 	HouseClass*       House;
-
 };

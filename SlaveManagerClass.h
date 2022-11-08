@@ -32,7 +32,7 @@ public:
 	struct SlaveControl {
 		InfantryClass* Slave;
 		SlaveControlStatus State;
-		TimerStruct RespawnTimer;
+		CDTimerClass RespawnTimer;
 	};
 
 	static const AbstractType AbsID = AbstractType::SlaveManager;
@@ -114,7 +114,7 @@ public:
 	int RegenRate;
 	int ReloadRate;
 	DynamicVectorClass<SlaveControl*> SlaveNodes;
-	TimerStruct RespawnTimer;
+	CDTimerClass RespawnTimer;
 	SlaveManagerStatus State;
 	int LastScanFrame;
 };

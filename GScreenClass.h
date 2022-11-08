@@ -22,10 +22,10 @@ public:
 
 	//GScreenClass
 	virtual void One_Time() RX;
-	virtual void vt_entry_18() RX;
+	virtual void Init() RX;
 	virtual void Init_Clear() RX;
-	virtual void vt_entry_20() RX;
-	virtual void GetInputAndUpdate(DWORD* outKeyCode, int* outMouseX, int* outMouseY) RX;
+	virtual void Init_IO() RX;
+	virtual void GetInputAndUpdate(DWORD& outKeyCode, int& outMouseX, int& outMouseY) RX;
 	virtual void Update(const int& keyCode, const Point2D& mouseCoords) RX;
 	virtual bool vt_entry_2C(DWORD dwUnk) R0;
 	virtual bool vt_entry_30(DWORD dwUnk) R0;
@@ -52,5 +52,5 @@ protected:
 public:
 	int ScreenShakeX;
 	int ScreenShakeY;
-	int unknown_int_0C;	//default is 2
+	int Bitfield;	//default is 2
 };

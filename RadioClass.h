@@ -73,5 +73,5 @@ protected:
 public:
 
 	RadioCommand LastCommands[3]; // new command updates these
-	VectorClass<TechnoClass*> RadioLinks;	//Docked units etc
+	DECLARE_PROPERTY(VectorClass<TechnoClass*>, RadioLinks);	//Docked units etc
 };

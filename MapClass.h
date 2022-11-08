@@ -15,8 +15,22 @@ class Crate
 {
 public:
 	//Properties
-	TimerStruct CrateTimer;
+	CDTimerClass CrateTimer;
 	CellStruct Location;
+};
+
+struct CellLevelPassabilityStruct
+{
+	char CellPassability;
+	char CellLevel;
+	unsigned short ZoneArrayIndex;
+};
+
+struct LevelAndPassabilityStruct2
+{
+	__int16 word_0[4];
+	char CellLevel;
+	char field_9;
 };
 
 //ZoneConnectionClass - Holding zone connection info from tubes or bridges (probably used for pathfinding)
@@ -313,12 +327,12 @@ public:
 		{ JMP_THIS(0x586990); }
 
 	// Find nearest spot
-	CellStruct* Pathfinding_Find(CellStruct &outBuffer, const CellStruct &position, SpeedType SpeedType, int a5, MovementZone MovementZone, bool alt, int SpaceSizeX, int SpaceSizeY, bool disallowOverlay, bool a11, bool requireBurrowable, bool allowBridge, const CellStruct &closeTo, bool a15, bool buildable)
+	CellStruct* NearByLocation(CellStruct &outBuffer, const CellStruct &position, SpeedType SpeedType, int a5, MovementZone MovementZone, bool alt, int SpaceSizeX, int SpaceSizeY, bool disallowOverlay, bool a11, bool requireBurrowable, bool allowBridge, const CellStruct &closeTo, bool a15, bool buildable)
 		{ JMP_THIS(0x56DC20); }
 
-	CellStruct Pathfinding_Find(const CellStruct &position, SpeedType SpeedType, int a5, MovementZone MovementZone, bool alt, int SpaceSizeX, int SpaceSizeY, bool disallowOverlay, bool a11, bool requireBurrowable, bool allowBridge, const CellStruct &closeTo, bool a15, bool buildable) {
+	CellStruct NearByLocation(const CellStruct &position, SpeedType SpeedType, int a5, MovementZone MovementZone, bool alt, int SpaceSizeX, int SpaceSizeY, bool disallowOverlay, bool a11, bool requireBurrowable, bool allowBridge, const CellStruct &closeTo, bool a15, bool buildable) {
 		CellStruct outBuffer;
-		Pathfinding_Find(outBuffer, position, SpeedType, a5, MovementZone, alt, SpaceSizeX, SpaceSizeY, disallowOverlay, a11, requireBurrowable, allowBridge, closeTo, a15, buildable);
+		NearByLocation(outBuffer, position, SpeedType, a5, MovementZone, alt, SpaceSizeX, SpaceSizeY, disallowOverlay, a11, requireBurrowable, allowBridge, closeTo, a15, buildable);
 		return outBuffer;
 	}
 
@@ -425,8 +439,7 @@ public:
 	void Reshroud(HouseClass* pHouse)
 		{ JMP_THIS(0x577AB0); }
 
-// the unknown functions that are srs bsns
-	int sub_578080(CoordStruct *Coords)
+	int GetZPos(CoordStruct *Coords)
 		{ JMP_THIS(0x578080); }
 
 	// these two VERY slowly reprocess the map after gapgen state changes
@@ -457,10 +470,12 @@ public:
 	void DestroyCliff(CellClass *Cell)
 		{ JMP_THIS(0x581140); }
 
-	bool IsLocationFogged(CoordStruct* pCoord)
+	bool IsLocationFogged(const CoordStruct& coord)
 		{ JMP_THIS(0x5865E0); }
+	bool IsLocationFogged(CoordStruct&& coord)
+		{ return IsLocationFogged(coord); }
 
-	bool RevealCheck(CellClass* pCell, HouseClass* pHouse, bool bUnk)
+	void RevealCheck(CellClass* pCell, HouseClass* pHouse, bool bUnk)
 		{ JMP_THIS(0x5865F0); }
 
 	// returns false if visitor should wait for a gate to open, true otherwise
@@ -484,12 +499,12 @@ protected:
 public:
 	DWORD unknown_10;
 	void* unknown_pointer_14;
-	void* unknown_pointer_array_18 [0xD];
-	DWORD unknown_4C;
+	void* MovementZones [13];
+	DWORD somecount_4C;
 	DynamicVectorClass<ZoneConnectionClass> ZoneConnections;
-	void* unknown_array_68;
-	int num_items_in_68;
-	DWORD unknown_70;
+	CellLevelPassabilityStruct* LevelAndPassability;
+	int ValidMapCellCount;
+	LevelAndPassabilityStruct2* LevelAndPassabilityStruct2pointer_70;
 	DWORD unknown_74;
 	DWORD unknown_78;
 	DWORD unknown_7C;
@@ -504,16 +519,16 @@ public:
 	int CellIterator_NextY;
 	int CellIterator_CurrentY;
 	CellClass* CellIterator_NextCell;
-	DWORD unknown_11C;
-	DWORD unknown_120;
+	int ZoneIterator_X;
+	int ZoneIterator_Y;
 	LTRBStruct MapCoordBounds; // the minimum and maximum cell struct values
-	DWORD unknown_134;
+	int TotalValue;
 	VectorClass<CellClass*> Cells;
+	int MaxLevel;
 	int MaxWidth;
 	int MaxHeight;
 	int MaxNumCells;
-	DWORD _padding_01;
-	DWORD _padding_02;
 	Crate Crates [0x100];
+	BOOL Redraws;
 	DynamicVectorClass<CellStruct> TaggedCells;
 };

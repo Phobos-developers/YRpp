@@ -24,9 +24,9 @@ protected:
 public:
 	bool unknown_bool_150C;
 	PROTECTED_PROPERTY(BYTE, align_150D[3])
-	TimerStruct unknown_timer_1510;
+	CDTimerClass unknown_timer_1510;
 	DWORD unknown_151C;
-	TimerStruct unknown_timer_1520;
+	CDTimerClass unknown_timer_1520;
 	DWORD unknown_152C;
 	DWORD unknown_1530;
 	DWORD unknown_1534;

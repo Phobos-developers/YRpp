@@ -5,7 +5,7 @@
 #pragma once
 
 #include <AbstractClass.h>
-#include <ProgressTimer.h>
+#include <StageClass.h>
 
 class HouseClass;
 class TechnoClass;
@@ -114,7 +114,7 @@ protected:
 	//===========================================================================
 
 public:
-	ProgressTimer      Production; // hardcoded to be 54 steps (so cameo clock should be 54 frames)
+	StageClass      Production; // hardcoded to be 54 steps (so cameo clock should be 54 frames)
 	DynamicVectorClass<TechnoTypeClass*> QueuedObjects;
 	TechnoClass*       Object;
 	bool               OnHold; // paused when out of money, restored when funds available

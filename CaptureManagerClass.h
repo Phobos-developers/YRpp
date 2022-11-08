@@ -11,9 +11,11 @@ class TechnoClass;
 
 struct ControlNode
 {
+	explicit ControlNode() noexcept { }
+
 	TechnoClass* Unit;
 	HouseClass* OriginalOwner;
-	TimerStruct LinkDrawTimer;
+	DECLARE_PROPERTY(CDTimerClass, LinkDrawTimer);
 };
 
 class NOVTABLE CaptureManagerClass : public AbstractClass

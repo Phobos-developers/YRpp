@@ -15,14 +15,6 @@ enum class EditFlag : int
 class NOVTABLE EditClass : public ControlClass
 {
 public:
-
-	//Destructor
-	virtual ~EditClass() RX;
-
-	//GadgetClass
-
-	//ControlClass
-
 	//EditClass
 	virtual void SetText(wchar_t* lpStr, int nMaxLength) RX;
 	virtual wchar_t* GetText() R0;

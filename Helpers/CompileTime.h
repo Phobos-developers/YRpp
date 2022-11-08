@@ -1,5 +1,9 @@
 #pragma once
 
+#include <type_traits>
+
+struct noinit_t;
+
 // defines a compile time pointer to a known memory address
 template <typename T, unsigned int Address>
 struct constant_ptr {

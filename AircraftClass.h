@@ -7,14 +7,8 @@
 #include <FootClass.h>
 #include <AircraftTypeClass.h>
 
-//forward declarations
-
-//What are these?
-class StageClass : public IFlyControl{ };
-class FlasherClass : public StageClass{ };
-
 //AircraftClass
-class NOVTABLE AircraftClass : public FootClass, public FlasherClass
+class NOVTABLE AircraftClass : public FootClass, public IFlyControl
 {
 public:
 	static const AbstractType AbsID = AbstractType::Aircraft;
@@ -69,7 +63,7 @@ public:
 	bool unknown_bool_6C8;
 	bool HasPassengers;	//parachutes
 	bool IsKamikaze; // when crashing down, duh
-	DWORD unknown_6CC;
+	BuildingClass* DockNowHeadingTo;
 	bool unknown_bool_6D0;
 	bool unknown_bool_6D1;
 	bool unknown_bool_6D2;

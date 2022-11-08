@@ -18,6 +18,21 @@ typedef unsigned long DWORD;
 #include <wchar.h>
 #include <cstdio>
 
+#include <Helpers/EnumFlags.h>
+
+//Avoid default CTOR trick
+#define DECLARE_PROPERTY(type,name)\
+union{\
+	type name; \
+	char __##name[sizeof(type)]; \
+}
+
+#define DECLARE_PROPERTY_ARRAY(type,name,cnt)\
+union{\
+	type name[cnt]; \
+	char __##name[sizeof(type) * cnt]; \
+}
+
 //Not gettable/settable members
 #define PROTECTED_PROPERTY(type,name)\
 	protected:\
@@ -45,5 +60,8 @@ virtual void alla(double malla) RX;
 #define RT(type) {return type();}
 
 #define NOVTABLE __declspec(novtable)
+
+#define VTABLE_SET(item, addr) ((int*)item)[0] = addr
+#define VTABLE_GET(item) (((int*)item)[0])
 
 struct noinit_t final {};

@@ -33,7 +33,7 @@ public:
 	virtual ObjectClass* CreateObject(HouseClass* pOwner) R0;
 
 	//SmudgeTypeClass
-	virtual void vt_entry_A0(DWORD dwUnk,DWORD dwUnk2,DWORD dwUnk3,DWORD dwUnk4,DWORD dwUnk5) RX;
+	virtual void DrawIt(const Point2D& Point, const RectangleStruct& Rect, int SmudgeData, int Height, const CellStruct& MapCoords) RX;
 
 	//Constructor
 	SmudgeTypeClass(const char* pID) noexcept

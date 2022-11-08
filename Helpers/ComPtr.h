@@ -50,7 +50,7 @@ struct YRComPtr {
 		return *this;
 	}
 
-	YRComPtr& operator = (YRComPtr&& other) {
+	YRComPtr& operator = (YRComPtr&& other) noexcept {
 		this->_release();
 		this->value = other.release();
 		return *this;

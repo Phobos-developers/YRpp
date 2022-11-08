@@ -12,40 +12,33 @@ private:
 public:
 	virtual ~BitFont() RX;
 
-	bool GetTextDimension(const wchar_t* pText, int& Width, int& Height, int nMaxWidth) { JMP_THIS(0x433CF0); }
+	bool GetTextDimension(const wchar_t* pText, int* pWidth, int* pHeight, int nMaxWidth) { JMP_THIS(0x433CF0); }
 	int Blit(wchar_t wch, int X, int Y, int nColor) { JMP_THIS(0x434120); }
 
 	bool Lock(Surface* pSurface) { JMP_THIS(0x4348F0); }
 	bool UnLock(Surface* pSurface) { JMP_THIS(0x434990); }
 	unsigned char* GetCharacterBitmap(wchar_t wch) { JMP_THIS(0x4346C0); }
 
-	void SetBounds(RectangleStruct* pRect)
+	void SetBounds(LTRBStruct* pBound)
 	{
-		// JMP_THIS(0x433CA0);
-		if (pRect)
-		{
-			this->Bounds = *pRect;
-		}
+		if (pBound)
+			this->Bounds = *pBound;
 		else
-		{
-			this->Bounds.X = 0;
-			this->Bounds.Y = 0;
-			this->Bounds.Width = 0;
-			this->Bounds.Height = 0;
-		}
+			this->Bounds = { 0,0,0,0 };
 	}
+
 	void SetColor(WORD nColor)
-	{ 
-		this->Color = nColor; 
+	{
+		this->Color = nColor;
 	}
-	
+
 	void SetField20(int x)
 	{
 		this->field_20 = x;
 	}
 
-	void SetField41(char flag) 
-	{ 
+	void SetField41(char flag)
+	{
 		this->field_41 = flag;
 	}
 
@@ -78,7 +71,7 @@ public:
 	short DefaultColor2;
 	int Unknown_28;
 	int State_2C;
-	RectangleStruct Bounds;
+	LTRBStruct Bounds;
 	bool Bool_40;
 	bool field_41;
 	bool field_42;

@@ -5,10 +5,66 @@
 #pragma once
 
 #include <AbstractTypeClass.h>
+#include <HeapClass.h>
 
 //forward declarations
 class AnimTypeClass;
 class OverlayTypeClass;
+
+struct MapSurfaceData
+{
+	static int __fastcall SurfaceDataCount() JMP_STD(0x42B1F0);
+	static int __fastcall ToSurfaceIndex(const CellStruct& mapCoord) JMP_STD(0x42B1C0);
+
+	int ToSurfaceIndex()
+	{
+		return ToSurfaceIndex(MapCoord);
+	}
+
+	CellStruct MapCoord;
+	float Score;
+
+	bool operator<(const MapSurfaceData& another) const
+	{
+		return Score < another.Score;
+	}
+};
+
+class TiberiumLogic
+{
+public:
+	void Construct(int nCount = MapSurfaceData::SurfaceDataCount())
+	{
+		Datas = (MapSurfaceData*)YRMemory::Allocate(sizeof(MapSurfaceData) * nCount);
+		States = (bool*)YRMemory::Allocate(sizeof(bool) * nCount);
+
+		Heap = GameCreate<PointerHeapClass<MapSurfaceData>>(nCount);
+	}
+
+	void Destruct()
+	{
+		GameDelete(Heap);
+		Heap = nullptr;
+
+		if (Datas)
+		{
+			YRMemory::Deallocate(Datas);
+			Datas = nullptr;
+		}
+
+		if (States)
+		{
+			YRMemory::Deallocate(States);
+			States = nullptr;
+		}
+	}
+
+	int Count;
+	PointerHeapClass<MapSurfaceData>* Heap;
+	bool* States;
+	MapSurfaceData* Datas;
+	CDTimerClass Timer;
+};
 
 class NOVTABLE TiberiumClass : public AbstractTypeClass
 {
@@ -74,19 +130,11 @@ public:
 	int Value;
 	int Power;
 	int Color;
-	TypeList<AnimTypeClass*> Debris;
+	DECLARE_PROPERTY(TypeList<AnimTypeClass*>, Debris);
 	OverlayTypeClass* Image;
 	int NumFrames;
 	int NumImages;
 	int field_EC;
-	int field_F0;
-	int field_F4;
-	int field_F8;
-	int field_FC;
-	TimerStruct SpreadTimer;
-	int field_10C;
-	int field_110;
-	int field_114;
-	int field_118;
-	TimerStruct GrowthTimer;
+	DECLARE_PROPERTY(TiberiumLogic, SpreadLogic);
+	DECLARE_PROPERTY(TiberiumLogic, GrowthLogic);
 };

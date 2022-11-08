@@ -47,7 +47,7 @@ public:
 
 	InfantryTypeClass* Type;
 	Sequence SequenceAnim; //which is currently playing
-	TimerStruct unknown_Timer_6C8;
+	CDTimerClass unknown_Timer_6C8;
 	DWORD          PanicDurationLeft; // set in ReceiveDamage on panicky units
 	bool           PermanentBerzerk; // set by script action, not cleared anywhere
 	bool           Technician;

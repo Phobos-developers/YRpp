@@ -9,20 +9,23 @@ public:
 	// this object should only be used for RMG and other randomness outside a match
 	static constexpr reference<Randomizer, 0x886B88u> const Global{};
 
-	DWORD Random()
+	int Random()
 		{ JMP_THIS(0x65C780); }
 
 	int RandomRanged(int nMin, int nMax)
 		{ JMP_THIS(0x65C7E0); }
 
-	Randomizer(DWORD dwSeed = GetTickCount())
+	Randomizer(DWORD dwSeed = *reinterpret_cast<DWORD*>(0xA8ED94))
 		{ JMP_THIS(0x65C6D0); }
 
 	// helper methods
 	double RandomDouble()
-	{
-		return this->RandomRanged(1, 2147483647) / 2147483648.0;
-	}
+		{ return this->RandomRanged(1, INT_MAX) / (double)((unsigned int)INT_MAX + 1); }
+
+	int operator()()
+		{ return Random(); }
+	int operator()(int nMin, int nMax)
+		{ return RandomRanged(nMin, nMax); }
 
 	//Properties
 

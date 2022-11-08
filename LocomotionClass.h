@@ -4,6 +4,7 @@
 #include <FootClass.h>
 #include <Unsorted.h>
 #include <YRCom.h>
+#include <Drawing.h>
 #include <Helpers/ComPtr.h>
 #include <Helpers/CompileTime.h>
 
@@ -53,8 +54,8 @@ public:
 	virtual CoordStruct* __stdcall Head_To_Coord(CoordStruct* pcoord) R0;
 	virtual Move __stdcall Can_Enter_Cell(CellStruct cell) RT(Move);
 	virtual bool __stdcall Is_To_Have_Shadow() R0;
-	virtual Matrix3D* __stdcall Draw_Matrix(Matrix3D* pMatrix, int* facing) R0;
-	virtual Matrix3D* __stdcall Shadow_Matrix(Matrix3D* pMatrix, int* facing) R0;
+	virtual Matrix3D __stdcall Draw_Matrix(VoxelIndexKey* pIndex) RT(Matrix3D);
+	virtual Matrix3D __stdcall Shadow_Matrix(VoxelIndexKey* pIndex) RT(Matrix3D);
 	virtual Point2D* __stdcall Draw_Point(Point2D* pPoint) R0;
 	virtual Point2D* __stdcall Shadow_Point(Point2D* pPoint) R0;
 	virtual VisualType __stdcall Visual_Character(VARIANT_BOOL unused) RT(VisualType);

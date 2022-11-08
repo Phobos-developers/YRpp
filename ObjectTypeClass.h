@@ -7,6 +7,9 @@
 #include <AbstractTypeClass.h>
 #include <FileSystem.h>
 
+#include <Drawing.h>
+#include <IndexClass.h>
+
 //forward declarations
 class TechnoTypeClass;
 class HouseTypeClass;
@@ -111,5 +114,8 @@ public:
 	PROTECTED_PROPERTY(BYTE, align_23E[2]);
 	int            LineTrailColorDecrement;
 
-	SomeVoxelCache VoxelCaches [4]; //These don't even seem to be of any use...
+	IndexClass<MainVoxelIndexKey, VoxelCacheStruct*> VoxelMainCache;
+	IndexClass<TurretWeaponVoxelIndexKey, VoxelCacheStruct*> VoxelTurretWeaponCache;
+	IndexClass<ShadowVoxelIndexKey, VoxelCacheStruct*> VoxelShadowCache;
+	IndexClass<TurretBarrelVoxelIndexKey, VoxelCacheStruct*> VoxelTurretBarrelCache;
 };

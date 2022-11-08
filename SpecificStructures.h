@@ -29,9 +29,9 @@ public:
 // need to know what you're comparing with what, though... oh well, leave it alone then
 class FPUControl {
 	private:
-		DWORD statusWord;
+		int statusWord;
 	public:
-		FPUControl(DWORD fnstsw): statusWord(fnstsw) { };
+		FPUControl(int fnstsw): statusWord(fnstsw) { };
 
 		bool isEqual() {
 			return (this->statusWord & 0x4000) != 0;

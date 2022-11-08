@@ -30,7 +30,7 @@ public:
 	// returns whether coords are visible at the moment
 	bool CoordsToClient(CoordStruct const& coords, Point2D* pOutClient) const
 		{ JMP_THIS(0x6D2140); }
-	
+
 	Point2D* CoordsToScreen(Point2D* pDest, CoordStruct* pSource)
 		{ JMP_THIS(0x6D1F10); }
 
@@ -67,6 +67,9 @@ public:
 
 	static int DrawTimer(int index, ColorScheme *Scheme, int Time, wchar_t *Text, Point2D *someXY1, Point2D *someXY2)
 		{ JMP_STD(0x64DB50); }
+
+	void AddSelectable(TechnoClass* pTechno, int x, int y)
+		{ JMP_THIS(0x6D9EF0) };
 
 	/*
 	*   TacticalRenderMode_0_ALL = 0x0,
@@ -106,7 +109,7 @@ public:
 	RectangleStruct ContainingMapCoords;
 	LTRBStruct Band;
 	DWORD MouseFrameIndex;
-	TimerStruct StartTime;
+	CDTimerClass StartTime;
 	int SelectableCount;
 	Matrix3D Unused_Matrix3D;
 	Matrix3D IsoTransformMatrix;

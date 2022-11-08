@@ -131,7 +131,7 @@ public:
 	DWORD field_1CC;
 	DWORD LaserIntensity; // for lasers only, ctor = 160, per frame -= 6, 32 == dtor
 	TechnoClass* Owner;
-	FacingStruct Facing;
+	FacingClass Facing;
 	DynamicVectorClass<CellClass *> Cells;
 	BYTE unknown_208 [14*4];
 };

@@ -76,7 +76,7 @@ public:
 	virtual const wchar_t* GetUIString_Save() const
 		{ JMP_THIS(0x55A070); }
 
-	virtual const wchar_t* GetUIString_Delete() const 
+	virtual const wchar_t* GetUIString_Delete() const
 		{ JMP_THIS(0x55A090); }
 
 	virtual const wchar_t* GetUIString_GameSaved() const
@@ -94,7 +94,7 @@ public:
 	DWORD unknown_14;
 	DWORD unknown_18;
 	DWORD unknown_1C;
-	DynamicVectorClass<FileEntryClass*> FileEntries;
+	DECLARE_PROPERTY(DynamicVectorClass<FileEntryClass*>, FileEntries);
 };
 
 class SavegameInformation

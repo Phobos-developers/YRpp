@@ -13,7 +13,7 @@ template <typename T>
 class VectorClass
 {
 public:
-	// the hidden element count messes with alignment. only applies to align 8, 16, ... 
+	// the hidden element count messes with alignment. only applies to align 8, 16, ...
 	static_assert(!needs_vector_delete<T>::value || (__alignof(T) <= 4), "Alignment of T needs to be less than or equal to 4.");
 
 	constexpr VectorClass() noexcept = default;
@@ -214,7 +214,7 @@ public:
 	}
 
 	DynamicVectorClass(DynamicVectorClass &&other) noexcept
-		: VectorClass(std::move(other)), Count(other.Count),
+		: VectorClass<T>(std::move(other)), Count(other.Count),
 		CapacityIncrement(other.CapacityIncrement)
 	{ }
 
@@ -229,7 +229,7 @@ public:
 	}
 
 	virtual bool SetCapacity(int capacity, T* pMem = nullptr) override {
-		bool bRet = VectorClass::SetCapacity(capacity, pMem);
+		bool bRet = VectorClass<T>::SetCapacity(capacity, pMem);
 
 		if(this->Capacity < this->Count) {
 			this->Count = this->Capacity;
@@ -239,7 +239,7 @@ public:
 	}
 
 	virtual void Clear() override {
-		VectorClass::Clear();
+		VectorClass<T>::Clear();
 		this->Count = 0;
 	}
 
@@ -286,6 +286,14 @@ public:
 		return &this->Items[this->Count];
 	}
 
+	T* front() const {
+		return begin();
+	}
+
+	T* back() const {
+		return end() - 1;
+	}
+
 	bool AddItem(T item) {
 		if(this->Count >= this->Capacity) {
 			if(!this->IsAllocated && this->Capacity != 0) {
@@ -303,6 +311,12 @@ public:
 
 		this->Items[Count++] = std::move(item);
 		return true;
+	}
+
+	template <class... _Valty>
+	constexpr decltype(auto) emplace_back(_Valty&&... _Val) {
+		AddItem(T{ _Val... });
+		return *back();
 	}
 
 	bool AddUnique(const T &item) {
@@ -329,7 +343,7 @@ public:
 	}
 
 	void Swap(DynamicVectorClass& other) noexcept {
-		VectorClass::Swap(other);
+		VectorClass<T>::Swap(other);
 		using std::swap;
 		swap(this->Count, other.Count);
 		swap(this->CapacityIncrement, other.CapacityIncrement);
@@ -354,7 +368,7 @@ public:
 	{ }
 
 	TypeList(const TypeList &other)
-		: DynamicVectorClass(other), unknown_18(other.unknown_18) 
+		: DynamicVectorClass(other), unknown_18(other.unknown_18)
 	{ }
 
 	TypeList(TypeList &&other) noexcept

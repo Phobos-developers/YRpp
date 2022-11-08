@@ -2,6 +2,7 @@
 
 #include <wchar.h>
 
+#include <ASMMacros.h>
 // contains functions that are part of the C runtime library and have been declared ingame
 // just declaring them so we don't need to include our own duplicates
 
@@ -21,6 +22,9 @@ public:
 		static size_t __cdecl wcslen(const wchar_t *Str)
 			{ JMP_STD(0x7CA405); }
 
+		static size_t __cdecl wcscspn(const wchar_t* pFirst ,const wchar_t* pSecond )
+			{ JMP_STD(0x7CD7CE); }
+
 		static wchar_t *__cdecl wcscat(wchar_t *Dest, const wchar_t *Source)
 			{ JMP_STD(0x7CA45F); }
 
@@ -30,6 +34,14 @@ public:
 		static int __cdecl swprintf(wchar_t *Buffer, const wchar_t *Format, ...)
 			{ JMP_STD(0x7CA564); }
 
+		static wchar_t * __fastcall wcstrim(wchar_t *Buffer)
+			{ JMP_STD(0x727D60); }
+
+		static wchar_t* __cdecl wcschr(const wchar_t*Str ,wchar_t a2)
+			{ JMP_STD(0x7CA8C6); }
+
+		static wchar_t* __cdecl wcsncat(wchar_t* a1, const wchar_t* a2, size_t a3)
+			{ JMP_STD(0x7CB504); }
 
 		// memory management
 		static void *__cdecl malloc(size_t sz)
@@ -44,10 +56,33 @@ public:
 		static void __cdecl _delete(void *p)
 			{ JMP_STD(0x7C8B3D); }
 
+		static void*__cdecl _memset(void* p, int nInt, size_t sz)
+			{ JMP_STD(0x7D75E0);}
+
+		static void* __cdecl _memmove(void* dst, const void* src, size_t count)
+			{ JMP_STD(0x7CA090); }
 
 		// strings
+		static int __cdecl atoi(const char* Str)
+			{ JMP_STD(0x7C9BFD);}
+
+		static double __cdecl atof(const char* Str)
+			{ JMP_STD(0x7C9D66); }
+
+		static int __cdecl isspace(char* Str)
+			{ JMP_STD(0x7C99E1); }
+
 		static char* __cdecl strdup(const char *Src)
 			{ JMP_STD(0x7D5408); }
+
+		static char* __cdecl strcats(char* StrTo, char* StrFrom)
+			{ JMP_STD(0x7D4C00); }
+
+		static char* __cdecl strcat(char* StrTo, const char* StrFrom)
+			{ JMP_STD(0x7D4C00); }
+
+		static char* __cdecl strcpy(char* StrTo, const char* StrFrom)
+			{ JMP_STD(0x7D4BF0);}
 
 		static int __cdecl strcmpi(const char *lhs, const char *rhs)
 			{ JMP_STD(0x7C8D20); }
@@ -67,11 +102,20 @@ public:
 		static char *__cdecl strstr(const char *Str, const char *SubStr)
 			{ JMP_STD(0x7CA4B0); }
 
+		static char *__cdecl strupr(char* pInput)
+			{ JMP_STD(0x7DCFC4); }
+
 		static int __cdecl sscanf(const char *, const char *, ...)
 			{ JMP_STD(0x7CA530); }
 
+		static int __cdecl _strnicmp(const char* a1, const char* a2, size_t a3)
+			{ JMP_STD(0x7CD680); }
+
 		static char *__cdecl strncat(char *Dest, const char *Source, size_t Count)
 			{ JMP_STD(0x7CB550); }
+
+		static char * __cdecl strtok(char * Str ,const char * Delim)
+			{ JMP_STD(0x7C9CC2);}
 
 		static int __cdecl sprintf(char *Buffer, const char *Format, ...)
 			{ JMP_STD(0x7C8EF4); }
@@ -79,10 +123,21 @@ public:
 		static int __cdecl vsprintf(char *, const char *, va_list)
 			{ JMP_STD(0x7CB7BA); }
 
+		static char * __fastcall strtrim(char * Buffer)
+		    { JMP_STD(0x727CF0); }
+
+		static size_t __cdecl strlen(const char *input)
+			{ JMP_STD(0x7D15A0); }
+
+		static size_t __cdecl strcspn(const char* pFirst , const char* pSecond)
+			{ JMP_STD(0x7CD790); }
 
 		// misc
 		static void *__cdecl memcpy(void *Dst, const void *Src, size_t Size)
 			{ JMP_STD(0x7CA090); }
+
+		static void *__cdecl memcpy_B(void *Dst, const void *Src, size_t Size)
+			{ JMP_STD(0x7D0A20); }
 
 		static void __cdecl qsort(void *buf, size_t num, size_t size, int (__cdecl *compare)(const void *lhs, const void *rhs))
 			{ JMP_STD(0x7C8B48); }
@@ -90,9 +145,14 @@ public:
 		static void *__cdecl bsearch(const void *, const void *, size_t, size_t, int (__cdecl *)(const void *, const void *))
 			{ JMP_STD(0x7C8E25); }
 
-		static void __cdecl makepath(char *, const char *, const char *, const char *, const char *)
-			{ JMP_STD(0x7C9FF0); }
+		static size_t __cdecl msize(void* nBlock)
+			{ JMP_STD(0x7D107D); }
 
+		static void _cdecl setfpmode()
+			{ JMP_STD(0x7C5EE4); }
+
+		static size_t __cdecl mbstowcs(wchar_t* lpWideCharStr, const char* lpMultiByteStr, size_t a3)
+			{ JMP_STD(0x7CC2AC); }
 
 		// files
 		static FILE *__cdecl fopen(const char *, const char *)
@@ -116,5 +176,6 @@ public:
 		static int __cdecl fclose(FILE *)
 			{ JMP_STD(0x7CA75B); }
 
-
+		static void __cdecl makepath(char* arg1 , const char* arg2, const char* arg3 ,  const char* arg4, const char* arg5)
+			{ JMP_STD(0x7C9FF0); }
 };

@@ -82,6 +82,12 @@ public:
 	void SetWallOwner()
 		{ JMP_THIS(0x47D210); }
 
+	void IncreaseShroudCounter()
+		{ JMP_THIS(0x487690); }
+
+	void ReduceShroudCounter()
+		{ JMP_THIS(0x487630); }
+
 	bool IsShrouded() const
 		{ JMP_THIS(0x487950); }
 
@@ -93,6 +99,9 @@ public:
 
 	bool IsFogged() // Check Fog maybe?
 		{ JMP_THIS(0x4879B0); }
+
+	void FogCell()
+		{ JMP_THIS(0x486A70); }
 
 	void CleanFog()
 		{ JMP_THIS(0x486BF0); }
@@ -172,14 +181,14 @@ public:
 	int GetFloorHeight(Point2D const& subcoords) const
 		{ JMP_THIS(0x47B3A0); }
 
-	// used by ambient waves and stuff
-	CoordStruct* GetCenterCoords(CoordStruct* pOutBuffer) const
+	// Factors in cell height from ramps, level etc.
+	CoordStruct* GetCellCoords(CoordStruct* pOutBuffer) const
 		{ JMP_THIS(0x480A30); }
 
-	CoordStruct GetCenterCoords() const
+	CoordStruct GetCellCoords() const
 	{
 		CoordStruct buffer;
-		GetCenterCoords(&buffer);
+		GetCellCoords(&buffer);
 		return buffer;
 	}
 
@@ -241,7 +250,13 @@ public:
 
 	// helper
 	bool ContainsBridge() const
-		{ return (this->Flags & cf_Bridge) != 0; }
+	{ 
+		return static_cast<bool>(this->Flags & CellFlags::Bridge); 
+	}
+	bool ContainsBridgeEx() const
+	{
+		return this->Flags & CellFlags::Bridge || this->Flags & CellFlags::Bridge_400;
+	}
 
 	// helper mimicking game's behaviour
 	ObjectClass* GetContent() const
@@ -344,14 +359,14 @@ public:
 	void CalculateLightSourceLighting(int& nIntensity, int& nAmbient, int& Red1, int& Green1, int& Blue1, int& Red2, int& Green2, int& Blue2)
 		{ JMP_THIS(0x484180); }
 
-	void InitLightConvert(LightConvertClass* pDrawer = nullptr, int nIntensity = 0x10000, 
+	void InitLightConvert(LightConvertClass* pDrawer = nullptr, int nIntensity = 0x10000,
 		int nAmbient = 0, int Red1 = 1000, int Green1 = 1000, int Blue1 = 1000)
 		{ JMP_THIS(0x483E30); }
 
-	void DrawOverlay(Point2D& Location, RectangleStruct& Bound)
+	void DrawOverlay(const Point2D& Location, const RectangleStruct& Bound)
 		{ JMP_THIS(0x47F6A0); }
 
-	void DrawOverlayShadow(Point2D& Location, RectangleStruct& Bound)
+	void DrawOverlayShadow(const Point2D& Location, const RectangleStruct& Bound)
 		{ JMP_THIS(0x47F510); }
 
 protected:
@@ -418,9 +433,8 @@ public:
 	int                OccupyHeightsCoveringMe;
 	DWORD              Intensity;
 	WORD               Ambient;
-	//ColorStruct      Color1; //10A-10E
-	WORD               Color1_Red;
-	WORD               Color1_Green;
+	WORD			   Intensity_Normal;
+	WORD               Intensity_Terrain;
 	WORD               Color1_Blue;
 	//ColorStruct      Color2; //110-114
 	WORD               Color2_Red;
@@ -436,7 +450,7 @@ public:
 	BYTE               SlopeIndex;  // this + 2 == cell's slope shape as reflected by PLACE.SHP
 	BYTE               unknown_11D;
 
-	unsigned char      Powerup;	//The crate type on this cell. Also indicates some other weird properties
+	unsigned char      OverlayData;	//The crate type on this cell. Also indicates some other weird properties
 
 	BYTE               SmudgeData;
 	char               Visibility; // trust me, you don't wanna know... if you do, see 0x7F4194 and cry
@@ -449,13 +463,13 @@ public:
 	DWORD              OccupationFlags;
 	DWORD              AltOccupationFlags;
 
-	eCellFlags_12C     CopyFlags;	// related to Flags below
+	AltCellFlags	   AltFlags;	// related to Flags below
 	int                ShroudCounter;
 	DWORD              GapsCoveringThisCell; // actual count of gapgens in this cell, no idea why they need a second layer
 	bool               VisibilityChanged;
 	PROTECTED_PROPERTY(BYTE,     align_139[0x3]);
 	DWORD              unknown_13C;
 
-	eCellFlags         Flags;	//Various settings.
+	CellFlags          Flags;	//Various settings.
 	PROTECTED_PROPERTY(BYTE,     padding_144[4]);
 };

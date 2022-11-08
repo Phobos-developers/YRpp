@@ -7,7 +7,7 @@
 #include <ObjectClass.h>
 #include <AnimTypeClass.h>
 #include <BounceClass.h>
-#include <ProgressTimer.h>
+#include <StageClass.h>
 
 //forward declarations
 class AnimTypeClass;
@@ -43,6 +43,9 @@ public:
 
 	void SetOwnerObject(ObjectClass *pOwner)
 		{ JMP_THIS(0x424B50); }
+		
+	void DetachFromObject(ObjectClass* pTarget, bool detachFromAll)
+		{ JMP_THIS(0x425150); }
 
 	void Pause() {
 		this->Paused = true;
@@ -73,7 +76,7 @@ protected:
 
 public:
 
-	ProgressTimer Animation;
+	DECLARE_PROPERTY(StageClass, Animation);
 	AnimTypeClass* Type; //The AnimType.
 	ObjectClass * OwnerObject; // set by AnimClass::SetOwnerObject (0x424B50)
 	DWORD unknown_D0;
@@ -92,13 +95,13 @@ public:
 	int PausedAnimFrame; // the animation value when paused
 	bool Reverse; // anim is forced to be played from end to start
 	DWORD unknown_124;
-	BounceClass Bounce;
+	DECLARE_PROPERTY(BounceClass, Bounce);
 	BYTE TranslucencyLevel; // on a scale of 1 - 100
 	bool TimeToDie; // or something to that effect, set just before UnInit
 	BulletClass* AttachedBullet;
 	HouseClass* Owner; //Used for remap (AltPalette).
 	int LoopDelay; // randomized value, depending on RandomLoopDelay
-	double Damage; // defaults to 1.0 , added to Type->Damage in some cases
+	double Accum; // Stores accumulated fractional animation damage and gets added to Type->Damage if at least 1.0 or above. Defaults to 1.0.
 	BlitterFlags AnimFlags; // argument that's 0x600 most of the time
 	bool HasExtras; // enables IsMeteor and Bouncer special behavior (AnimExtras)
 	byte RemainingIterations; // defaulted to deleteAfterIterations, when reaches zero, UnInit() is called
@@ -112,6 +115,6 @@ public:
 	bool Invisible; // don't draw, but Update state anyway
 	bool PowerOff; // powered animation has no power
 	PROTECTED_PROPERTY(BYTE, unused_19F);
-	AudioController Audio3;
-	AudioController Audio4;
+	DECLARE_PROPERTY(AudioController, Audio3);
+	DECLARE_PROPERTY(AudioController, Audio4);
 };

@@ -33,7 +33,7 @@ public:
 	virtual void PointerExpired(AbstractClass* pAbstract, bool removed) override RX;
 	virtual AbstractType WhatAmI() const override RT(AbstractType);
 	virtual int Size() const override R0;
-	virtual void CalculateChecksum(Checksummer& checksum) const override RX;
+	virtual void ComputeCRC(CRCEngine& crc) const override RX;
 
 	// contains at least one Crosses Horizontal Line event
 	bool HasCrossesHorizontalLineEvent() const
@@ -121,7 +121,7 @@ public:
 	HouseClass*			House;
 	bool				Destroyed; // ActionClass::DestroyTrigger called on
 	PROTECTED_PROPERTY(BYTE, align_31[3]);
-	TimerStruct			Timer;
+	CDTimerClass			Timer;
 	DWORD				OccuredEvents; // bitfield for 32 events max
 	bool				Enabled;
 	PROTECTED_PROPERTY(BYTE, padding_45[3]);

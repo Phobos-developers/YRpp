@@ -1,15 +1,3 @@
-/*
-	UI Commands
-*/
-
-/*
-NOTE:
-	This should NOT become a victim of Operation: The Cleansing, since we actually
-	derive classes from it!
-
-	-pd
-*/
-
 #pragma once
 
 #include <GeneralDefinitions.h>
@@ -30,14 +18,17 @@ public:
 	virtual const wchar_t* GetUICategory() const = 0;
 	virtual const wchar_t* GetUIDescription() const = 0;
 
-	virtual bool vt_entry_14(DWORD dwUnk) const
+	virtual bool PreventCombinationOverride(WWKey eInput) const // Do we need to check extra value like SHIFT?
+		{ return false; }										// If this value is true, the game won't process
+																// Combination keys written here
+																// e.g. To ignore SHIFT + this key
+																// return eInput & WWKey::Shift;
+
+	virtual bool ExtraTriggerCondition(WWKey eInput) const // Only with this key set to true will the game call the Execute
+		{ return !(eInput & WWKey::Release); }
+
+	virtual bool CheckLoop55E020(WWKey eInput) const // Stupid loop, I don't know what's it used for
 		{ return false; }
 
-	virtual bool vt_entry_18(DWORD dwUnk) const
-		{ return (((~dwUnk) >> 11) & 1) != 0; }
-
-	virtual bool vt_entry_1C(DWORD dwUnk) const
-		{ return false; }
-
-	virtual void Execute(DWORD dwUnk) const = 0;
+	virtual void Execute(WWKey eInput) const = 0;
 };

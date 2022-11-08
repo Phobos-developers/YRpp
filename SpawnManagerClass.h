@@ -26,7 +26,7 @@ struct SpawnNode
 {
 	TechnoClass* Unit;
 	SpawnNodeStatus Status;
-	TimerStruct SpawnTimer;
+	CDTimerClass SpawnTimer;
 	BOOL IsSpawnMissile;
 };
 
@@ -100,8 +100,8 @@ public:
 	int RegenRate;
 	int ReloadRate;
 	DynamicVectorClass<SpawnNode*> SpawnedNodes;
-	TimerStruct UpdateTimer;
-	TimerStruct SpawnTimer;
+	CDTimerClass UpdateTimer;
+	CDTimerClass SpawnTimer;
 	AbstractClass* Target;
 	AbstractClass* NewTarget;
 	SpawnManagerStatus Status;

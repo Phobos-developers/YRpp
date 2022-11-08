@@ -46,8 +46,8 @@ public:
 	static constexpr constant_ptr<TabClass, 0x87F7E8u> const Instance{};
 
 	TabDataClass TabData;
-	TimerStruct unknown_timer_552C;
-	TimerStruct InsufficientFundsBlinkTimer;
+	CDTimerClass unknown_timer_552C;
+	CDTimerClass InsufficientFundsBlinkTimer;
 	BYTE unknown_byte_5544;
 	bool MissionTimerPinged;
 	BYTE unknown_byte_5546;

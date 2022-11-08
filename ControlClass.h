@@ -5,17 +5,6 @@
 class NOVTABLE ControlClass : public GadgetClass
 {
 public:
-
-	//Destructor
-	virtual ~ControlClass() RX;
-
-	//GadgetClass
-	virtual ControlClass* ExtractGadget(unsigned int nID) R0;
-	virtual void PeerToPeer(unsigned int Flags, DWORD* pKey, ControlClass* pSendTo) RX;
-
-	//ControlClass
-	virtual void MakePeer(ControlClass const& target) RX;
-
 	//Non virtual
 
 	//Statics

@@ -4,19 +4,17 @@
 #include <GeneralDefinitions.h>
 #include <GeneralStructures.h>
 #include <ArrayClasses.h>
+#include <IndexClass.h>
 
 #include <Helpers\CompileTime.h>
 
 //forward declarations
 class TechnoClass;
 class HouseClass;
-class Checksummer;
+class CRCEngine;
 
-//--- OwnedTiberiumStruct - holds info about how much of each tiberium type is held.
-struct OwnedTiberiumStruct
+struct StorageClass
 {
-	static const size_t Size = 4;
-
 	float GetAmount(int index) const
 		{ JMP_THIS(0x6C9680); }
 
@@ -46,6 +44,7 @@ public:
 	static const AbstractType AbsID = AbstractType::Abstract;
 
 	static constexpr constant_ptr<DynamicVectorClass<AbstractClass*>, 0xB0F720u> const Array{};
+	static constexpr reference<IndexClass<int, int>, 0xB0E840u> const TargetIndex{};
 
 	//static
 	const char* GetClassName() const
@@ -101,7 +100,7 @@ public:
 	virtual void PointerExpired(AbstractClass* pAbstract, bool removed) RX;
 	virtual AbstractType WhatAmI() const = 0;
 	virtual int Size() const = 0;
-	virtual void CalculateChecksum(Checksummer& checksum) const RX;
+	virtual void ComputeCRC(CRCEngine& crc) const RX;
 	virtual int GetOwningHouseIndex() const R0;
 	virtual HouseClass* GetOwningHouse() const R0;
 	virtual int GetArrayIndex() const R0;
@@ -110,12 +109,14 @@ public:
 	virtual CoordStruct* GetDestination(CoordStruct* pCrd, TechnoClass* pDocker = nullptr) const R0; // where this is moving, or a building's dock for a techno. iow, a rendez-vous point
 	virtual bool IsOnFloor() const R0;
 	virtual bool IsInAir() const R0;
-	virtual CoordStruct* GetAltCoords(CoordStruct* pCrd) const R0;
+	virtual CoordStruct* GetCenterCoords(CoordStruct* pCrd) const R0;
 	virtual void Update() RX;
 
 	//non-virtual
 	static void __fastcall AnnounceExpiredPointer(AbstractClass* pAbstract, bool removed = true)
 		{ JMP_THIS(0x7258D0); }
+
+	static void __fastcall RemoveAllInactive() JMP_STD(0x725C70);
 
 	void AnnounceExpiredPointer(bool removed = true) {
 		AnnounceExpiredPointer(this, removed);
@@ -133,9 +134,9 @@ public:
 		return ret;
 	}
 
-	CoordStruct GetAltCoords() const {
+	CoordStruct GetCenterCoords() const {
 		CoordStruct ret;
-		this->GetAltCoords(&ret);
+		this->GetCenterCoords(&ret);
 		return ret;
 	}
 

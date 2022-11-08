@@ -63,7 +63,7 @@ public:
 				*pOut = this->Items[index];
 			}
 			return true;
-		}	
+		}
 
 		return false;
 	}

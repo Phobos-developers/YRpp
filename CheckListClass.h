@@ -5,18 +5,6 @@
 class NOVTABLE CheckListClass : public ListClass
 {
 public:
-
-	//Destructor
-	virtual ~CheckListClass() RX;
-
-	//GadgetClass
-
-	//ControlClass
-
-	//ListClass
-
-	//CheckListClass
-
 	//Non virtual
 
 	//Statics

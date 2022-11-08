@@ -7,7 +7,11 @@
 #define ALIAS(Type, Obj, Addr) \
 	Type &Obj = *reinterpret_cast<Type*>(Addr);
 
+ALIAS(Imports::FP_OleSaveToStream, Imports::OleSaveToStream, 0x7E15F4);
 ALIAS(Imports::FP_OleLoadFromStream, Imports::OleLoadFromStream, 0x7E15F8);
+ALIAS(Imports::FP_CoRegisterClassObject, Imports::CoRegisterClassObject, 0x7E15D8);
+ALIAS(Imports::FP_CoRevokeClassObject, Imports::CoRevokeClassObject, 0x7E15CC);
+
 ALIAS(Imports::FP_TimeGetTime, Imports::TimeGetTime, 0x7E1530);
 
 ALIAS(Imports::FP_DefWindowProcA, Imports::DefWindowProcA, 0x7E1394);
@@ -110,6 +114,8 @@ ALIAS(Imports::FP_EndPaint, Imports::EndPaint, 0x7E1504);
 ALIAS(Imports::FP_CreateDialogParamA, Imports::CreateDialogParamA, 0x7E1508);
 ALIAS(Imports::FP_GetWindowTextA, Imports::GetWindowTextA, 0x7E150C);
 ALIAS(Imports::FP_RegisterHotKey, Imports::RegisterHotKey, 0x7E1510);
+ALIAS(Imports::FP_InterlockedIncrement, Imports::InterlockedIncrement, 0x7E11C8);
+ALIAS(Imports::FP_InterlockedDecrement, Imports::InterlockedDecrement, 0x7E11CC);
 
 #undef ALIAS
 
@@ -236,7 +242,7 @@ bool HouseClass::IsIonCannonEligibleTarget(const TechnoClass* const pTechno) con
 	if(this->AIDifficulty == AIDifficulty::Hard) {
 		for(const auto* pFactory : *FactoryClass::Array) {
 			if(pFactory->Object == pTechno
-				&& pFactory->Production.Timer.Duration
+				&& pFactory->Production.Rate
 				&& !pFactory->IsSuspended)
 			{
 				return true;

@@ -34,17 +34,17 @@ public:
 	ScriptActionNode* GetNextAction(ScriptActionNode *buffer) const
 		{ JMP_THIS(0x691540); }
 
-	bool Reset()
-		{ this->idxCurrentLine = -1; return true; }
+	bool ClearMission()
+		{ JMP_THIS(0x691590); }
 
-	bool SetCurrentLine(int idx)
-		{ this->idxCurrentLine = idx; return true; }
+	bool SetMission(int nLine)
+		{ JMP_THIS(0x6915A0); }
 
-	bool NextAction()
-		{ ++this->idxCurrentLine; return this->HasNextAction(); }
+	bool NextMission()
+		{ ++this->CurrentMission; return this->HasNextMission(); }
 
-	bool HasNextAction() const
-		{ return this->idxCurrentLine < this->Type->ActionsCount; }
+	bool HasNextMission() const
+		{ JMP_THIS(0x6915B0); }
 
 	//Constructor
 	ScriptClass(ScriptTypeClass* pType) noexcept
@@ -64,6 +64,5 @@ public:
 
 	ScriptTypeClass * Type;
 	int field_28;
-	int idxCurrentLine;
-
+	int CurrentMission;
 };

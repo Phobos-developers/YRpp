@@ -16,33 +16,33 @@ public:
 
 	virtual ~MapSeedClass()
 		{ JMP_THIS(0x5AC270); }
-	
+
 	//Loads an SED file
 	virtual bool LoadMission(const char* pFilename) const
 		{ JMP_THIS(0x597A30); }
-	
+
 	//Saves an SED file
 	virtual bool SaveMission(const char* pFilename, const wchar_t* pDescription) const
 		{ JMP_THIS(0x597760); }
-		
+
 	virtual bool DeleteMission(const char* pFilename) const
 		{ JMP_THIS(0x597D50); }
-		
+
 	virtual bool GetFileEntry(FileEntryClass& FileEntry, const WIN32_FIND_DATAA& pFindData) const
 		{ JMP_THIS(0x597D60); }
-	
+
 	virtual const wchar_t* GetUIString_Load() const
 		{ JMP_THIS(0x597F80); }
-		
+
 	virtual const wchar_t* GetUIString_Save() const
 		{ JMP_THIS(0x597FA0); }
-		
+
 	virtual const wchar_t* GetUIString_Delete() const
 		{ JMP_THIS(0x597FC0); }
-		
+
 	virtual const wchar_t* GetUIString_GameSaved() const
 		{ JMP_THIS(0x597FE0); }
-	
+
 	//Properties
 public:
 	int Theater;
@@ -62,20 +62,20 @@ public:
 	int RegionSize;
 	int Seed; //default -1
 	FixedWString<0x80> DescriptionBuffer;
-	
+
 	/*
 		This is confusing the hell out of me...
 		At some points (e.g. 0x5961D2), the MapSeedClass constructor is invoked after allocating 0x178 bytes.
 		According to that information, this class would have to end here.
-		
+
 		However, 0x595740 fist calls the MapSeedClass constructor and then initializes further fields.
 		It looks a lot like the constructor of another class extending MapSeedClass, however there seems to be no type information for it.
 		According to 0xABDFD8, that class must be 0x318 bytes long.
-		
+
 		I'll simply add the following to this MapSeedClass, if I ever figure out what's behind all this I'll fix this.
 		~pd
 	*/
-	
+
 	DWORD unknown178;
 	DWORD unknown17C;
 	DWORD unknown180;

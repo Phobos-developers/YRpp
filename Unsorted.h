@@ -2,6 +2,7 @@
 
 #include <ArrayClasses.h>
 #include <GeneralDefinitions.h>
+#include <CCFileClass.h>
 #include <Helpers/CompileTime.h>
 
 struct TacticalSelectableStruct;
@@ -15,11 +16,25 @@ public:
 	// the magic checksum for version validation - linked in StaticInits
 	static constexpr reference<DWORD, 0x83D560u> const Savegame_Magic{};
 
+	static constexpr reference<DynamicVectorClass<DWORD>, 0xB0BC88u> const COMClasses{};
+
 	static constexpr reference<HWND, 0xB73550u> const hWnd{};
 	static constexpr reference<HINSTANCE, 0xB732F0u> const hInstance{};
 
+	static constexpr reference<bool, 0x887418u> const bVPLRead{};
 	static constexpr reference<bool, 0x840A6Cu> const bVideoBackBuffer{};
 	static constexpr reference<bool, 0xA8EB96u> const bAllowVRAMSidebar{};
+
+	static constexpr reference<RecordFlag, 0xA8D5F8u> const RecordingFlag{};
+	static constexpr reference<CCFileClass, 0xA8D58Cu> const RecordFile{};
+
+	static constexpr reference<bool, 0x822CF1u> const bDrawShadow{};
+	static constexpr reference<bool, 0x8A0DEFu> const bAllowDirect3D{};
+	static constexpr reference<bool, 0x8A0DF0u> const bDirect3DIsUseable{};
+
+	static constexpr reference<bool, 0xA8E9A0u> const IsActive{};
+	static constexpr reference<bool, 0xA8ED80u> const IsFocused{};
+	static constexpr reference<int, 0xA8EDA0u> const SpecialDialog{};
 
 	// the game's own rounding function
 	// infamous for true'ing (F2I(-5.00) == -4.00)
@@ -79,6 +94,12 @@ public:
 
 	static double GetFloaterGravity()
 		{ JMP_STD(0x48ACF0); }
+
+	static void __fastcall KeyboardProcess(DWORD& input)
+		{ JMP_STD(0x55DEE0); }
+
+	static LARGE_INTEGER __fastcall AudioGetTime()
+		{ JMP_STD(0x4093B0); }
 };
 
 // this fake class contains the IIDs used by the game
@@ -108,8 +129,17 @@ public:
 class Imports {
 public:
 	// OleLoadFromStream
+	typedef HRESULT(__stdcall* FP_OleSaveToStream)(LPPERSISTSTREAM pPStm, LPSTREAM pStm);
+	static FP_OleSaveToStream& OleSaveToStream;
+
 	typedef HRESULT (__stdcall * FP_OleLoadFromStream)(LPSTREAM pStm, const IID *const iidInterface, LPVOID *ppvObj);
 	static FP_OleLoadFromStream &OleLoadFromStream;
+
+	typedef HRESULT(__stdcall* FP_CoRegisterClassObject)(const IID& rclsid, LPUNKNOWN pUnk, DWORD dwClsContext, DWORD flags, LPDWORD lpdwRegister);
+	static FP_CoRegisterClassObject& CoRegisterClassObject;
+
+	typedef HRESULT(__stdcall* FP_CoRevokeClassObject)(DWORD dwRegister);
+	static FP_CoRevokeClassObject& CoRevokeClassObject;
 
 	typedef DWORD (* FP_TimeGetTime)();
 	static FP_TimeGetTime &TimeGetTime;
@@ -407,7 +437,11 @@ public:
 	typedef BOOL ( __stdcall * FP_RegisterHotKey)(HWND hWnd, int id, UINT fsModifiers, UINT vk);
 	static FP_RegisterHotKey &RegisterHotKey;
 
+	typedef LONG(__stdcall* FP_InterlockedIncrement)(void* lpAddend);
+	static FP_InterlockedIncrement& InterlockedIncrement;
 
+	typedef LONG(__stdcall* FP_InterlockedDecrement)(void* lpAddend);
+	static FP_InterlockedDecrement& InterlockedDecrement;
 
 };
 
@@ -466,7 +500,6 @@ namespace Unsorted
 	static constexpr reference<bool, 0x822CF2> MoveFeedback {};
 
 	static constexpr reference<byte, 0xA8ED6B> ArmageddonMode {};
-	static constexpr reference<byte, 0xA8E9A0> WTFMode {};
 	static constexpr constant_ptr<DynamicVectorClass<ObjectClass*>, 0x8A0360> ObjectsInLayers {};
 
 // checkbox states, afaik

@@ -63,8 +63,8 @@ public:
 
 	FootClass*      Owner;
 	FootClass*      Victim;
-	TimerStruct     SuppressionTimer;
-	TimerStruct     DamageDeliveryTimer;
+	CDTimerClass    SuppressionTimer;
+	CDTimerClass    DamageDeliveryTimer;
 	AnimClass*      GrappleAnim;
 	ParasiteState   GrappleState;
 	int             GrappleAnimFrame;

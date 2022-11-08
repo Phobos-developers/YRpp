@@ -6,7 +6,7 @@
 
 #include <ObjectClass.h>
 #include <TerrainTypeClass.h>
-#include <ProgressTimer.h>
+#include <StageClass.h>
 
 class NOVTABLE TerrainClass : public ObjectClass
 {
@@ -46,7 +46,7 @@ protected:
 
 public:
 
-	ProgressTimer Animation;
+	StageClass Animation;
 	TerrainTypeClass* Type;
 	bool IsBurning; // this terrain object has been ignited
 	bool TimeToDie; // finish the animation and uninit

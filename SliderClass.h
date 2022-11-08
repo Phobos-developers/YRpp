@@ -5,16 +5,6 @@
 class NOVTABLE SliderClass : public GaugeClass
 {
 public:
-
-	//Destructor
-	virtual ~SliderClass() RX;
-
-	//GadgetClass
-
-	//ControlClass
-
-	//GaugeClass
-
 	//SliderClass
 	virtual int Bump(bool bMinus) R0; // CurrentValue +=/-= Thumb
 	virtual int Step(bool bMinus) R0; // CurrentValue +=/-= 1

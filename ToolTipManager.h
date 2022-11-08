@@ -18,11 +18,7 @@ struct ToolTip
 struct ToolTipManagerData
 {
 	RectangleStruct Dimension;
-	union // I'm not sure...
-	{
-		wchar_t AsWideChar[0x100];
-		char AsChar[0x200];
-	} HelpText;
+	wchar_t HelpText[0x100];
 };
 
 class NOVTABLE ToolTipManager
@@ -33,11 +29,11 @@ public:
 	virtual ~ToolTipManager() RX;
 
 	// ToolTipManager
-	virtual bool AI(ToolTipManagerData& from) R0; // update in ToolTipManager, Process in CCToolTip, so I called it AI
-	virtual void MarkToRedraw(ToolTipManagerData& from) RX; // parameter seems to be useless, also clear
-	virtual void Draw1(bool bRedraw) RX;
-	virtual void Draw2(ToolTipManagerData& from) RX; // more seems like print some debug information
-	virtual wchar_t* GetToolTipText(unsigned int ID) R0; // seems abandoned, nobody calls it
+	virtual bool Update(ToolTipManagerData& from) R0;
+	virtual void MarkToRedraw(ToolTipManagerData& from) RX;
+	virtual void Draw(bool bOnSidebar) RX;
+	virtual void DrawText(ToolTipManagerData& from) RX;
+	virtual wchar_t* GetToolTipText(unsigned int ID) R0;
 
 	//Non virtual
 	void SetState(bool bState) { JMP_THIS(0x7241A0); }

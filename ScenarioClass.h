@@ -6,10 +6,19 @@
 #include <TechnoTypeClass.h>
 #include <Helpers/CompileTime.h>
 
+class INIClass;
+
 struct Variable
 {
 	char Name[40];
 	char Value;
+};
+
+struct LightingStruct
+{
+	TintStruct Tint;
+	int Ground; // all these are stored as ini value * 100 + 0.01
+	int Level; // this one is stored as ini value * 1000 + 0.01
 };
 
 struct ScenarioFlags
@@ -57,6 +66,7 @@ public:
 	//Static
 	static constexpr reference<ScenarioClass*, 0xA8B230u> const Instance{};
 	static constexpr reference<int, 0xA8ED7Cu> const NewINIFormat{};
+	static constexpr reference<TheaterType, 0x822CF8> const LastTheater{};
 
 
 	static void __fastcall UpdateCellLighting()
@@ -79,6 +89,9 @@ public:
 
 	static bool __fastcall SaveGame(const char* FileName, const wchar_t* Description, bool BarGraph = false)
 		{ JMP_STD(0x67CEF0); }
+
+	void ReadStartPoints(INIClass& ini)
+		{ JMP_THIS(0x689D30); }
 
 	// valid range [0..701]
 	bool IsDefinedWaypoint(int idx)
@@ -109,8 +122,8 @@ public:
 	Randomizer Random; //218
 	DWORD Difficulty1;
 	DWORD Difficulty2; // 2 - Difficulty1
-	TimerStruct ElapsedTimer;
-	TimerStruct PauseTimer;
+	CDTimerClass ElapsedTimer;
+	CDTimerClass PauseTimer;
 	DWORD unknown_62C;
 	bool IsGamePaused;
 	CellStruct Waypoints [702];
@@ -126,14 +139,14 @@ public:
 	CellStruct HouseHomeCells [0x8];
 	bool TeamsPresent;
 	int NumCoopHumanStartSpots;
-	TimerStruct MissionTimer;
+	CDTimerClass MissionTimer;
 	wchar_t * MissionTimerTextCSF;
 	char MissionTimerText [32];
-	TimerStruct ShroudRegrowTimer;
-	TimerStruct FogTimer;
-	TimerStruct IceTimer;
-	TimerStruct unknown_timer_123c;
-	TimerStruct AmbientTimer;
+	CDTimerClass ShroudRegrowTimer;
+	CDTimerClass FogTimer;
+	CDTimerClass IceTimer;
+	CDTimerClass unknown_timer_123c;
+	CDTimerClass AmbientTimer;
 	int TechLevel;
 	TheaterType Theater;
 	char FileName [0x104];
@@ -190,7 +203,7 @@ public:
 	bool MultiplayerOnly; //34BC
 	bool IsRandom;
 	bool PickedUpAnyCrate;
-	TimerStruct unknown_timer_34C0;
+	CDTimerClass unknown_timer_34C0;
 	int CampaignIndex;
 	int StartingDropships;
 	TypeList<TechnoTypeClass*> AllowableUnits;
@@ -201,43 +214,27 @@ public:
 	int AmbientOriginal; // set at map creation
 	int AmbientCurrent; // current ambient
 	int AmbientTarget; // target ambient (while changing)
-	int Red;
-	int Green;
-	int Blue;
-	int Ground; // all these are stored as ini value * 100 + 0.01
-	int Level; // this one is stored as ini value * 1000 + 0.01
+	LightingStruct NormalLighting;
 
 	//Ion lighting
 	int IonAmbient;
-	int IonRed;
-	int IonGreen;
-	int IonBlue;
-	int IonGround;
-	int IonLevel;
+	LightingStruct IonLighting;
 
 	//Nuke flash lighting
 	int NukeAmbient;
-	int NukeRed;
-	int NukeGreen;
-	int NukeBlue;
-	int NukeGround;
-	int NukeLevel;
+	LightingStruct NukeLighting;
 	int NukeAmbientChangeRate;
 
 	//Dominator lighting
 	int DominatorAmbient;
-	int DominatorRed;
-	int DominatorGreen;
-	int DominatorBlue;
-	int DominatorGround;
-	int DominatorLevel;
+	LightingStruct DominatorLighting;
 	int DominatorAmbientChangeRate;
 
 	DWORD unknown_3598;
 	int InitTime;
 	short Stage;
-	bool unknown_35A2;
-	BYTE unknown_35A3;
+	bool UserInputLocked;
+	bool unknown_35A3;
 	int ParTimeEasy;
 	int ParTimeMedium;
 	int ParTimeDifficult;

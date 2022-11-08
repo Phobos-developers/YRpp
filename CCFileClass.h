@@ -9,8 +9,10 @@ enum class FileAccessMode : unsigned int {
 	None = 0,
 	Read = 1,
 	Write = 2,
-	ReadWrite = 3
+	ReadWrite = Read | Write
 };
+
+MAKE_ENUM_FLAGS(FileAccessMode);
 
 enum class FileSeekMode : unsigned int {
 	Set = 0, // SEEK_SET
@@ -40,8 +42,8 @@ public:
 	virtual int GetFileSize() = 0;
 	virtual int WriteBytes(void* pBuffer, int nNumBytes) = 0; //Returns number of bytes written.
 	virtual void Close() = 0;
-	virtual DWORD GetFileTime() R0; //LoWORD = FatTime, HiWORD = FatDate
-	virtual bool SetFileTime(DWORD FileTime) R0;
+	virtual DWORD GetFileTime() JMP_THIS(0x65C5F0); //LoWORD = FatTime, HiWORD = FatDate
+	virtual bool SetFileTime(DWORD FileTime) JMP_THIS(0x65C600);
 	virtual void CDCheck(DWORD errorCode, bool bUnk, const char* pFilename) = 0;
 
 	void* ReadWholeFile()
@@ -79,20 +81,24 @@ public:
 	virtual ~RawFileClass() RX;
 
 	//FileClass
-	virtual const char* GetFileName() const override R0;
-	virtual const char* SetFileName(const char* pFileName) override R0;
-	virtual BOOL CreateFile() override R0;
-	virtual BOOL DeleteFile() override R0;
-	virtual bool Exists(bool writeShared = false) override R0;
-	virtual bool HasHandle() override R0;
-	virtual bool Open(FileAccessMode access) override R0;
-	virtual bool OpenEx(const char* pFileName, FileAccessMode access) override R0;
-	virtual int ReadBytes(void* pBuffer, int nNumBytes) override R0;
-	virtual int Seek(int offset, FileSeekMode seek) override R0;
-	virtual int GetFileSize() override R0;
-	virtual int WriteBytes(void* pBuffer, int nNumBytes) override R0;
-	virtual void Close() override RX;
-	virtual void CDCheck(DWORD errorCode, bool lUnk, const char* pFilename) override RX;
+	virtual const char* GetFileName() const override JMP_THIS(0x401940);
+	virtual const char* SetFileName(const char* pFileName) override JMP_THIS(0x65CAC0);
+	virtual BOOL CreateFile() override JMP_THIS(0x65D150);
+	virtual BOOL DeleteFile() override JMP_THIS(0x65D190);
+	virtual bool Exists(bool writeShared = false) override JMP_THIS(0x65CBF0);
+	virtual bool HasHandle() override JMP_THIS(0x65D420);
+	virtual bool Open(FileAccessMode access) override JMP_THIS(0x65CB50);
+	virtual bool OpenEx(const char* pFileName, FileAccessMode access) override JMP_THIS(0x65CB30);
+	virtual int ReadBytes(void* pBuffer, int nNumBytes) override JMP_THIS(0x65CCE0);
+	virtual int Seek(int offset, FileSeekMode seek) override JMP_THIS(0x65CF00);
+	virtual int GetFileSize() override JMP_THIS(0x65D0D0);
+	virtual int WriteBytes(void* pBuffer, int nNumBytes) override JMP_THIS(0x65CDD0);
+	virtual void Close() override JMP_THIS(0x65CCA0);
+	virtual DWORD GetFileTime() override JMP_THIS(0x65D1F0);
+	virtual bool SetFileTime(DWORD FileTime) override JMP_THIS(0x65D240);
+	virtual void CDCheck(DWORD errorCode, bool lUnk, const char* pFilename) override JMP_THIS(0x65CA70);
+
+	void Bias(int offset = 0, int length = -1) { JMP_THIS(0x65D2B0); }
 
 	//Constructor
 	RawFileClass(const char* pFileName)
@@ -128,6 +134,16 @@ public:
 	//Destructor
 	virtual ~BufferIOFileClass() RX;
 	//FileClass
+	virtual const char* SetFileName(const char* pFileName) override JMP_THIS(0x431E80);
+	virtual bool Exists(bool writeShared = false) override JMP_THIS(0x431F10);
+	virtual bool HasHandle() override JMP_THIS(0x431F30);
+	virtual bool Open(FileAccessMode access) override JMP_THIS(0x431F70);
+	virtual bool OpenEx(const char* pFileName, FileAccessMode access) override JMP_THIS(0x431F50);
+	virtual int ReadBytes(void* pBuffer, int nNumBytes) override JMP_THIS(0x4322A0);
+	virtual int Seek(int offset, FileSeekMode seek) override JMP_THIS(0x4324B0);
+	virtual int GetFileSize() override JMP_THIS(0x4325A0);
+	virtual int WriteBytes(void* pBuffer, int nNumBytes) override JMP_THIS(0x432050);
+	virtual void Close() override JMP_THIS(0x4325C0);
 
 	//Constructor
 	BufferIOFileClass()
@@ -169,7 +185,10 @@ public:
 	//Destructor
 	virtual ~CDFileClass() RX;
 	//FileClass
-
+	virtual const char* SetFileName(const char* pFileName) override JMP_THIS(0x47AE10);
+	virtual bool Open(FileAccessMode access) override JMP_THIS(0x47AAB0);
+	virtual bool OpenEx(const char* pFileName, FileAccessMode access) override JMP_THIS(0x47AF10);
+	
 	//Constructor
 	CDFileClass()
 		: CDFileClass(noinit_t())
@@ -183,7 +202,7 @@ protected:
 	//Property
 
 public:
-	DWORD unknown_54;
+	bool IsDisabled;
 };
 
 //--------------------------------------------------------------------
@@ -196,6 +215,19 @@ public:
 	virtual ~CCFileClass() RX;
 
 	//FileClass
+	virtual const char* SetFileName(const char* pFileName) override JMP_THIS(0x473FC0);
+	virtual bool Exists(bool writeShared = false) override JMP_THIS(0x473C50);
+	virtual bool HasHandle() override JMP_THIS(0x473CD0);
+	virtual bool Open(FileAccessMode access) override JMP_THIS(0x473D10);
+	virtual bool OpenEx(const char* pFileName, FileAccessMode access) override JMP_THIS(0x401980);
+	virtual int ReadBytes(void* pBuffer, int nNumBytes) override JMP_THIS(0x473B10);
+	virtual int Seek(int offset, FileSeekMode seek) override JMP_THIS(0x473BA0);
+	virtual int GetFileSize() override JMP_THIS(0x473C00);
+	virtual int WriteBytes(void* pBuffer, int nNumBytes) override JMP_THIS(0x473AE0);
+	virtual void Close() override JMP_THIS(0x473CE0);
+	virtual DWORD GetFileTime() override JMP_THIS(0x473E50);
+	virtual bool SetFileTime(DWORD FileTime) override JMP_THIS(0x473F00);
+	virtual void CDCheck(DWORD errorCode, bool lUnk, const char* pFilename) override JMP_THIS(0x473AB0);
 
 	//Constructor
 	CCFileClass(const char* pFileName)
@@ -211,8 +243,8 @@ protected:
 
 public:
 	MemoryBuffer Buffer;
-	DWORD unknown_64;
-	DWORD unknown_68;
+	DWORD Position;
+	DWORD Availablility;
 };
 
 //TO BE CREATED WHEN NEEDED

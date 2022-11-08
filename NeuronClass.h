@@ -45,7 +45,7 @@ public:
 	void* unknown_ptr_24;
 	void* unknown_ptr_28;
 	void* unknown_ptr_2C;
-	TimerStruct unknown_timer_30;
+	CDTimerClass unknown_timer_30;
 };
 
 //Even more questions marks on the use of this... >.<

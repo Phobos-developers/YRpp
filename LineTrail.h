@@ -7,7 +7,7 @@
 struct LineTrailNode
 {
 	CoordStruct Position;
-	DWORD unknown;
+	int Value;
 };
 
 class LineTrail
@@ -37,7 +37,7 @@ public:
 
 	ColorStruct Color;
 	ObjectClass* Owner;
-	DWORD Decrement;
-	DWORD ActiveSlot;
-	LineTrailNode Trails [32];
+	int Decrement;
+	int ActiveSlot;
+	LineTrailNode Trails[32];
 };

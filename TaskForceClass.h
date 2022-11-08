@@ -55,6 +55,6 @@ public:
 
 	int     Group;
 	int     CountEntries;
-	bool    isGlobal;
+	bool    IsGlobal;
 	TaskForceEntryStruct Entries [0x6];
 };

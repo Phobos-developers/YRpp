@@ -26,7 +26,8 @@ namespace Math
 	MATH_FUNC(acos,	 0x4CADB0);
 	MATH_FUNC(atan,	 0x4CADE0);
 
-	inline __declspec(naked) double __cdecl arctanfoo(double a, double b)
+
+	inline __declspec(naked) double __cdecl atan2(double a, double b)
 	{
 		JMP(0x4CAE30);
 	}

@@ -93,7 +93,7 @@
 #include <WaveClass.h>
 #include <LoadProgressManager.h>
 
-#include <ProgressTimer.h>
+#include <StageClass.h>
 #include <TransitionTimer.h>
 
 //Static classes

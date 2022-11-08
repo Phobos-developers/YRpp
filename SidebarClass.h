@@ -1,7 +1,7 @@
 #pragma once
 
 #include <PowerClass.h>
-#include <ProgressTimer.h>
+#include <StageClass.h>
 
 class ColorScheme;
 class FactoryClass;
@@ -14,7 +14,7 @@ struct BuildType
 	bool              IsAlt{ false }; // set on buildings that go on tab 2
 	FactoryClass*     CurrentFactory{ nullptr };
 	DWORD             unknown_10{ 0 };
-	ProgressTimer     Progress{}; // 0 to 54, how much of this object is constructed (gclock anim level)
+	StageClass        Progress{}; // 0 to 54, how much of this object is constructed (gclock anim level)
 	int               FlashEndFrame{ 0 };
 
 	BuildType() = default;
@@ -43,7 +43,7 @@ struct BuildType
 // SidebarClass::StripClass
 struct StripClass
 {
-	ProgressTimer     Progress;
+	StageClass        Progress;
 	bool              AllowedToDraw; // prevents redrawing when layouting the list
 	PROTECTED_PROPERTY(BYTE, align_1D[3]);
 	Point2D           Location;

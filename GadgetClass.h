@@ -62,9 +62,9 @@ public:
 	virtual bool Clicked(DWORD* pKey, GadgetFlag Flags, int X, int Y, KeyModifier Modifier) R0; // Clicked On
 
 	//Non virtual
-	GadgetClass& operator=(GadgetClass& const another) { JMP_THIS(0x4B5780); }
+	GadgetClass& operator=(GadgetClass& another) { JMP_THIS(0x4B5780); }
 	GadgetClass* ExtractGadgetAt(int X, int Y) { JMP_THIS(0x4E15A0); }
-	
+
 	//Statics
 	static int __fastcall GetColorScheme() { JMP_STD(0x4E12D0); }
 
@@ -72,7 +72,7 @@ public:
 	GadgetClass(int nX,int nY,int nWidth,int nHeight,GadgetFlag eFlag, bool bSticky) noexcept
 		: GadgetClass(noinit_t()) { JMP_THIS(0x4E12F0); }
 
-	GadgetClass(GadgetClass& another) noexcept 
+	GadgetClass(GadgetClass& another) noexcept
 		: GadgetClass(noinit_t()) { JMP_THIS(0x4E1340); }
 
 protected:

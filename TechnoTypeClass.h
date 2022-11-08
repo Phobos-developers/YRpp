@@ -104,7 +104,7 @@ public:
 	//ObjectTypeClass
 
 	//TechnoTypeClass
-	virtual bool vt_entry_A0() R0;
+	virtual bool CanUseWaypoint() const R0;
 	virtual bool CanAttackMove() const R0;
 	virtual bool CanCreateHere(const CellStruct& mapCoords, HouseClass* pOwner) const R0;
 	virtual int GetCost() const R0;
@@ -197,8 +197,8 @@ public:
 	TypeList<int> DebrisMaximums;
 	_GUID           Locomotor;
 	DWORD align_35C;
-	double          unknown_double_360;
-	double          unknown_double_368;
+	double          VoxelScaleX;
+	double          VoxelScaleY;
 	double          Weight;
 	double          PhysicalSize;
 	double          Size;
@@ -286,8 +286,8 @@ public:
 	int             DetectDisguiseRange;
 	int             BombSight;
 	int             LeadershipRating;
-	int             NavalTargeting;
-	int             LandTargeting;
+	NavalTargetingType NavalTargeting;
+	LandTargetingType LandTargeting;
 	float           BuildTimeMultiplier;
 	int             MindControlRingOffset;
 	int             Cost;
@@ -506,6 +506,6 @@ public:
 	int             ZFudgeTunnel;
 	int             ZFudgeBridge;
 	char            PaletteFile[0x20];
-	void*           Palette; //no... idea....
+	DynamicVectorClass<ColorScheme*>*           Palette; //no... idea....
 	DWORD           align_DF4;
 };

@@ -25,6 +25,7 @@ class NOVTABLE ThemeClass
 public:
 
 	static constexpr reference<ThemeClass, 0xA83D10> Instance {};
+	static constexpr reference<bool, 0xA8EC74> ScoresPresen {};
 
 	const char* GetID(unsigned int index) const
 		{ JMP_THIS(0x721270) }
@@ -67,6 +68,9 @@ public:
 
 	void AI()
 		{ JMP_THIS(0x7209D0) }
+
+	void Scan()
+		{ JMP_THIS(0x7207F0) }
 
 	int CurrentTheme; // the playing theme's index
 	int LastTheme; // the theme that cannot be selected randomly

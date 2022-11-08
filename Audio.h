@@ -124,7 +124,7 @@ struct AudioController
 		f_10(0)
 	{ }
 
-	~AudioController() 
+	~AudioController()
 		{ JMP_THIS(0x405C00); }
 
 	// no idea how these differ really

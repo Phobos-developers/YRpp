@@ -11,14 +11,14 @@ class TechnoClass;
 class FootClass;
 
 template <typename T>
-inline T specific_cast(AbstractClass* pAbstract) {
+__forceinline T specific_cast(AbstractClass* pAbstract) {
 	using Base = std::remove_pointer_t<T>;
 
 	return const_cast<Base*>(specific_cast<const Base*>(static_cast<const AbstractClass*>(pAbstract)));
 };
 
 template <typename T>
-inline T specific_cast(const AbstractClass* pAbstract) {
+__forceinline T specific_cast(const AbstractClass* pAbstract) {
 	using Base = std::remove_const_t<std::remove_pointer_t<T>>;
 
 	static_assert(std::is_const<std::remove_pointer_t<T>>::value,
@@ -37,14 +37,14 @@ inline T specific_cast(const AbstractClass* pAbstract) {
 };
 
 template <typename T>
-inline T generic_cast(AbstractClass* pAbstract) {
+__forceinline T generic_cast(AbstractClass* pAbstract) {
 	using Base = std::remove_pointer_t<T>;
 
 	return const_cast<Base*>(generic_cast<const Base*>(static_cast<const AbstractClass*>(pAbstract)));
 };
 
 template <typename T>
-inline T generic_cast(const AbstractClass* pAbstract) {
+__forceinline T generic_cast(const AbstractClass* pAbstract) {
 	using Base = std::remove_const_t<std::remove_pointer_t<T>>;
 
 	static_assert(std::is_const<std::remove_pointer_t<T>>::value,
@@ -61,14 +61,14 @@ inline T generic_cast(const AbstractClass* pAbstract) {
 };
 
 template <typename T>
-inline T abstract_cast(AbstractClass* pAbstract) {
+__forceinline T abstract_cast(AbstractClass* pAbstract) {
 	using Base = std::remove_pointer_t<T>;
 
 	return const_cast<T>(abstract_cast<const Base*>(static_cast<const AbstractClass*>(pAbstract)));
 };
 
 template <typename T>
-inline T abstract_cast(const AbstractClass* pAbstract) {
+__forceinline T abstract_cast(const AbstractClass* pAbstract) {
 	using Base = std::remove_const_t<std::remove_pointer_t<T>>;
 
 	static_assert(std::is_const<std::remove_pointer_t<T>>::value,
@@ -87,63 +87,63 @@ inline T abstract_cast(const AbstractClass* pAbstract) {
 // non-const versions
 
 template <>
-inline AbstractClass* abstract_cast<AbstractClass*>(AbstractClass* pAbstract) {
+__forceinline AbstractClass* abstract_cast<AbstractClass*>(AbstractClass* pAbstract) {
 	return pAbstract;
 };
 
 template <>
-inline ObjectClass* abstract_cast<ObjectClass*>(AbstractClass* pAbstract) {
+__forceinline ObjectClass* abstract_cast<ObjectClass*>(AbstractClass* pAbstract) {
 	return generic_cast<ObjectClass*>(pAbstract);
 };
 
 template <>
-inline MissionClass* abstract_cast<MissionClass*>(AbstractClass* pAbstract) {
+__forceinline MissionClass* abstract_cast<MissionClass*>(AbstractClass* pAbstract) {
 	return reinterpret_cast<MissionClass*>(generic_cast<TechnoClass*>(pAbstract));
 };
 
 template <>
-inline RadioClass* abstract_cast<RadioClass*>(AbstractClass* pAbstract) {
+__forceinline RadioClass* abstract_cast<RadioClass*>(AbstractClass* pAbstract) {
 	return reinterpret_cast<RadioClass*>(generic_cast<TechnoClass*>(pAbstract));
 };
 
 template <>
-inline TechnoClass* abstract_cast<TechnoClass*>(AbstractClass* pAbstract) {
+__forceinline TechnoClass* abstract_cast<TechnoClass*>(AbstractClass* pAbstract) {
 	return generic_cast<TechnoClass*>(pAbstract);
 };
 
 template <>
-inline FootClass* abstract_cast<FootClass*>(AbstractClass* pAbstract) {
+__forceinline FootClass* abstract_cast<FootClass*>(AbstractClass* pAbstract) {
 	return generic_cast<FootClass*>(pAbstract);
 };
 
 // const versions
 
 template <>
-inline const AbstractClass* abstract_cast<const AbstractClass*>(const AbstractClass* pAbstract) {
+__forceinline const AbstractClass* abstract_cast<const AbstractClass*>(const AbstractClass* pAbstract) {
 	return pAbstract;
 };
 
 template <>
-inline const ObjectClass* abstract_cast<const ObjectClass*>(const AbstractClass* pAbstract) {
+__forceinline const ObjectClass* abstract_cast<const ObjectClass*>(const AbstractClass* pAbstract) {
 	return generic_cast<const ObjectClass*>(pAbstract);
 };
 
 template <>
-inline const MissionClass* abstract_cast<const MissionClass*>(const AbstractClass* pAbstract) {
+__forceinline const MissionClass* abstract_cast<const MissionClass*>(const AbstractClass* pAbstract) {
 	return reinterpret_cast<const MissionClass*>(generic_cast<const TechnoClass*>(pAbstract));
 };
 
 template <>
-inline const RadioClass* abstract_cast<const RadioClass*>(const AbstractClass* pAbstract) {
+__forceinline const RadioClass* abstract_cast<const RadioClass*>(const AbstractClass* pAbstract) {
 	return reinterpret_cast<const RadioClass*>(generic_cast<const TechnoClass*>(pAbstract));
 };
 
 template <>
-inline const TechnoClass* abstract_cast<const TechnoClass*>(const AbstractClass* pAbstract) {
+__forceinline const TechnoClass* abstract_cast<const TechnoClass*>(const AbstractClass* pAbstract) {
 	return generic_cast<const TechnoClass*>(pAbstract);
 };
 
 template <>
-inline const FootClass* abstract_cast<const FootClass*>(const AbstractClass* pAbstract) {
+__forceinline const FootClass* abstract_cast<const FootClass*>(const AbstractClass* pAbstract) {
 	return generic_cast<const FootClass*>(pAbstract);
 };

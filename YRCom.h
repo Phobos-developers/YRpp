@@ -1,5 +1,6 @@
 #pragma once
 
+#include <Unsorted.h>
 #include <Objbase.h>
 
 class YRComHelpers {
@@ -58,4 +59,76 @@ public:
 			return CoCreateInstance(rclsid, pUnkOuter, dwClsContext, riid, ppv);
 		}
 	}
+};
+
+template<typename T>
+class TClassFactory : public IClassFactory
+{
+public:
+	TClassFactory()
+	{
+		this->nRefCount = 0;
+	}
+
+	virtual HRESULT __stdcall QueryInterface(const IID& riid, void** ppvObject) override
+	{
+		if (!ppvObject)
+			return E_POINTER;
+
+		*ppvObject = nullptr;
+
+		if (riid == __uuidof(IUnknown) || riid == __uuidof(IClassFactory))
+			*ppvObject = this;
+
+		if (!ppvObject)
+			return E_NOINTERFACE;
+
+		this->AddRef();
+
+		return S_OK;
+	}
+
+	virtual ULONG __stdcall AddRef() override
+	{
+		return Imports::InterlockedIncrement(&this->nRefCount);
+	}
+
+	virtual ULONG __stdcall Release() override
+	{
+		int nNewRef = Imports::InterlockedIncrement(&this->nRefCount);
+		if (!nNewRef)
+			GameDelete(this);
+		return nNewRef;
+	}
+
+	virtual HRESULT __stdcall CreateInstance(IUnknown* pUnkOuter, const IID& riid, void** ppvObject) override
+	{
+		if (!ppvObject)
+			return E_INVALIDARG;
+
+		*ppvObject = nullptr;
+		if (pUnkOuter)
+			return CLASS_E_NOAGGREGATION;
+
+		T* pThis = GameCreate<T>();
+		if (!pThis)
+			return E_OUTOFMEMORY;
+
+		HRESULT hr = pThis->QueryInterface(riid, ppvObject);
+
+		if (FAILED(hr))
+			GameDelete(pThis);
+
+		return hr;
+	}
+
+	virtual HRESULT __stdcall LockServer(BOOL fLock) override
+	{
+		this->nRefCount += fLock ? 1 : -1;
+
+		return S_OK;
+	}
+
+private:
+	int nRefCount {0};
 };

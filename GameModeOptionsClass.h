@@ -8,11 +8,11 @@ class StartingSlotClass;
 
 struct AISlotsStruct
 {
-	int AIDifficulties[8];
-	StartingSlotClass* StartingSpots[8];
-	int Colours[8];
+	int Difficulties[8];
+	int Countries[8];
+	int Colors[8];
 	int Starts[8];
-	int Teams[8];
+	int Allies[8];
 };
 
 class GameModeOptionsClass

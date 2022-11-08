@@ -3,6 +3,8 @@
 #include <FootClass.h>
 #include <Helpers/Cast.h>
 
+#include <cmath>
+
 // Enumerates the objects in a linked list.
 /*
 	The next element is retrieved eagerly, thus this enumerator supports
@@ -330,7 +332,7 @@ public:
 			static_cast<short>(Math::sgn(difference.Y))
 		};
 
-		distance = { difference.X * offset.X * 2, difference.Y * offset.Y * 2 };
+		distance = { static_cast<short>(difference.X * offset.X * 2), static_cast<short>(difference.Y * offset.Y * 2) };
 
 		if(distance.X > distance.Y) {
 			value = distance.Y - distance.X / 2;

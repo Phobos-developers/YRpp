@@ -1,6 +1,6 @@
 #pragma once
 
-#include <GeneralStructures.h>
+#include <GeneralDefinitions.h>
 #include <YRDDraw.h>
 #include <YRAllocator.h>
 
@@ -12,7 +12,9 @@ struct SHPStruct;
 class NOVTABLE Surface
 {
 public:
-	virtual ~Surface() { PUSH_IMM(SDDTOR_NODELETE); THISCALL(0x4115D0); }
+	Surface() = default;
+
+	virtual ~Surface() RX;
 
 	//Surface
 	virtual bool CopyFromWhole(Surface* pSrc, bool bUnk1, bool bUnk2) R0;
@@ -39,7 +41,7 @@ public:
 
 	virtual bool Fill(COLORREF nColor) R0;
 
-	virtual bool FillRectTrans(RectangleStruct* pClipRect, ColorStruct Color, COLORREF nUnknown) R0;
+	virtual bool FillRectTrans(RectangleStruct* pClipRect, ColorStruct* pColor, int nOpacity) R0;
 
 	virtual bool DrawEllipse(
 		int XOff, int YOff, int CenterX, int CenterY, RectangleStruct Rect, COLORREF nColor) R0;
@@ -124,6 +126,8 @@ public:
 class NOVTABLE XSurface : public Surface
 {
 public:
+	XSurface(int nWidth = 640, int nHeight = 400) { JMP_THIS(0x5FE020); }
+
 	virtual bool PutPixelClip(Point2D* pPoint, short nUkn, RectangleStruct* pRect) R0;
 
 	virtual short GetPixelClip(Point2D* pPoint, RectangleStruct* pRect) R0;
@@ -137,8 +141,13 @@ class NOVTABLE BSurface : public XSurface
 public:
 	static constexpr constant_ptr<BSurface, 0xB2D928> VoxelSurface {};
 
+	BSurface() : XSurface(), Buffer { this->Width * this->Height * 2 } { BytesPerPixel = 2; ((int*)this)[0] = 0x7E2070; }
+
 	MemoryBuffer Buffer;
 };
+
+#pragma warning(push)
+#pragma warning( disable : 4505) // 'function' : unreferenced local function has been removed
 
 // Comments from thomassneddon
 static void __fastcall CC_Draw_Shape(Surface* Surface, ConvertClass* Palette, SHPStruct* SHP, int FrameIndex,
@@ -152,11 +161,21 @@ static void __fastcall CC_Draw_Shape(Surface* Surface, ConvertClass* Palette, SH
 	JMP_STD(0x4AED70);
 }
 
-static Point2D* Fancy_Text_Print_Wide(Point2D* RetVal, const wchar_t* Text, Surface* Surface, RectangleStruct* Bounds,
-	Point2D* Location, COLORREF ForeColor, COLORREF BackColor, TextPrintType Flag, ...)
+static Point2D* Fancy_Text_Print_Wide(const Point2D& retBuffer, const wchar_t* Text, Surface* Surface, const RectangleStruct& Bounds,
+	const Point2D& Location, COLORREF ForeColor, COLORREF BackColor, TextPrintType Flag, ...)
 {
 	JMP_STD(0x4A60E0);
 }
+
+class ColorScheme;
+static Point2D* Fancy_Text_Print_Wide(const Point2D& retBuffer, const wchar_t* Text, Surface* Surface, const RectangleStruct& Bounds,
+	const Point2D& Location, ColorScheme* ForeScheme, ColorScheme* BackScheme, TextPrintType Flag, ...)
+{
+	JMP_STD(0x4A61C0);
+}
+
+#pragma warning(pop)
+
 
 //static Point2D* __fastcall Simple_Text_Print_Wide(Point2D* RetVal, const wchar_t* Text, Surface* Surface, RectangleStruct* Bounds,
 //	Point2D* Location, COLORREF ForeColor, COLORREF BackColor, TextPrintType Flag, bool bUkn)
@@ -167,17 +186,17 @@ static Point2D* Fancy_Text_Print_Wide(Point2D* RetVal, const wchar_t* Text, Surf
 class NOVTABLE DSurface : public XSurface
 {
 public:
-	static constexpr reference<DSurface*, 0x8872FCu> const Tile{};
-	static constexpr reference<DSurface*, 0x887300u> const Sidebar{};
-	static constexpr reference<DSurface*, 0x887308u> const Primary{};
-	static constexpr reference<DSurface*, 0x88730Cu> const Hidden{};
-	static constexpr reference<DSurface*, 0x887310u> const Alternate{};
-	static constexpr reference<DSurface*, 0x887314u> const Temp{};
-	static constexpr reference<DSurface*, 0x88731Cu> const Composite{};
+	static constexpr reference<DSurface*, 0x8872FCu> const Tile {};
+	static constexpr reference<DSurface*, 0x887300u> const Sidebar {};
+	static constexpr reference<DSurface*, 0x887308u> const Primary {};
+	static constexpr reference<DSurface*, 0x88730Cu> const Hidden {};
+	static constexpr reference<DSurface*, 0x887310u> const Alternate {};
+	static constexpr reference<DSurface*, 0x887314u> const Temp {};
+	static constexpr reference<DSurface*, 0x88731Cu> const Composite {};
 
-	static constexpr reference<RectangleStruct, 0x886F90u> const SidebarBounds{};
-	static constexpr reference<RectangleStruct, 0x886FA0u> const ViewBounds{};
-	static constexpr reference<RectangleStruct, 0x886FB0u> const WindowBounds{};
+	static constexpr reference<RectangleStruct, 0x886F90u> const SidebarBounds {};
+	static constexpr reference<RectangleStruct, 0x886FA0u> const ViewBounds {};
+	static constexpr reference<RectangleStruct, 0x886FB0u> const WindowBounds {};
 
 	virtual bool DrawGradientLine(RectangleStruct* pRect, Point2D* pStart, Point2D* pEnd,
 		ColorStruct* pStartColor, ColorStruct* pEndColor, float fStep, int nColor) R0;
@@ -201,7 +220,7 @@ public:
 	{
 		Point2D tmp = { 0, 0 };
 
-		Fancy_Text_Print_Wide(&tmp, pText, this, pBounds, pLocation, ForeColor, BackColor, Flag);
+		Fancy_Text_Print_Wide(tmp, pText, this, *pBounds, *pLocation, ForeColor, BackColor, Flag);
 	}
 
 	void DrawText(const wchar_t* pText, Point2D* pLoction, COLORREF Color)
@@ -210,7 +229,7 @@ public:
 		this->GetRect(&rect);
 
 		Point2D tmp { 0,0 };
-		Fancy_Text_Print_Wide(&tmp, pText, this, &rect, pLoction, Color, 0, TextPrintType::NoShadow);
+		Fancy_Text_Print_Wide(tmp, pText, this, rect, *pLoction, Color, 0, TextPrintType::NoShadow);
 	}
 
 	void DrawText(const wchar_t* pText, int X, int Y, COLORREF Color)

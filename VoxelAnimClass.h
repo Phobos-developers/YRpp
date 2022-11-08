@@ -54,15 +54,15 @@ protected:
 public:
 
 	PROTECTED_PROPERTY(DWORD, unused_AC);
-	BounceClass Bounce;
+	DECLARE_PROPERTY(BounceClass, Bounce);
 	int unknown_int_100;
 	VoxelAnimTypeClass* Type;
 	ParticleSystemClass* AttachedSystem;
 	HouseClass* OwnerHouse;
 	bool TimeToDie; // remove on next update
 	PROTECTED_PROPERTY(BYTE, unused_111[3]);
-	AudioController Audio3;
-	AudioController Audio4;
+	DECLARE_PROPERTY(AudioController, Audio3);
+	DECLARE_PROPERTY(AudioController, Audio4);
 	bool Invisible; // don't draw, but Update state anyway
 	PROTECTED_PROPERTY(BYTE, unused_13D[3]);
 	int Duration; // counting down to zero
