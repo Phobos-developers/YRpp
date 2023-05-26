@@ -369,9 +369,6 @@ public:
 	void DrawOverlayShadow(const Point2D& Location, const RectangleStruct& Bound)
 		{ JMP_THIS(0x47F510); }
 
-	bool IsClearToMove(SpeedType speedType, char a3, char a4, MovementZone movementZone, MovementZone footMovementZone, int a7, char a8)
-		{ JMP_THIS(0x4834A0); }
-
 protected:
 	//Constructor
 	CellClass() noexcept
