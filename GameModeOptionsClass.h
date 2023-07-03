@@ -1,10 +1,8 @@
 #pragma once
 
 #include <wchar.h>
-
 #include <Helpers/CompileTime.h>
 
-class StartingSlotClass;
 
 struct AISlotsStruct
 {
@@ -38,7 +36,7 @@ public:
 	AISlotsStruct AISlots;
 	bool AlliesAllowed;
 	bool HarvesterTruce;
-	bool CTF;
+	bool CaptureTheFlag;
 	bool FogOfWar;
 	bool MCVRedeploy;
 	wchar_t MapDescription[45];
