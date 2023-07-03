@@ -427,10 +427,12 @@ public:
 		{ JMP_STD(0x5009B0); }
 
 	int GetSpawnPosition() {
-		ScenarioClass* pScenario = ScenarioClass::Instance;
+		const int currentIndex = this->ArrayIndex;
+		const int* houseIndices = ScenarioClass::Instance.HouseIndices;
+
 		for (int i = 0; i < 8; i++)
 		{
-			if (HouseClass::Array.GetItemOrDefault(pScenario->HouseIndices[i], nullptr) == this)
+			if (houseIndices[i] == currentIndex)
 				return i;
 		}
 		return -1;
