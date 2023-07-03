@@ -60,13 +60,8 @@ public:
 	//global arrays
 	static DynamicVectorClass<MPGameModeClass*>* GameModes;
 
-	static bool Set(int index)
-	{
-		THISCALL_EX(index, 0x5D5F30);
-		MEM_WRITEIMM32(0xA8B23C, eax);
-		VAR8_REG(bool, success, al);
-		return success;
-	}
+	static MPGameModeClass* __fastcall Get(int index)
+		{ JMP_STD(0x5D5F30); }
 
 	/*
 	static UNINIT_FUNC(0x5D7FD0);
@@ -247,10 +242,9 @@ protected:
 	//===========================================================================
 
 public:
-
 	bool unknown_4;
 	DynamicVectorClass<MPTeam *> MPTeams;
-	DECLARE_PROPERTY(WideWstring, CSFTitle);
+	DECLARE_PROPERTY(WideWstring, UIName);
 	DECLARE_PROPERTY(WideWstring, CSFTooltip);
 	int MPModeIndex;
 	DECLARE_PROPERTY(Wstring, INIFilename);
@@ -262,7 +256,6 @@ public:
 	bool wolClanTourney;
 	bool MustAlly;
 };
-
 
 class MPBattleClass : public MPGameModeClass
 {
@@ -289,7 +282,6 @@ protected:
 	//FACTORY(0x7EEEBC);
 };
 
-
 class MPManBattleClass : public MPGameModeClass
 {
 	//Destructor
@@ -312,7 +304,6 @@ protected:
 	{ }
 	//FACTORY(0x7EEEB0);
 };
-
 
 class MPFreeForAllClass : public MPGameModeClass
 {
@@ -352,7 +343,6 @@ protected:
 	//FACTORY(0x7EEE8C);
 };
 
-
 class MPMegawealthClass : public MPGameModeClass
 {
 	//Destructor
@@ -372,7 +362,6 @@ protected:
 		: MPGameModeClass(noinit_t())
 	{ }
 };
-
 
 class MPUnholyAllianceClass : public MPGameModeClass
 {
@@ -408,7 +397,6 @@ protected:
 	{ }
 	//FACTORY(0x7EEE98);
 };
-
 
 class MPSiegeClass : public MPGameModeClass
 {
