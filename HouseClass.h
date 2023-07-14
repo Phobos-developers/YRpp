@@ -713,6 +713,11 @@ public:
 		return this == Observer;
 	}
 
+	bool inline IsInitiallyObserver()
+	{
+		return this->IsHumanPlayer && (this->GetSpawnPosition() == -1);
+	}
+
 	// Whether CurrentPlayer is equal to Observer
 	static bool IsCurrentPlayerObserver() {
 		return CurrentPlayer && CurrentPlayer->IsObserver();
