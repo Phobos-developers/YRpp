@@ -76,6 +76,10 @@ namespace GameStrings
 	GAMEMD_STRING(TXT_MONEY_FORMAT_1      , 0x83FAB0);
 	GAMEMD_STRING(TXT_MONEY_FORMAT_2      , 0x83FA9C);
 	GAMEMD_STRING(GUI_DEBUG               , 0x827AF8);
+	GAMEMD_STRING(TXT_COMPUTER            , 0x824FC8);
+	GAMEMD_STRING(GUI_AIHard              , 0x831C4C);
+	GAMEMD_STRING(GUI_AINormal            , 0x831C58);
+	GAMEMD_STRING(GUI_AIEasy              , 0x831C68);
 
 	// ....
 }
