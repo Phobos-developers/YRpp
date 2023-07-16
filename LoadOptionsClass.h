@@ -54,37 +54,36 @@ public:
 		{ JMP_THIS(0x558740); }
 
 	// virtuals
-
 	virtual ~LoadOptionsClass()
 		{ JMP_THIS(0x55A0D0); }
-
-	virtual bool LoadMission(const char* pFilename) const
-		{ JMP_THIS(0x559D60); }
-
-	virtual bool SaveMission(const char* pFilename, const wchar_t* pDescription) const
-		{ JMP_THIS(0x559E7B); }
-
-	virtual bool DeleteMission(const char* pFilename) const
-		{ JMP_THIS(0x559EB0); }
-
-	virtual bool GetFileEntry(FileEntryClass& FileEntry, const WIN32_FIND_DATAA& pFindData) const
-		{ JMP_THIS(0x559ED0); }
-
-	virtual const wchar_t* GetUIString_Load() const
-		{ JMP_THIS(0x55A050); }
-
-	virtual const wchar_t* GetUIString_Save() const
-		{ JMP_THIS(0x55A070); }
-
-	virtual const wchar_t* GetUIString_Delete() const
-		{ JMP_THIS(0x55A090); }
-
-	virtual const wchar_t* GetUIString_GameSaved() const
-		{ JMP_THIS(0x55A0B0); }
 
 	//Non virtuals
 	bool LoadDialog()
 		{ JMP_THIS(0x5587F0); }
+
+	static bool LoadMission(const char* pFilename)
+		{ JMP_THIS(0x559D60); }
+
+	static bool SaveMission(const char* pFilename, const wchar_t* pDescription)
+		{ JMP_THIS(0x559E7B); }
+
+	static bool DeleteMission(const char* pFilename)
+		{ JMP_THIS(0x559EB0); }
+
+	static bool GetFileEntry(FileEntryClass& FileEntry, const WIN32_FIND_DATAA& pFindData)
+		{ JMP_THIS(0x559ED0); }
+
+	static const wchar_t* GetUIString_Load()
+		{ JMP_THIS(0x55A050); }
+
+	static const wchar_t* GetUIString_Save()
+		{ JMP_THIS(0x55A070); }
+
+	static const wchar_t* GetUIString_Delete()
+		{ JMP_THIS(0x55A090); }
+
+	static const wchar_t* GetUIString_GameSaved()
+		{ JMP_THIS(0x55A0B0); }
 
 	//Properties
 	LoadOptionsMode Mode;
