@@ -201,6 +201,9 @@ public:
 	bool IsTraversable() const
 		{ JMP_THIS(0x4525F0); }
 
+	int DrawInfoTipAndSpiedSelection(Point2D* pLocation, RectangleStruct* pRect) const
+		{ JMP_THIS(0x43E7B0); }
+
 	// helpers
 	bool HasSuperWeapon(int index) const {
 		if(this->Type->HasSuperWeapon(index)) {
