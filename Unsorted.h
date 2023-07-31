@@ -44,6 +44,8 @@ public:
 	DEFINE_REFERENCE(bool, ObserverMode, 0xAC10C8u)
 	DEFINE_POINTER(char, ScenarioName, 0xA8B8E0u)
 	DEFINE_REFERENCE(bool, DontSetExceptionHandler, 0xA8F7ACu)
+	DEFINE_REFERENCE(bool, EnableMPDebug, 0xA8B8B4u)
+	DEFINE_REFERENCE(bool, DrawMPDebugStats, 0xA8B8B5u)
 	DEFINE_REFERENCE(bool, EnableMPSyncDebug, 0xB04880u)
 
 	DEFINE_REFERENCE(Vector3D<float>, VoxelLightSource, 0x887470)
