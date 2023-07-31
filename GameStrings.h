@@ -21,6 +21,7 @@ namespace GameStrings
 	GAMEMD_STRING(Civilian      , 0x818164u);
 	GAMEMD_STRING(Special       , 0x817318u);
 	GAMEMD_STRING(MCVRedeploys  , 0x83CF68u);
+	GAMEMD_STRING(GAME_FNT      , 0x818B98u);
 
 	// ini file names
 	GAMEMD_STRING(UIMD_INI     , 0x827DC8u);
