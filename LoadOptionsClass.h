@@ -108,6 +108,9 @@ public:
 	bool Read(IStorage* pStorage)
 		{ JMP_THIS(0x681840); }
 
+	static bool __fastcall ReadFromFile(const char* fileName, SavegameInformation* pSavegameInfo)
+		{ JMP_STD(0x67FD20); }
+
 	int InternalVersion; // PIDSI_CHARCOUNT (16)
 	int Version; // PIDSI_REVNUMBER (9)
 	FixedWString<0x80> ScenarioDescription; // PIDSI_TITLE (2)
