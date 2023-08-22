@@ -60,9 +60,11 @@ public:
 		DEFINE_REFERENCE(int, GameStockKeepingUnit, 0xB73814u)
 		DEFINE_REFERENCE(int, ProtocolVersion, 0xA8B24Cu)
 		DEFINE_REFERENCE(int, FrameSendRate, 0xA8B554u)
+		DEFINE_REFERENCE(int, PreCalcFrameRate, 0xA8B570u)
 		DEFINE_REFERENCE(int, ReconnectTimeout, 0x83737Cu)
 		DEFINE_REFERENCE(int, MaxAhead, 0xA8B550u)
 		DEFINE_REFERENCE(int, MaxMaxAhead, 0xA8B568u)
+		DEFINE_REFERENCE(int, PreCalcMaxAhead, 0xA8B56Cu)
 		DEFINE_REFERENCE(int, LatencyFudge, 0xA8DB9Cu)
 		DEFINE_REFERENCE(int, RequestedFPS, 0xA8B558u)
 
