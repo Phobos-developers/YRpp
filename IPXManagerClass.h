@@ -1,24 +1,25 @@
 #pragma once
-#include <YRPPCore.h>
-#include <ArrayClasses.h>
-#include <Helpers/CompileTime.h>
+#include <YRPP.h>
 
 class IPXConnClass;
 class IPXGlobalConnClass;
 class ConnectionClass;
 
-class IPXManagerClass
+class NOVTABLE IPXManagerClass
 {
 public:
 	// Static
-	DEFINE_REFERENCE(IPXManagerClass*, Instance, 0xA8E9C0u)
+	DEFINE_REFERENCE(IPXManagerClass, Instance, 0xA8E9C0u)
+
+	virtual ~IPXManagerClass() RX;
 
 	ConnectionClass* SetTiming(int retrydelta, int maxretries, int timeout, bool a5)
 		{ JMP_THIS(0x7B30B0) }
 
+	int ResponseTime()
+		{ JMP_THIS(0x542450) }
+
 	// Properties
-private:
-	void* vtable;
 public:
 	BYTE IPXStatus;
 	BYTE Listening;
