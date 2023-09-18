@@ -1,6 +1,7 @@
 #pragma once
-#include <ObjectClass.h>
-#include <TiberiumClass.h>
+
+#include <FootClass.h>
+#include <PriorityQueueClass.h>
 #include <RulesClass.h>
 #include <CRT.h>
 
@@ -11,41 +12,41 @@ public:
 	//74DFAF
 	void Construct(int nCount = RulesClass::Instance->MaxVeinholeGrowth)
 	{
-		Datas = (MapSurfaceData*)YRMemory::Allocate(sizeof(MapSurfaceData) * nCount);
-		States = (bool*)YRMemory::Allocate(sizeof(bool) * nCount);
-		CRT::_memset(States, 0, sizeof(bool) * nCount); //0x7D75E0 reserve ?
-		Heap = GameCreate<PointerHeapClass<MapSurfaceData>>(nCount);
+		Nodes = (PriorityQueueClassNode*)YRMemory::Allocate(sizeof(PriorityQueueClassNode) * nCount);
+		CellIndexesWithVeins = (bool*)YRMemory::Allocate(sizeof(bool) * nCount);
+		CRT::_memset(CellIndexesWithVeins, 0, sizeof(bool) * nCount); //0x7D75E0 reserve ?
+		Queue = GameCreate<PriorityQueueClass<PriorityQueueClassNode>>(nCount);
 	}
 
 	//74E8A0 Delete SpreadData
 	void Destruct()
 	{
-		if (Heap)
+		if (Queue)
 		{
-			GameDelete(Heap);
-			Heap = nullptr;
+			GameDelete(Queue);
+			Queue = nullptr;
 		}
 
-		if (Datas)
+		if (Nodes)
 		{
-			YRMemory::Deallocate(Datas);
-			Datas = nullptr;
+			YRMemory::Deallocate(Nodes);
+			Nodes = nullptr;
 		}
 
-		if (States)
+		if (CellIndexesWithVeins)
 		{
-			YRMemory::Deallocate(States);
-			States = nullptr;
+			YRMemory::Deallocate(CellIndexesWithVeins);
+			CellIndexesWithVeins = nullptr;
 		}
 
-		Count = 0;
+		NextFreeNodeIndex = 0;
 	}
 
-	int Count;
-	PointerHeapClass<MapSurfaceData>* Heap;
-	MapSurfaceData* Datas;
-	CDTimerClass Timer;
-	bool* States;
+	int NextFreeNodeIndex;
+	PriorityQueueClass<PriorityQueueClassNode>* Queue;
+	PriorityQueueClassNode* Nodes;
+	CDTimerClass VeinTimer;
+	bool* CellIndexesWithVeins;
 };
 
 class NOVTABLE VeinholeMonsterClass : public ObjectClass
@@ -74,7 +75,7 @@ public:
 	virtual void Update() override JMP_THIS(0x74CE50);
 
 	//ObjectClass
-	virtual void Draw(Point2D* pLocation, RectangleStruct* pBounds) const override JMP_THIS(0x74D490); //114
+	virtual void DrawIt(Point2D* pLocation, RectangleStruct* pBounds) const override JMP_THIS(0x74D490); //114
 	virtual DamageState ReceiveDamage(int* pDamage, int DistanceFromEpicenter, WarheadTypeClass* pWH,
   ObjectClass* Attacker, bool IgnoreDefenses, bool PreventPassengerEscape, HouseClass* pAttackingHouse) override JMP_THIS(0x74D5D0);
 
@@ -108,9 +109,9 @@ public:
 	void UpdateGrowth() const
 	{ JMP_THIS(0x74D7C0); }
 
-
 	static void __fastcall ClearVeinGrowthData()
-	{  JMP_STD(0x74E100);
+	{
+		JMP_STD(0x74E100);
 
 		/*
 		//pop back ?
@@ -128,7 +129,7 @@ public:
 	}
 
 	//called 687A80
-	static void __fastcall InitVeiGrowhData(bool bAllocate = true)
+	static void __fastcall InitVeinGrowhData(bool bAllocate = true)
 	{ JMP_STD(0x74DE90); }
 
 	static bool __fastcall IsCellEligibleForVeinHole(CellStruct& nWhere)
@@ -152,6 +153,18 @@ public:
 	static void __fastcall DrawAll()
 	{ JMP_STD(0x74D430); }
 
+	static void __fastcall DeleteAll()
+	{ JMP_STD(0x74D760); }
+
+	static void __fastcall DeleteVeinholeGrowthData()
+	{ JMP_STD(0x74E880); }
+
+	static void __fastcall LoadVeinholeArt(int idxTheatre)
+	{ JMP_STD(0x74D450); }
+
+	static void __cdecl UpdateAllVeinholes()
+	{ JMP_STD(0x74CDF0); }
+
 	static void __fastcall UpdateAll()
 	{
 		for (auto const& pVeins : *Array())
@@ -163,27 +176,29 @@ public:
 
 	VeinholeMonsterClass(CellStruct* pWhere) noexcept
 		: VeinholeMonsterClass(noinit_t())
-	{ JMP_THIS(0x74C5B0); }
+	{
+		JMP_THIS(0x74C5B0);
+	}
 
 protected:
 	explicit __forceinline VeinholeMonsterClass(noinit_t) noexcept
-		: ObjectClass(noinit_t()) {}
+		: ObjectClass(noinit_t()) { }
 public:
 
 	DECLARE_PROPERTY(VeinholeLogic, GrowthLogic);
-	DWORD State;
-	DamageState DamageState;
-	DWORD ___dwordD0Gas;
-	BYTE ___byteD4timerstate;
-	CDTimerClass Timer_1;
-	int GasTimerStart;
-	DWORD ___dwordE8Gas;
-	CDTimerClass Timer_2;
-	CellStruct MonsterCell;
-	int ShapeFrame;
-	bool SkipDraw;
-	BYTE ToPuffGas;
-	DWORD CurrentGrowthCount2;
+	int CurrentState;
+	int NextState;
+	int MonsterFrameIdx;
+	char IsAnimationUpToDate;
+	CDTimerClass UpdateAnimationFrameTimer;
+	int AnimationUpdatePeriod;
+	int MonsterFrameIdxChange;
+	CDTimerClass UpdateStateTimer;
+	CellStruct Position;
+	int MonsterFrameToDraw;
+	char IsDead;
+	char DontPuffGas;
+	int VeinCount;
 };
 
 static_assert(sizeof(VeinholeMonsterClass) == 0x108); //264

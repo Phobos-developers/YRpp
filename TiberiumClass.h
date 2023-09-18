@@ -5,64 +5,45 @@
 #pragma once
 
 #include <AbstractTypeClass.h>
-#include <HeapClass.h>
+#include <PriorityQueueClass.h>
 
 //forward declarations
 class AnimTypeClass;
 class OverlayTypeClass;
 
-struct MapSurfaceData
-{
-	static int __fastcall SurfaceDataCount() JMP_STD(0x42B1F0);
-	static int __fastcall ToSurfaceIndex(const CellStruct& mapCoord) JMP_STD(0x42B1C0);
-
-	int ToSurfaceIndex()
-	{
-		return ToSurfaceIndex(MapCoord);
-	}
-
-	CellStruct MapCoord;
-	float Score;
-
-	bool operator<(const MapSurfaceData& another) const
-	{
-		return Score < another.Score;
-	}
-};
-
 class TiberiumLogic
 {
 public:
-	void Construct(int nCount = MapSurfaceData::SurfaceDataCount())
+	void Construct(int nCount = PriorityQueueClassNode::SurfaceDataCount())
 	{
-		Datas = (MapSurfaceData*)YRMemory::Allocate(sizeof(MapSurfaceData) * nCount);
-		States = (bool*)YRMemory::Allocate(sizeof(bool) * nCount);
+		Nodes = (PriorityQueueClassNode*)YRMemory::Allocate(sizeof(PriorityQueueClassNode) * nCount);
+		CellIndexesWithTiberium = (bool*)YRMemory::Allocate(sizeof(bool) * nCount);
 
-		Heap = GameCreate<PointerHeapClass<MapSurfaceData>>(nCount);
+		Queue = GameCreate<PriorityQueueClass<PriorityQueueClassNode>>(nCount);
 	}
 
 	void Destruct()
 	{
-		GameDelete(Heap);
-		Heap = nullptr;
+		GameDelete(Queue);
+		Queue = nullptr;
 
-		if (Datas)
+		if (Nodes)
 		{
-			YRMemory::Deallocate(Datas);
-			Datas = nullptr;
+			YRMemory::Deallocate(Nodes);
+			Nodes = nullptr;
 		}
 
-		if (States)
+		if (CellIndexesWithTiberium)
 		{
-			YRMemory::Deallocate(States);
-			States = nullptr;
+			YRMemory::Deallocate(CellIndexesWithTiberium);
+			CellIndexesWithTiberium = nullptr;
 		}
 	}
 
 	int Count;
-	PointerHeapClass<MapSurfaceData>* Heap;
-	bool* States;
-	MapSurfaceData* Datas;
+	PriorityQueueClass<PriorityQueueClassNode>* Queue;
+	bool* CellIndexesWithTiberium;
+	PriorityQueueClassNode* Nodes;
 	CDTimerClass Timer;
 };
 

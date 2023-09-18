@@ -72,12 +72,17 @@ public:
 	void UpdateAnimations()
 		{ JMP_THIS(0x4509D0); }
 
-	int GetCurrentFrame() { JMP_THIS(0x43EF90); }
+	int GetCurrentFrame()
+		{ JMP_THIS(0x43EF90); }
 
-	bool IsAllFogged() const { JMP_THIS(0x457A10); }
+	bool IsAllFogged() const
+		{ JMP_THIS(0x457A10); }
 
 	void SetRallypoint(CellStruct* pTarget, bool bPlayEVA)
 		{ JMP_THIS(0x443860); }
+
+	int GetPipCount()
+		{ JMP_THIS(0x44D700); }
 
 	void FreezeInFog(DynamicVectorClass<FoggedObjectClass*>* pFoggedArray, CellClass* pCell, bool Visible)
 		{ JMP_THIS(0x457AA0); }

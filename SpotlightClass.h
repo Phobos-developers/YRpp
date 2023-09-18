@@ -21,6 +21,9 @@ public:
 	void Update()
 		{ JMP_THIS(0x5FF320); }
 
+	static void __fastcall DrawAll()
+		{ JMP_STD(0x5FFFA0); }
+
 	//Constructor
 	SpotlightClass(CoordStruct coords, int size)
 		{ JMP_THIS(0x5FF250); }

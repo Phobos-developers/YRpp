@@ -60,8 +60,8 @@ public:
 	DWORD  unknown_B4;
 	DWORD  unknown_B8;
 	DWORD  unknown_BC;
-	DWORD  unknown_C0;
-	DWORD  unknown_C4;
+	int  VelocityX;
+	int  VelocityY;
 	DWORD  unknown_C8;
 	DWORD  unknown_CC;
 	double unknown_double_D0;

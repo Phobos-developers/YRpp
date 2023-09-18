@@ -19,6 +19,9 @@ public:
 	void Update()
 		{ JMP_THIS(0x53CBE0); }
 
+	static void __fastcall DrawAll()
+		{ JMP_STD(0x53D850); }
+
 	//Constructor, Destructor
 	IonBlastClass(CoordStruct Crd)
 		{ JMP_THIS(0x53CB10); }

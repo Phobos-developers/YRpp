@@ -74,7 +74,7 @@ public:
 	bool HasChargeProgressed(bool isPlayer) // true if the charge has changed (charge overlay on the cameo)
 		{ JMP_THIS(0x6CBCA0); }               // triggers the EVA Announcement if it's ready
 
-	signed int GetCameoChargeState() const // which cameo charge overlay frame to show
+	signed int AnimStage() const // which cameo charge overlay frame to show
 		{ JMP_THIS(0x6CBEE0); }
 
 	void SetCharge(int percentage)
@@ -130,12 +130,12 @@ public:
 	PROTECTED_PROPERTY(BYTE, unused_66[2]);
 	AnimClass* Animation;                // 0x68
 	bool AnimationGotInvalid;
-	bool Granted;
-	bool OneTime; // remove this SW when it has been fired once
-	bool IsCharged;
-	bool IsOnHold;
+	bool IsPresent;
+	bool IsOneTime; // remove this SW when it has been fired once
+	bool IsReady;
+	bool IsSuspended;
 	PROTECTED_PROPERTY(BYTE, unused_71[3]);
-	int ReadinessFrame; // when did it become ready?
+	int ReadyFrame; // when did it become ready?
 	int CameoChargeState;
 	ChargeDrainState ChargeDrainState;
 };

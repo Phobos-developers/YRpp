@@ -35,6 +35,9 @@ public:
 	//SmudgeTypeClass
 	virtual void DrawIt(const Point2D& Point, const RectangleStruct& Rect, int SmudgeData, int Height, const CellStruct& MapCoords) RX;
 
+	static void __fastcall LoadFromIniList(int idxTheatre)
+		{ JMP_STD(0x6B5490); }
+
 	//Constructor
 	SmudgeTypeClass(const char* pID) noexcept
 		: SmudgeTypeClass(noinit_t())

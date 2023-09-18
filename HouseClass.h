@@ -713,6 +713,9 @@ public:
 	void AddTracking(TechnoClass* pTechno)
 		{ JMP_THIS(0x4FF700); }
 
+	long double GetWeedStoragePercentage()
+		{ JMP_THIS(0x4F9750); }
+
 	//Constructor
 	HouseClass(HouseTypeClass* pCountry) noexcept
 		: HouseClass(noinit_t())

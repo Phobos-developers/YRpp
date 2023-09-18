@@ -68,7 +68,7 @@ public:
 		{ JMP_THIS(0x6DA7D0) };
 
 	static int DrawTimer(int index, ColorScheme *Scheme, int Time, wchar_t *Text, Point2D *someXY1, Point2D *someXY2)
-		{ JMP_STD(0x64DB50); }
+		{ JMP_STD(0x6D4B50); }
 
 	void AddSelectable(TechnoClass* pTechno, int x, int y)
 		{ JMP_THIS(0x6D9EF0) };
