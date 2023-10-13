@@ -129,7 +129,7 @@ public:
 	}
 
 	//called 687A80
-	static void __fastcall InitVeinGrowhData(bool bAllocate = true)
+	static void __fastcall InitVeinGrowthData(bool bAllocate = true)
 	{ JMP_STD(0x74DE90); }
 
 	static bool __fastcall IsCellEligibleForVeinHole(CellStruct& nWhere)
