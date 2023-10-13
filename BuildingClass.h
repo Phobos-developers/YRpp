@@ -81,9 +81,6 @@ public:
 	void SetRallypoint(CellStruct* pTarget, bool bPlayEVA)
 		{ JMP_THIS(0x443860); }
 
-	int GetPipCount()
-		{ JMP_THIS(0x44D700); }
-
 	void FreezeInFog(DynamicVectorClass<FoggedObjectClass*>* pFoggedArray, CellClass* pCell, bool Visible)
 		{ JMP_THIS(0x457AA0); }
 
