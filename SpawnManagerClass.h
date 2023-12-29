@@ -2,13 +2,15 @@
 
 #include <AircraftClass.h>
 
-enum class SpawnManagerStatus : unsigned int {
+enum class SpawnManagerStatus : unsigned int
+{
 	Idle = 0, // no target or out of range
 	Launching = 1, // one launch in progress
 	CoolDown = 2 // waiting for launch to complete
 };
 
-enum class SpawnNodeStatus : unsigned int {
+enum class SpawnNodeStatus : unsigned int
+{
 	Idle = 0, // docked, waiting for target
 	TakeOff = 1, // missile tilting and launch
 	Preparing = 2, // gathering, waiting
