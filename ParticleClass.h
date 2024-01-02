@@ -60,15 +60,13 @@ public:
 	DWORD  unknown_B4;
 	DWORD  unknown_B8;
 	DWORD  unknown_BC;
-	int  VelocityX;
-	int  VelocityY;
-	DWORD  unknown_C8;
+	CoordStruct Velocity;
 	DWORD  unknown_CC;
 	double unknown_double_D0;
 	DWORD  unknown_D8;
 	DWORD  unknown_DC;
 	DWORD  unknown_E0;
-	float  Velocity;
+	float  Speed;
 	CoordStruct unknown_coords_E8; //Crd2 in CTOR
 	CoordStruct unknown_coords_F4; //Crd1 in CTOR
 	CoordStruct unknown_coords_100; //{ 0, 0, 0} in CTOR

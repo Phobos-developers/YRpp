@@ -713,7 +713,7 @@ public:
 	void AddTracking(TechnoClass* pTechno)
 		{ JMP_THIS(0x4FF700); }
 
-	long double GetWeedStoragePercentage()
+	double GetWeedStoragePercentage()
 		{ JMP_THIS(0x4F9750); }
 
 	//Constructor
