@@ -255,7 +255,8 @@ public:
 
 	inline bool IsMutualAllie(HouseClass const* pHouse) const
 	{
-		return this->Allies.Contains(pHouse->ArrayIndex) && pHouse->Allies.Contains(this->ArrayIndex);
+		return pHouse == this
+			|| (this->Allies.Contains(pHouse->ArrayIndex) && pHouse->Allies.Contains(this->ArrayIndex));
 	}
 
 	void MakeAlly(int iHouse, bool bAnnounce)
