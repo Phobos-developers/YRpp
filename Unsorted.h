@@ -51,6 +51,8 @@ public:
 	DEFINE_REFERENCE(Vector3D<float>, VoxelLightSource, 0x887470)
 	DEFINE_REFERENCE(Vector3D<float>, VoxelShadowLightSource, 0x887420)
 
+	DEFINE_ARRAY_REFERENCE(byte, [8], ChatMask, 0xA8D108u);
+
 	static struct Network
 	{
 	public:
