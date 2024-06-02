@@ -375,7 +375,7 @@ public:
 	void DrawOverlayShadow(const Point2D& Location, const RectangleStruct& Bound)
 		{ JMP_THIS(0x47F510); }
 
-	bool IsClearToMove(SpeedType speedType, bool ignoreInfantry, bool ignoreVehicles, int zone, MovementZone movementZone, int level, bool isBridge)
+	bool IsClearToMove(SpeedType speedType, bool ignoreInfantry, bool ignoreVehicles, int zone = -1, MovementZone movementZone = MovementZone::Normal, int level = -1, bool isBridge = true)
 		{ JMP_THIS(0x4834A0); }
 
 protected:

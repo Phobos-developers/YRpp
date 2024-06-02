@@ -129,6 +129,9 @@ public:
 	int FailedToPlaceNode(BaseNodeClass *Node) // called after AI fails to place building, obviously
 		{ JMP_THIS(0x42F380); }
 
+	BaseNodeClass* NextBuildable(int buildingTypeIndex = -1)
+	    { JMP_THIS(0x42EB20); }
+
 	//Properties
 	DECLARE_PROPERTY(DynamicVectorClass<BaseNodeClass>, BaseNodes);
 	int PercentBuilt;
@@ -971,7 +974,7 @@ public:
 	DECLARE_PROPERTY(DynamicVectorClass<AngerStruct>, AngerNodes); //arghghghgh bugged
 	DECLARE_PROPERTY(DynamicVectorClass<ScoutStruct>, ScoutNodes); // filled with data which is never used, jood gob WW
 	DECLARE_PROPERTY(CDTimerClass, AITimer);
-	DECLARE_PROPERTY(CDTimerClass, Unknown_Timer_5640);
+	DECLARE_PROPERTY(CDTimerClass, ExpertAITimer);
 	int                   ProducingBuildingTypeIndex;
 	int                   ProducingUnitTypeIndex;
 	int                   ProducingInfantryTypeIndex;

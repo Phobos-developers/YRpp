@@ -5,7 +5,7 @@
 #include <Helpers/CompileTime.h>
 
 class DSurface;
-struct RectangleStruct;
+class RectangleStruct;
 class GadgetClass;
 class NOVTABLE GScreenClass : public IGameMap
 {

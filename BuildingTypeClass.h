@@ -65,7 +65,7 @@ public:
 	short GetFoundationHeight(bool bIncludeBib) const
 		{ JMP_THIS(0x45ECA0); }
 
-	bool CanPlaceHere(CellStruct* cell, HouseClass* owner) const
+	bool CanPlaceHere(CellStruct& cell, HouseClass* owner) const
 		{ JMP_THIS(0x464AC0); }
 
 	// helpers
@@ -88,6 +88,12 @@ public:
 	const BuildingAnimStruct& GetBuildingAnim(BuildingAnimSlot slot) const {
 		return this->BuildingAnim[static_cast<int>(slot)];
 	}
+
+	int FlushForPlacement(CellStruct& cell, HouseClass* pHouse)
+	{ JMP_THIS(0x45EE70); }
+
+	static BuildingTypeClass* FindOrMake(const char* name)
+	{ JMP_THIS(0x4653C0); }
 
 	//Constructor
 	BuildingTypeClass(const char* pID) noexcept

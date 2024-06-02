@@ -519,11 +519,23 @@ public:
 
 	// Called on wall state updates etc. when the wall HAS been removed.
 	void ResetZones(CellStruct const& cell)
-	{ JMP_THIS(0x56D460); }
+	    { JMP_THIS(0x56D460); }
 
 	// Called on wall state updates etc
 	void RecalculateSubZones(CellStruct const& cell)
-	{ JMP_THIS(0x584550); }
+	    { JMP_THIS(0x584550); }
+
+	CellClass& operator[] (const CellStruct& cell)
+	    { JMP_THIS(0x5657A0); }
+
+	const CellClass& operator[] (const CellStruct& cell) const
+	    { JMP_THIS(0x5657A0); }
+
+	CellClass& operator[] (const CoordStruct& coord)
+	    { JMP_THIS(0x565730); }
+
+	const CellClass& operator[] (const CoordStruct& coord) const
+	    { JMP_THIS(0x565730); }
 
 
 protected:

@@ -151,12 +151,6 @@ struct RandomStruct
 	int Min, Max;
 };
 
-//obvious
-struct RectangleStruct
-{
-	int X, Y, Width, Height;
-};
-
 struct LTRBStruct
 {
 	int Left;

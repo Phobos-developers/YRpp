@@ -64,6 +64,9 @@ public:
 	bool IsDone() const
 		{ JMP_THIS(0x4CA130); }
 
+	TechnoClass* GetObject() const
+		{ JMP_THIS(0x4CA160); }
+
 	int GetCostPerStep() const
 		{ JMP_THIS(0x4CA180); }
 

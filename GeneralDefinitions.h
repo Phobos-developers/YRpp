@@ -95,6 +95,36 @@ enum class AbstractType : unsigned int
 	DiskLaser = 73
 };
 
+enum class SpecialWeaponType
+{
+	MultiMissile = 0x0,
+	IronCurtain = 0x1,
+	LightningStorm = 0x2,
+	Chronosphere = 0x3,
+	ChronoWarp = 0x4,
+	Paradrop = 0x5,
+	AmericanParadrop = 0x6,
+	PsychicDominator = 0x7,
+	SpyPlane = 0x8,
+	GeneticMutator = 0x9,
+	ForceShield = 0xA,
+	PsychicReveal = 0xB,
+	Count = 0xC,
+	None = -1
+};
+
+enum class WeaponSlotType
+{
+	Primary,
+	Secondary,
+	Elite,
+
+	Count,
+
+	None = -1,
+	First = 0,
+};
+
 enum class RecordFlag : unsigned int
 {
 	Write = 0x1, // I am recording the game now

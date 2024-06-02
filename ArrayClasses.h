@@ -434,6 +434,10 @@ public:
 	}
 
 	bool EnsureItem(int index) {
+		if(index < 0) {
+			return false;
+		}
+
 		if(index < this->Capacity) {
 			return true;
 		}
