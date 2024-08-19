@@ -83,24 +83,14 @@ public:
 		return *this * *this;
 	}
 	//distance from another vector
-	double DistanceFrom(const Vector2D& a, bool cylinder = false) const
+	double DistanceFrom(const Vector2D& a) const
 	{
-		Vector3D temp = a - *this;
-
-		if (cylinder)
-			temp.Z = 0;
-
-		return temp.Magnitude();
+		return (a - *this).Magnitude();
 	}
 	//distance from another vector, squared
-	double DistanceFromSquared(const Vector2D& a, bool cylinder = false) const
+	double DistanceFromSquared(const Vector2D& a) const
 	{
-		Vector3D temp = a - *this;
-
-		if (cylinder)
-			temp.Z = 0;
-
-		return temp.MagnitudeSquared();
+		return (a - *this).MagnitudeSquared();
 	}
 	//collinearity
 	bool IsCollinearTo(const Vector2D& a) const
@@ -229,14 +219,24 @@ public:
 		return *this * *this;
 	}
 	//distance from another vector
-	double DistanceFrom(const Vector3D& a) const
+	double DistanceFrom(const Vector3D& a, bool cylinder = false) const
 	{
-		return (a - *this).Magnitude();
+		Vector3D temp = a - *this;
+
+		if (cylinder)
+			temp.Z = 0;
+
+		return temp.Magnitude();
 	}
 	//distance from another vector, squared
-	double DistanceFromSquared(const Vector3D& a) const
+	double DistanceFromSquared(const Vector3D& a, bool cylinder = false) const
 	{
-		return (a - *this).MagnitudeSquared();
+		Vector3D temp = a - *this;
+
+		if (cylinder)
+			temp.Z = 0;
+
+		return temp.MagnitudeSquared();
 	}
 	//collinearity
 	bool IsCollinearTo(const Vector3D& a) const
