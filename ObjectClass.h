@@ -234,6 +234,9 @@ public:
 	int GetCellLevel() const
 		{ JMP_THIS(0x5F5F00); }
 
+	bool IsCrushable(TechnoClass* pCrusher)
+		{ JMP_THIS(0x5F6CD0); }
+
 	CellStruct GetMapCoords() const {
 		CellStruct ret;
 		this->GetMapCoords(&ret);
