@@ -10,15 +10,15 @@ public:
 	virtual ~LinkClass() RX;
 
 	//LinkClass
-	virtual LinkClass* GetNext() R0;
-	virtual LinkClass* GetPrev() R0;
-	virtual LinkClass* Add(LinkClass& another) R0;
-	virtual LinkClass* AddTail(LinkClass& another) R0;
-	virtual LinkClass* AddHead(LinkClass& another) R0;
-	virtual LinkClass* HeadOfList(LinkClass& another) R0;
-	virtual LinkClass* TailOfList(LinkClass& another) R0;
-	virtual void Zap() RX;
-	virtual LinkClass* Remove() R0;
+	virtual LinkClass* GetNext() { JMP_THIS(0x556620); }
+	virtual LinkClass* GetPrev() { JMP_THIS(0x556630); }
+	virtual LinkClass* Add(LinkClass& another) { JMP_THIS(0x5566A0); }
+	virtual LinkClass* AddTail(LinkClass& another) { JMP_THIS(0x556700); }
+	virtual LinkClass* AddHead(LinkClass& another) { JMP_THIS(0x5566D0); }
+	virtual LinkClass* HeadOfList(LinkClass& another) { JMP_THIS(0x556640); }
+	virtual LinkClass* TailOfList(LinkClass& another) { JMP_THIS(0x556670); }
+	virtual void Zap() { JMP_THIS(0x5565F0); }
+	virtual LinkClass* Remove() { JMP_THIS(0x556730); }
 
 	//Non virtual
 	LinkClass& operator=(LinkClass& another) { JMP_THIS(0x556600); }

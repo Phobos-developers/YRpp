@@ -31,35 +31,34 @@ public:
 	virtual ~GadgetClass() RX;
 
 	//LinkClass
-	virtual GadgetClass* GetNext() R0;
-	virtual GadgetClass* GetPrev() R0;
-	virtual void Zap() RX;
-	virtual GadgetClass* Remove() R0;
+	virtual GadgetClass* GetNext() { JMP_THIS(0x4E14A0); }
+	virtual GadgetClass* GetPrev() { JMP_THIS(0x4E14B0); }
+	virtual GadgetClass* Remove() { JMP_THIS(0x4E1480); }
 
 	//GadgetClass
-	virtual DWORD Input() R0;
-	virtual void DrawAll(bool bForced) RX;
-	virtual void DeleteList() RX;
-	virtual GadgetClass* ExtractGadget(unsigned int nID) R0;
-	virtual void MarkListToRedraw() RX;
-	virtual void Disable() RX;
-	virtual void Enable() RX;
-	virtual unsigned int const GetID() R0;
-	virtual void MarkRedraw() RX;
-	virtual void PeerToPeer(unsigned int Flags, DWORD* pKey, GadgetClass* pSendTo) RX;
-	virtual void SetFocus() RX;
-	virtual void KillFocus() RX;
-	virtual bool IsFocused() R0;
-	virtual bool IsListToRedraw() R0;
-	virtual bool IsToRedraw() R0;
-	virtual void SetPosition(int X, int Y) RX;
-	virtual void SetDimension(int Width, int Height) RX;
-	virtual bool Draw(bool bForced) R0;
-	virtual void OnMouseEnter() RX;
-	virtual void OnMouseLeave() RX;
-	virtual void StickyProcess(GadgetFlag Flags) RX;
-	virtual bool Action(GadgetFlag Flags, DWORD* pKey, KeyModifier Modifier) R0;
-	virtual bool Clicked(DWORD* pKey, GadgetFlag Flags, int X, int Y, KeyModifier Modifier) R0; // Clicked On
+	virtual DWORD Input() { JMP_THIS(0x4E1640); }
+	virtual void DrawAll(bool bForced) { JMP_THIS(0x4E1570); }
+	virtual void DeleteList() { JMP_THIS(0x4E14C0); }
+	virtual GadgetClass* ExtractGadget(unsigned int nID) { JMP_THIS(0x4E1920); }
+	virtual void MarkListToRedraw() { JMP_THIS(0x488690); }
+	virtual void Disable() { JMP_THIS(0x4E1460); }
+	virtual void Enable() { JMP_THIS(0x4E1450); }
+	virtual unsigned int const GetID() { JMP_THIS(0x4AEBA0); }
+	virtual void MarkRedraw() { JMP_THIS(0x4E1960); }
+	virtual void PeerToPeer(unsigned int Flags, DWORD* pKey, GadgetClass* pSendTo) { JMP_THIS(0x48E650); }
+	virtual void SetFocus() { JMP_THIS(0x4E19A0); }
+	virtual void KillFocus() { JMP_THIS(0x4E19D0); }
+	virtual bool IsFocused() { JMP_THIS(0x4E19F0); }
+	virtual bool IsListToRedraw() { JMP_THIS(0x4E1A00); }
+	virtual bool IsToRedraw() { JMP_THIS(0x4886A0); }
+	virtual void SetPosition(int X, int Y) { JMP_THIS(0x4E1A20); }
+	virtual void SetDimension(int Width, int Height) { JMP_THIS(0x4E1A40); }
+	virtual bool Draw(bool bForced) { JMP_THIS(0x4E1550); }
+	virtual void OnMouseEnter() { JMP_THIS(0x4E1510); }
+	virtual void OnMouseLeave() { JMP_THIS(0x4E1520); }
+	virtual void StickyProcess(GadgetFlag Flags) { JMP_THIS(0x4E1970); }
+	virtual bool Action(GadgetFlag Flags, DWORD* pKey, KeyModifier Modifier) { JMP_THIS(0x4E1530); }
+	virtual bool Clicked(DWORD* pKey, GadgetFlag Flags, int X, int Y, KeyModifier Modifier) { JMP_THIS(0x4E13F0); } // Clicked On
 
 	//Non virtual
 	GadgetClass& operator=(GadgetClass& another) { JMP_THIS(0x4B5780); }
