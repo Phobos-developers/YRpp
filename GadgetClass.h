@@ -23,6 +23,8 @@ enum class GadgetFlag : int
 	Keyboard = 0x100
 };
 
+MAKE_ENUM_FLAGS(GadgetFlag)
+
 class NOVTABLE GadgetClass : public LinkClass
 {
 public:
@@ -31,9 +33,9 @@ public:
 	virtual ~GadgetClass() RX;
 
 	//LinkClass
-	virtual GadgetClass* GetNext() { JMP_THIS(0x4E14A0); }
-	virtual GadgetClass* GetPrev() { JMP_THIS(0x4E14B0); }
-	virtual GadgetClass* Remove() { JMP_THIS(0x4E1480); }
+	virtual GadgetClass* GetNext() override { JMP_THIS(0x4E14A0); }
+	virtual GadgetClass* GetPrev() override { JMP_THIS(0x4E14B0); }
+	virtual GadgetClass* Remove() override { JMP_THIS(0x4E1480); }
 
 	//GadgetClass
 	virtual DWORD Input() { JMP_THIS(0x4E1640); }
