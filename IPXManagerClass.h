@@ -14,7 +14,7 @@ public:
 	virtual ~IPXManagerClass() RX;
 
 	ConnectionClass* SetTiming(int retrydelta, int maxretries, int timeout, bool a5)
-		{ JMP_THIS(0x7B30B0) }
+		{ JMP_THIS(0x540C60) }
 
 	int ResponseTime()
 		{ JMP_THIS(0x542450) }
