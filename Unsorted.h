@@ -223,7 +223,7 @@ public:
 	ALIAS(CoRevokeClassObject, 0x7E15CC);
 
 	typedef DWORD(*FP_TimeGetTime)();
-	ALIAS(TimeGetTime, 0x7E1530);
+	static FP_TimeGetTime& TimeGetTime;
 
 	/* user32.dll */
 	typedef LRESULT(__stdcall* FP_DefWindowProcA)(HWND hWnd, UINT Msg, WPARAM wParam, LPARAM lParam);
