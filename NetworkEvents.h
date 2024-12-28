@@ -27,8 +27,9 @@ class AbstractTypeClass;
 
 #pragma pack(push, 8)
 #pragma pack(1)
-struct NetworkEvent {
-	NetworkEvents Kind;
+struct NetworkEvent
+{
+	EventType Kind;
 	byte Unused;
 	byte HouseIndex;
 	DWORD Timestamp;
@@ -37,40 +38,43 @@ struct NetworkEvent {
 	byte Delay;
 	byte ExtraData[0x61];
 
-	NetworkEvent() {
+	NetworkEvent()
+	{
 		memset(this, 0, sizeof(*this));
 	}
 
-	NetworkEvent * FillEvent_ProduceAbandonSuspend(int PlayerNumber, NetworkEvents eventKind, AbstractType abstractId, int idx, int isNaval)
-		{ JMP_THIS(0x4C6970); }
+	NetworkEvent* FillEvent_ProduceAbandonSuspend(int PlayerNumber, EventType eventKind, AbstractType abstractId, int idx, int isNaval)
+	{ JMP_THIS(0x4C6970); }
 
-	NetworkEvent * FillEvent_SellCell(int dwUnk, NetworkEvents eventKind, CellStruct *Coords)
-		{ JMP_THIS(0x4C6650); }
+	NetworkEvent* FillEvent_SellCell(int dwUnk, EventType eventKind, CellStruct* Coords)
+	{ JMP_THIS(0x4C6650); }
 
-	NetworkEvent * FillEvent_Noopt(int PlayerNumber, NetworkEvents eventKind)
-		{ JMP_THIS(0x4C66C0); }
+	NetworkEvent* FillEvent_Noopt(int PlayerNumber, EventType eventKind)
+	{ JMP_THIS(0x4C66C0); }
 
-	NetworkEvent * FillEvent_PlayerBased(int a2, NetworkEvents eventKind, int a4)
-		{ JMP_THIS(0x4C6720); }
+	NetworkEvent* FillEvent_PlayerBased(int a2, EventType eventKind, int a4)
+	{ JMP_THIS(0x4C6720); }
 
-	NetworkEvent * FillEvent_Waypoints(int PlayerNumber, NetworkEvents eventKind, int a4, char a5, int a6, char a7)
-		{ JMP_THIS(0x4C6780); }
+	NetworkEvent* FillEvent_Waypoints(int PlayerNumber, EventType eventKind, int a4, char a5, int a6, char a7)
+	{ JMP_THIS(0x4C6780); }
 
-	NetworkEvent * FillEvent_Animation(int PlayerNumber, NetworkEvents eventKind, int a4, int a5)
-		{ JMP_THIS(0x4C6800); }
+	NetworkEvent* FillEvent_Animation(int PlayerNumber, EventType eventKind, int a4, int a5)
+	{ JMP_THIS(0x4C6800); }
 
-	NetworkEvent * FillEvent_Place(int a2, NetworkEvents eventKind, int a4, int a5, int a6, CellStruct *loc)
-		{ JMP_THIS(0x4C6AE0); }
+	NetworkEvent* FillEvent_Place(int a2, EventType eventKind, int a4, int a5, int a6, CellStruct* loc)
+	{ JMP_THIS(0x4C6AE0); }
 
-	NetworkEvent * FillEvent_SWPlace(int PlayerNumber, NetworkEvents eventKind, int swTypeIdx, CellStruct *loc)
-		{ JMP_THIS(0x4C6B60); }
+	NetworkEvent* FillEvent_SWPlace(int PlayerNumber, EventType eventKind, int swTypeIdx, CellStruct* loc)
+	{ JMP_THIS(0x4C6B60); }
 };
 
-struct NetID {
+struct NetID
+{
 	DWORD RTTI_ID;
 	byte WhatAmI;
 
-	NetID() {
+	NetID()
+	{
 		this->RTTI_ID = this->WhatAmI = 0;
 	}
 
@@ -100,13 +104,13 @@ struct NetID {
 	UNPACK(TagType, 0x6E6D50);
 	UNPACK(AbstractType, 0x6E6BB0);
 
-	NetID * Pack(AbstractClass * toPack)
-		{ JMP_THIS(0x6E6AB0); }
+	NetID* Pack(AbstractClass* toPack)
+	{ JMP_THIS(0x6E6AB0); }
 
-	NetID * Pack(CellStruct * toPack)
-		{ JMP_THIS(0x6E6B20); }
+	NetID* Pack(CellStruct* toPack)
+	{ JMP_THIS(0x6E6B20); }
 
-	NetID * Pack(Point2D * toPack)
-		{ JMP_THIS(0x6E6B70); }
+	NetID* Pack(Point2D* toPack)
+	{ JMP_THIS(0x6E6B70); }
 };
 #pragma pack(pop)
