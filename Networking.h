@@ -24,7 +24,7 @@ public:
 			return false;
 		}
 		memcpy(&QueuedEvents[NextPacketIndex], event, sizeof(*event));
-		QueuedEventTimestamps[NextPacketIndex] = static_cast<int>(Imports::TimeGetTime());
+		QueuedEventTimestamps[NextPacketIndex] = static_cast<int>(Imports::TimeGetTime()());
 		NextPacketIndex = (NextPacketIndex + 1) & 0x7F;
 		++LastEventIndex;
 		return true;
