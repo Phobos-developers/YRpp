@@ -31,6 +31,7 @@ public:
 	//TechnoClass
 	virtual void Destroyed(ObjectClass *Killer) RX;
 	virtual bool ForceCreate(CoordStruct& coord, DWORD dwUnk = 0) R0;
+	virtual AbstractClass* GreatestThreat(ThreatType threat, CoordStruct* pCoord, bool onlyTargetHouseEnemy) override { JMP_THIS(0x4D9920) };
 
 	//FootClass
 	virtual void ReceiveGunner(FootClass* Gunner) RX;
