@@ -253,7 +253,7 @@ public:
 		return this->IsAlliedWith(generic_cast<ObjectClass const*>(pAbstract));
 	}
 
-	inline bool IsMutualAllie(HouseClass const* pHouse) const
+	inline bool IsMutualAlly(HouseClass const* pHouse) const
 	{
 		return pHouse == this
 			|| (this->Allies.Contains(pHouse->ArrayIndex) && pHouse->Allies.Contains(this->ArrayIndex));
