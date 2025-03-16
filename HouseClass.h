@@ -443,7 +443,7 @@ public:
 
 	int GetSpawnPosition() const {
 		const int currentIndex = this->ArrayIndex;
-		const int* houseIndices = ScenarioClass::Instance.HouseIndices;
+		const int* houseIndices = ScenarioClass::Instance->HouseIndices;
 
 		for (int i = 0; i < 8; i++)
 		{
