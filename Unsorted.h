@@ -47,6 +47,7 @@ public:
 	DEFINE_REFERENCE(bool, EnableMPDebug, 0xA8B8B4u)
 	DEFINE_REFERENCE(bool, DrawMPDebugStats, 0xA8B8B5u)
 	DEFINE_REFERENCE(bool, EnableMPSyncDebug, 0xB04880u)
+	DEFINE_REFERENCE(bool, ScoreStuffLoad, 0xB0FBB8u)
 
 	DEFINE_REFERENCE(Vector3D<float>, VoxelLightSource, 0x887470)
 	DEFINE_REFERENCE(Vector3D<float>, VoxelShadowLightSource, 0x887420)
