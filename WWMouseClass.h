@@ -1,5 +1,6 @@
 #pragma once
 
+#include <MouseClass.h>
 #include <GeneralDefinitions.h>
 #include <GeneralStructures.h>
 #include <Drawing.h>
@@ -14,13 +15,13 @@ public:
 
 	static void PrepareScreen()
 	{
-		WWMouseClass::Instance.HideCursor();
+		WWMouseClass::Instance->HideCursor();
 
 		DSurface::Hidden->Fill(0);
 		GScreenClass::DoBlit(true, DSurface::Hidden);
 		DSurface::Temp = DSurface::Hidden;
 
-		WWMouseClass::Instance.ShowCursor();
+		WWMouseClass::Instance->ShowCursor();
 
 		MouseClass::Instance.SetCursor(MouseCursorType::NoMove, false);
 		MouseClass::Instance.RestoreCursor();
