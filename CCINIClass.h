@@ -75,18 +75,6 @@ public:
 	int GetString(const char* pSection, const char* pKey, char* pBuffer,size_t szBufferSize)
 		{ return ReadString(pSection, pKey, pBuffer, pBuffer, szBufferSize); }
 
-	int ReadString_WithoutAresHook(const char* pSection, const char* pKey, const char* pDefault, char* pBuffer, size_t szBufferSize)
-	{
-		EPILOG_THISCALL;
-
-		// It's 5 bytes corrupted by the ares hook
-		_asm { sub  esp, 0xC };
-		_asm { xor  eax, eax };
-
-		_asm { mov edx, 0x528A10 + 5 };
-		_asm { jmp edx }
-	}
-
 	//Writes an ANSI string.
 	bool WriteString(const char* pSection, const char* pKey, const char* pString)
 		{ JMP_THIS(0x528660); }
@@ -373,7 +361,7 @@ public:
 		if (file.Exists())
 			this->ReadCCFile(&file);
 	}
-	
+
 	//Parses an INI file from a CCFile
 	CCINIClass* ReadCCFile(FileClass* pCCFile, bool bDigest = false, bool bLoadComments = false)
 		{ JMP_THIS(0x4741F0); }
