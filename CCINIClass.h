@@ -362,6 +362,22 @@ public:
 			this->ReadCCFile(&file);
 	}
 
+	static CCINIClass* LoadINIFile(const char* pFileName)
+	{
+		CCINIClass* pINI = GameCreate<CCINIClass>();
+		pINI->LoadFromFile(pFileName);
+		return pINI;
+	}
+
+	static void UnloadINIFile(CCINIClass*& pINI)
+ 	{
+ 		if (pINI)
+ 		{
+ 			GameDelete(pINI);
+ 			pINI = nullptr;
+ 		}
+ 	}
+
 	//Parses an INI file from a CCFile
 	CCINIClass* ReadCCFile(FileClass* pCCFile, bool bDigest = false, bool bLoadComments = false)
 		{ JMP_THIS(0x4741F0); }
