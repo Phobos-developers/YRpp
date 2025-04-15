@@ -206,7 +206,7 @@ __forceinline T locomotion_cast(ILocomotionPtr& comLoco)
 */
 }
 
-struct TrackNumStruct
+struct TurnTrackType
 {
 	char NormalTrackStructIndex;
 	char ShortTrackStructIndex;
@@ -214,16 +214,16 @@ struct TrackNumStruct
 	int Flag;
 };
 
-struct TrackPtStruct
+struct TrackType
 {
 	Point2D Point;
 	int Face;
 };
 
-struct TrackIdxStruct
+struct RawTrackType
 {
-	TrackPtStruct* TrackPoint;
-	int TrackIndex1;
-	int TrackIndex2;
-	int TrackIndex3;
+	TrackType* TrackPoint;
+	int JumpIndex;
+	int EntryIndex;
+	int CellIndex;
 };

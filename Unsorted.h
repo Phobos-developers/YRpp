@@ -636,8 +636,8 @@ namespace Unsorted
 	static const int except_txt_length = 0xFFFF;
 	DEFINE_ARRAY_REFERENCE(char, [65536], except_txt_content, 0x8A3A08)
 
-	DEFINE_ARRAY_REFERENCE(CellStruct, [8], CellDirections, 0x89F688)
-	DEFINE_ARRAY_REFERENCE(Point2D, [8], CoordDirections, 0x89F6D8)
+	DEFINE_ARRAY_REFERENCE(CellStruct, [8], AdjacentCell, 0x89F688)
+	DEFINE_ARRAY_REFERENCE(Point2D, [8], AdjacentCoord, 0x89F6D8)
 
 	/*
 	 * This thing is ridiculous

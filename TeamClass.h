@@ -41,7 +41,7 @@ public:
 	void AssignMissionTarget(AbstractClass* pTarget)
 		JMP_THIS(0x6E9050);
 
-	void AbandonTarget()
+	void ScanLimit()
 		JMP_THIS(0x6EC3A0);
 
 	//AbstractClass

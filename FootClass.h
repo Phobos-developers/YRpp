@@ -195,7 +195,7 @@ public:
 	signed char       TubeFaceIndex;
 	signed char       WaypointIndex; // which waypoint in my planning path am I following?
 	bool              ShouldScatterInNextIdle;
-	bool              ShouldSelectCloserTarget;
+	bool              IsScanLimited;
 	bool              IsInitiated; // Is a fully joined member of a team, used for regroup etc. checks
 	bool              ShouldScanForTarget;
 	bool              unknown_bool_68B; //unused?

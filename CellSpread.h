@@ -18,7 +18,7 @@ public:
 		if(direction > 7) {
 			return CellStruct::Empty;
 		}
-		return Unsorted::CellDirections[direction];
+		return Unsorted::AdjacentCell[direction];
 	}
 
 	static size_t GetDistance(int dx, int dy) {
