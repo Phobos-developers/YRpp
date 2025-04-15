@@ -41,6 +41,9 @@ public:
 	void AssignMissionTarget(AbstractClass* pTarget)
 		JMP_THIS(0x6E9050);
 
+	void AbandonTarget()
+		JMP_THIS(0x6EC3A0);
+
 	//AbstractClass
 	virtual AbstractType WhatAmI() const RT(AbstractType);
 	virtual int Size() const R0;

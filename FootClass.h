@@ -46,7 +46,7 @@ public:
 	virtual bool vt_entry_4F8() R0;
 	virtual bool MoveTo(CoordStruct* pCrd) R0;
 	virtual bool StopMoving() R0;
-	virtual bool vt_entry_504() R0;
+	virtual bool TryEnterIdle() R0;
 	virtual bool ChronoWarpTo(CoordStruct pDest) R0; // fsds... only implemented for one new YR map trigger, other chrono events repeat the code...
 	virtual void Draw_A_SHP(
 		SHPStruct *SHP, int idxFacing, Point2D * Coords, RectangleStruct *Rectangle,
@@ -66,7 +66,7 @@ public:
 	virtual BuildingClass* TryNearestDockBuilding(TypeList<BuildingTypeClass*>* bList, DWORD dwUnk2, DWORD dwUnk3) const R0;
 	virtual BuildingClass* FindCloserDockBuilding(BuildingTypeClass* bType, DWORD dwUnk2, DWORD dwUnk3, int* pDistance) const R0;
 	virtual BuildingClass* FindNearestDockBuilding(BuildingTypeClass* bType, DWORD dwUnk2, DWORD dwUnk3) const R0;
-	virtual void vt_entry_534(DWORD dwUnk, DWORD dwUnk2) RX;
+	virtual void TryCrushCell(const CellStruct& cell, bool warn) RX;
 	virtual int GetCurrentSpeed() const R0;
 	virtual AbstractClass* vt_entry_53C(DWORD dwUnk) R0;
 	virtual void vt_entry_540(DWORD dwUnk) RX;
@@ -104,7 +104,7 @@ public:
 	void AbortMotion()
 		{ JMP_THIS(0x4DF0D0); }
 
-	bool UpdatePathfinding(CellStruct unkCell, CellStruct unkCell2, int unk3)
+	bool UpdatePathfinding(CellStruct destinationCell, bool restart, int mode)
 		{ JMP_THIS(0x4D3920); }
 
 	// Removes the first passenger and updates the Gunner.
@@ -166,7 +166,7 @@ public:
 	CellStruct      LastMapCoords; // ::UpdatePosition uses this to remove threat from last occupied cell, etc
 	CellStruct      LastFlightMapCoords; // which cell was I occupying previously? only for AircraftTracker-tracked stuff
 	CellStruct      CurrentJumpjetMapCoords; // unconfirmed, which cell am I occupying? only for jumpjets
-	CoordStruct     unknown_coords_568;
+	CoordStruct     CurrentTunnelCoords;
 	PROTECTED_PROPERTY(DWORD,   unused_574);
 	double          SpeedPercentage;
 	double          SpeedMultiplier;
@@ -185,20 +185,20 @@ public:
 	DWORD           unknown_5DC;
 	int             PathDirections[24]; // list of directions to move in next, like tube directions
 	DECLARE_PROPERTY(CDTimerClass, PathDelayTimer);
-	int             unknown_int_64C;
+	int             PathWaitTimes;
 	DECLARE_PROPERTY(CDTimerClass, unknown_timer_650);
 	DECLARE_PROPERTY(CDTimerClass, SightTimer);
 	DECLARE_PROPERTY(CDTimerClass, BlockagePathTimer);
 	DECLARE_PROPERTY(ILocomotionPtr, Locomotor);
 	CoordStruct       unknown_point3d_678;
 	signed char       TubeIndex;	//I'm in this tunnel
-	bool              unknown_bool_685;
+	signed char       TubeFaceIndex;
 	signed char       WaypointIndex; // which waypoint in my planning path am I following?
-	bool              unknown_bool_687;
-	bool              unknown_bool_688;
+	bool              ShouldScatterInNextIdle;
+	bool              ShouldSelectCloserTarget;
 	bool              IsInitiated; // Is a fully joined member of a team, used for regroup etc. checks
 	bool              ShouldScanForTarget;
-	bool              unknown_bool_68B;
+	bool              unknown_bool_68B; //unused?
 	bool              IsDeploying;
 	bool              IsFiring;
 	bool              unknown_bool_68E;
@@ -218,9 +218,9 @@ public:
 	bool              unknown_bool_6B2;
 	bool              unknown_bool_6B3;
 	bool              unknown_bool_6B4;
-	bool              unknown_bool_6B5;
+	bool              IsCrushingSomething;
 	bool              FrozenStill; // frozen in first frame of the proper facing - when magnetron'd or warping
-	bool              unknown_bool_6B7;
+	bool              IsWaitingBlockagePath;
 	bool              unknown_bool_6B8;
 	PROTECTED_PROPERTY(DWORD,   unused_6BC);	//???
 };

@@ -305,6 +305,7 @@
     <ClInclude Include="$(YRppDir)\TriColorGaugeClass.h" />
     <ClInclude Include="$(YRppDir)\TriggerClass.h" />
     <ClInclude Include="$(YRppDir)\TriggerTypeClass.h" />
+    <ClInclude Include="$(YRppDir)\TubeClass.h" />
     <ClInclude Include="$(YRppDir)\TunnelLocomotionClass.h" />
     <ClInclude Include="$(YRppDir)\UDPInterfaceClass.h" />
     <ClInclude Include="$(YRppDir)\UI.h" />

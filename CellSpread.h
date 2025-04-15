@@ -1,6 +1,7 @@
 #pragma once
 
 #include <GeneralStructures.h>
+#include <Unsorted.h>
 
 class CellSpread
 {
@@ -17,7 +18,7 @@ public:
 		if(direction > 7) {
 			return CellStruct::Empty;
 		}
-		return reinterpret_cast<const CellStruct*>(0x89F688)[direction];
+		return Unsorted::CellDirections[direction];
 	}
 
 	static size_t GetDistance(int dx, int dy) {

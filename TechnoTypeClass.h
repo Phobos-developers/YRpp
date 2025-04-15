@@ -195,7 +195,7 @@ public:
 	double          ThreatAvoidanceCoefficient;
 	int             SlowdownDistance;
 	DWORD align_2FC;
-	double          unknown_double_300;
+	double          DecelerationFactor;
 	double          AccelerationFactor;
 	int             CloakingSpeed;
 	TypeList<VoxelAnimTypeClass*> DebrisTypes;

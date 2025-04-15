@@ -93,11 +93,13 @@ public:
 
 	virtual ULONG __stdcall AddRef() override
 	{
+#pragma warning(suppress: 4996)
 		return Imports::InterlockedIncrement()(&this->nRefCount);
 	}
 
 	virtual ULONG __stdcall Release() override
 	{
+#pragma warning(suppress: 4996)
 		int nNewRef = Imports::InterlockedIncrement()(&this->nRefCount);
 		if (!nNewRef)
 			GameDelete(this);

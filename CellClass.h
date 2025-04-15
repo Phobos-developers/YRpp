@@ -138,7 +138,7 @@ public:
 	void UpdateThreat(unsigned int SourceHouse, int ThreatLevel)
 		{ JMP_THIS(0x481870); }
 
-	void CollectCrate(FootClass* pCollector)
+	bool CollectCrate(FootClass* pCollector)
 		{ JMP_THIS(0x481A00); }
 
 	void ProcessColourComponents(int* arg0, int* pIntensity, int* pAmbient, int* a5, int* a6, int* tintR, int* tintG, int* tintB)
@@ -374,6 +374,9 @@ public:
 
 	void DrawOverlayShadow(const Point2D& Location, const RectangleStruct& Bound)
 		{ JMP_THIS(0x47F510); }
+
+	void RevealCellObjects()
+		{ JMP_THIS(0x483480); }
 
 	bool IsClearToMove(SpeedType speedType, bool ignoreInfantry, bool ignoreVehicles, int zone, MovementZone movementZone, int level, bool isBridge)
 		{ JMP_THIS(0x4834A0); }
