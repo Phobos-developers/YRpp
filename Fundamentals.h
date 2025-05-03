@@ -31,4 +31,16 @@ namespace Unsorted
 
 	// Cell height in pixels.
 	constexpr int CellHeightInPixels = 30;
+
+	// Sections in health bars.
+	constexpr int HealthBarSectionsInfantry = 8;
+
+	// Sections in health bars.
+	constexpr int HealthBarSectionsOther = 17;
+
+	// Health bars vertical offset.
+	constexpr int HealthBarYOffsetInfantry = 25;
+
+	// Health bars vertical offset.
+	constexpr int HealthBarYOffsetOther = 26;
 }
