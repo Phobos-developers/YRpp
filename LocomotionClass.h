@@ -177,21 +177,32 @@ public:
 namespace detail
 {
 	template<typename Base>
-	concept LocoHasILocoVtbl = std::derived_from<Base, LocomotionClass> && !std::is_same_v<LocomotionClass, Base> && requires
-	{
-		{ Base::ILocoVTable }->std::convertible_to<const uintptr_t>;
-	};
+	concept LocoIsDerived = std::derived_from<Base, LocomotionClass> && !std::is_same_v<LocomotionClass, Base>;
+
+	template<typename Base>
+	concept LocoHasILocoVtbl = requires { { Base::ILocoVTable }->std::convertible_to<const uintptr_t>; };
 }
 
 template<typename T>
-concept LocoCastEligible = std::is_pointer_v<T> && detail::LocoHasILocoVtbl<std::remove_cvref_t<std::remove_const_t<std::remove_pointer_t<T>>>>;
+concept LocoCastEligible = std::is_pointer_v<T> && detail::LocoIsDerived<std::remove_cvref_t<std::remove_const_t<std::remove_pointer_t<T>>>>;
 
 
 template <LocoCastEligible T>
 __forceinline T locomotion_cast(ILocomotion* iLoco)
 {
 	using Base = std::remove_cvref_t<std::remove_const_t<std::remove_pointer_t<T>>>;
-	return VTable::Get(iLoco) == Base::ILocoVTable ? static_cast<T>(iLoco) : nullptr;
+
+	if constexpr (detail::LocoHasILocoVtbl<Base>)
+	{
+		return VTable::Get(iLoco) == Base::ILocoVTable ? static_cast<T>(iLoco) : nullptr;
+	}
+	else
+	{
+		CLSID clsid;
+		IPersistPtr comPersist = iLoco;
+
+		return (SUCCEEDED(comPersist->GetClassID(&clsid)) && clsid == __uuidof(Base)) ? static_cast<T>(iLoco) : nullptr;
+	}
 }
 
 template<LocoCastEligible T>
