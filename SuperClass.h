@@ -98,6 +98,9 @@ public:
 	bool ShouldFlashTab() const // sidebar
 		{ JMP_THIS(0x6CE1A0); }
 
+	bool GetIsReady() const
+	{ JMP_THIS(0x6CC367); }
+
 	//Constructor
 	SuperClass(SuperWeaponTypeClass* pSWType, HouseClass* pOwner) noexcept
 		: SuperClass(noinit_t())
