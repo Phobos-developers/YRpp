@@ -99,7 +99,7 @@ public:
 		{ JMP_THIS(0x6CE1A0); }
 
 	bool GetIsReady() const
-	{ JMP_THIS(0x6CC360); }
+		{ JMP_THIS(0x6CC360); }
 
 	//Constructor
 	SuperClass(SuperWeaponTypeClass* pSWType, HouseClass* pOwner) noexcept
