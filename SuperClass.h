@@ -98,7 +98,7 @@ public:
 	bool ShouldFlashTab() const // sidebar
 		{ JMP_THIS(0x6CE1A0); }
 
-	bool CanFire() const
+	bool GetIsReady() const
 		{ JMP_THIS(0x6CC360); }
 
 	//Constructor
