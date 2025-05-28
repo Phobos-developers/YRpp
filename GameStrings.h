@@ -17,6 +17,10 @@ namespace GameStrings
 	GAMEMD_STRING(_640          , 0x8297E0u);
 	GAMEMD_STRING(_none_        , 0x817474u);
 	GAMEMD_STRING(none          , 0x817694u);
+	GAMEMD_STRING(Allied        , 0x846788u);
+	GAMEMD_STRING(Russian       , 0x846790u);
+	GAMEMD_STRING(Yuri          , 0x846798u);
+	GAMEMD_STRING(Player        , 0x82BFA4u);
 	GAMEMD_STRING(Neutral       , 0x82BA08u);
 	GAMEMD_STRING(Civilian      , 0x818164u);
 	GAMEMD_STRING(Special       , 0x817318u);
