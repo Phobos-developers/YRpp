@@ -158,6 +158,13 @@ public:
 	}
 
 	// weapon related
+	WeaponStruct* GetWeapon(int index)
+	{ JMP_THIS(0x7177C0); }
+
+	WeaponStruct* GetEliteWeapon(int index)
+	{ JMP_THIS(0x7177E0); }
+
+	// weapon related
 	WeaponStruct& GetWeapon(size_t const index, bool const elite) {
 		return elite ? this->EliteWeapon[index] : this->Weapon[index];
 	}

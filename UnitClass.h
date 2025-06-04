@@ -107,7 +107,7 @@ protected:
 
 public:
 
-	int unknown_int_6C0;
+	int CurrentFiringFrame;
 	UnitTypeClass* Type;
 	UnitClass* FollowerCar; // groovy - link defined in the map's [Units] section, looked up on startup
 	int FlagHouseIndex; // Carrying the flag of this House
