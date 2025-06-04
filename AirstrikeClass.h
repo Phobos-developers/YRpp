@@ -32,6 +32,9 @@ public:
 	void StartMission(ObjectClass* pTarget)
 		{ JMP_THIS(0x41D830); }
 
+	void InvalidatePointer(void* ptr)
+	{ JMP_THIS(0x41D540); }
+
 	//Constructor
 	AirstrikeClass(TechnoClass* pOwner) noexcept
 		: AirstrikeClass(noinit_t())

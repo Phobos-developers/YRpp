@@ -44,9 +44,6 @@ public:
 	//Destructor
 	virtual ~AircraftClass() RX;
 
-	void InvalidatePointer(void* ptr)
-	{ JMP_THIS(0x41D540); }
-
 	//Constructor
 	AircraftClass(AircraftTypeClass* pType, HouseClass* pOwner) noexcept
 		: AircraftClass(noinit_t())
