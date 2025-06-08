@@ -5,6 +5,7 @@
 #pragma once
 
 #include <GeneralDefinitions.h>
+#include <TechnoClass.h>
 
 class UnitClass;
 
