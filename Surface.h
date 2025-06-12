@@ -12,6 +12,8 @@ struct SHPStruct;
 class NOVTABLE Surface
 {
 public:
+	static constexpr reference<bool*, 0x84310Cu> const Pattern {};
+
 	Surface() = default;
 
 	virtual ~Surface() RX;
