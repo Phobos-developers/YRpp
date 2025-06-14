@@ -12,7 +12,7 @@ struct SHPStruct;
 class NOVTABLE Surface
 {
 public:
-	static constexpr reference<bool*, 0x84310Cu> const Pattern {};
+	DEFINE_ARRAY_REFERENCE(bool, [16], Pattern, 0x84310C)
 
 	Surface() = default;
 
