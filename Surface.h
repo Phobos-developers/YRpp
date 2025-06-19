@@ -13,6 +13,7 @@ class NOVTABLE Surface
 {
 public:
 	DEFINE_ARRAY_REFERENCE(bool, [16], Pattern, 0x84310C)
+	DEFINE_ARRAY_REFERENCE(bool, [16], PatternLong, 0x843128)
 
 	Surface() = default;
 
@@ -151,6 +152,12 @@ public:
 #pragma warning(push)
 #pragma warning( disable : 4505) // 'function' : unreferenced local function has been removed
 
+// The coordinate points will be modified
+static bool __fastcall Line_In_Bounds(Point2D* pStart, Point2D* pEnd, RectangleStruct* pBounds)
+{
+	JMP_STD(0x7BC2B0);
+}
+
 // Comments from thomassneddon
 static void __fastcall CC_Draw_Shape(Surface* Surface, ConvertClass* Palette, SHPStruct* SHP, int FrameIndex,
 	const Point2D* const Position, const RectangleStruct* const Bounds, BlitterFlags Flags,
@@ -204,6 +211,14 @@ public:
 		ColorStruct* pStartColor, ColorStruct* pEndColor, float fStep, int nColor) R0;
 
 	virtual bool CanBlit() R0;
+
+	// The coordinate points will be modified
+	void DrawDashed(Point2D* pStart, Point2D* pEnd, int color,
+		int offset, bool* pPattern = Surface::PatternLong)
+	{
+		if (Line_In_Bounds(pStart, pEnd, &DSurface::ViewBounds))
+			this->DrawDashedLine_(pStart, pEnd, color, pPattern, offset, false);
+	}
 
 	// Comments from thomassneddon
 	void DrawSHP(ConvertClass* Palette, SHPStruct* SHP, int FrameIndex,
