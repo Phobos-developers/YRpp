@@ -104,7 +104,7 @@ public:
 	void AbortMotion()
 		{ JMP_THIS(0x4DF0D0); }
 
-	bool UpdatePathfinding(CellStruct destinationCell, bool restart, int mode)
+	bool UpdatePathfinding(CellStruct destinationCell, BOOL restart, int mode)
 		{ JMP_THIS(0x4D3920); }
 
 	// Removes the first passenger and updates the Gunner.
