@@ -4,15 +4,32 @@
 #include <GeneralDefinitions.h>
 #include <CCFileClass.h>
 #include <Helpers/CompileTime.h>
-
 struct TacticalSelectableStruct;
 class SideClass;
 class ObjectClass;
+
+#pragma pack(push, 4)
+class MouseThreadClass
+{
+public:
+	bool IsInactive;
+	int CallCount;
+	bool IsStopped;
+	int field_C;
+	unsigned long long Interval;
+	bool IsThreadCalled;
+	HANDLE ThreadHandle;
+	DWORD ThreadID;
+};
+#pragma pack(pop)
+
+static_assert(sizeof(MouseThreadClass) == 0x24);
 
 // things that I can't put into nice meaningful classes
 class Game
 {
 public:
+	DEFINE_REFERENCE(MouseThreadClass, MouseThread, 0xB78138u)
 	// the magic checksum for version validation - linked in StaticInits
 	DEFINE_REFERENCE(DWORD, Savegame_Magic, 0x83D560u)
 
