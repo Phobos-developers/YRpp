@@ -302,46 +302,26 @@ struct VoxelCacheStruct
 
 struct MainVoxelIndexKey
 {
-public:
 	unsigned FrameIndex : 5;
-	unsigned RampType : 5;
-private:
-	unsigned bitfield_10 : 6;
-public:
+	unsigned BodyFacing : 5;
+	unsigned RampType : 6;
 	unsigned UseAuxVoxel : 1; // !(!pUnit->Type->NoSpawnAlt || pUnit->SpawnManager->Draw_State())
-private:
-	unsigned bitfield_17 : 15;
+	unsigned Reserved : 15;
 };
 
-struct TurretWeaponVoxelIndexKey
+struct MinorVoxelIndexKey
 {
-public:
-	unsigned Facing : 5;
-	unsigned HasTurretOffset : 5;
-private:
-	unsigned bitfield_10 : 6;
-public:
-	unsigned FrameIndex : 8;
-	unsigned TurretWeaponIndex : 8;
+	unsigned TurretFacing : 5;
+	unsigned BodyFacing : 5; // Reset to 0 when TurretOffset=0
+	unsigned RampType : 6;
+	unsigned TurretFrameIndex : 8;
+	unsigned TurretWeaponIndex : 8; // Not set if no turret but have barrel
 };
 
 struct ShadowVoxelIndexKey
 {
 public:
 	unsigned Data : 32;
-};
-
-struct TurretBarrelVoxelIndexKey
-{
-public:
-	unsigned Facing : 5;
-	unsigned HasTurretOffset : 5;
-private:
-	unsigned bitfield_10 : 6;
-public:
-	unsigned FrameIndex : 8;
-private:
-	unsigned bitfield_24 : 8;
 };
 
 struct ReservedVoxelIndexKey
@@ -376,12 +356,10 @@ union VoxelIndexKey
 		Value = -1;
 	}
 
-	MainVoxelIndexKey MainVoxel;
-	TurretWeaponVoxelIndexKey TurretWeapon;
+	MainVoxelIndexKey MainVoxel; // For body to use
+	MinorVoxelIndexKey MinorVoxel; // For turret/barrel to use
 	ShadowVoxelIndexKey Shadow;
-	TurretBarrelVoxelIndexKey TurretBarrel;
 	ReservedVoxelIndexKey Reserved;
-private:
 	int Value;
 };
 
