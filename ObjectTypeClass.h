@@ -115,7 +115,7 @@ public:
 	int            LineTrailColorDecrement;
 
 	IndexClass<MainVoxelIndexKey, VoxelCacheStruct*> VoxelMainCache;
-	IndexClass<TurretWeaponVoxelIndexKey, VoxelCacheStruct*> VoxelTurretWeaponCache;
+	IndexClass<MinorVoxelIndexKey, VoxelCacheStruct*> VoxelTurretWeaponCache;
 	IndexClass<ShadowVoxelIndexKey, VoxelCacheStruct*> VoxelShadowCache;
-	IndexClass<TurretBarrelVoxelIndexKey, VoxelCacheStruct*> VoxelTurretBarrelCache;
+	IndexClass<MinorVoxelIndexKey, VoxelCacheStruct*> VoxelTurretBarrelCache;
 };
