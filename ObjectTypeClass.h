@@ -114,8 +114,8 @@ public:
 	PROTECTED_PROPERTY(BYTE, align_23E[2]);
 	int            LineTrailColorDecrement;
 
-	IndexClass<MainVoxelIndexKey, VoxelCacheStruct*> VoxelMainCache;
-	IndexClass<MinorVoxelIndexKey, VoxelCacheStruct*> VoxelTurretWeaponCache;
+	IndexClass<VoxelIndexKey, VoxelCacheStruct*> VoxelMainCache;
+	IndexClass<VoxelIndexKey, VoxelCacheStruct*> VoxelTurretWeaponCache;
 	IndexClass<ShadowVoxelIndexKey, VoxelCacheStruct*> VoxelShadowCache;
-	IndexClass<MinorVoxelIndexKey, VoxelCacheStruct*> VoxelTurretBarrelCache;
+	IndexClass<VoxelIndexKey, VoxelCacheStruct*> VoxelTurretBarrelCache;
 };
