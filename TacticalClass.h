@@ -6,15 +6,16 @@
 #include <ColorScheme.h>
 #include <Helpers/CompileTime.h>
 
+class ObjectClass;
+class DSurface;
+class CellClass;
+
 struct TacticalSelectableStruct
 {
-	TechnoClass* Techno;
+	ObjectClass* Object;
 	int X;
 	int Y;
 };
-
-class DSurface;
-class CellClass;
 
 class NOVTABLE TacticalClass : public AbstractClass
 {
