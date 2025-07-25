@@ -528,6 +528,18 @@ public:
 	void RecalculateSubZones(CellStruct const& cell)
 	{ JMP_THIS(0x584550); }
 
+	void RepairWoodBridgeAt(CellStruct const& cell)
+	{ JMP_THIS(0x570050); }
+
+	void RepairConcreteBridgeAt(CellStruct const& cell)
+	{ JMP_THIS(0x573540); }
+
+	void DestroyWoodBridgeAt(CellStruct const& cell)
+	{ JMP_THIS(0x574C20); }
+
+	void DestroyConcreteBridgeAt(CellStruct const& cell)
+	{ JMP_THIS(0x574000); }
+
 
 protected:
 	//Constructor
