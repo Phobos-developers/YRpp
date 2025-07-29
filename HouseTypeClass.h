@@ -35,11 +35,11 @@ public:
 
 	//helpers
 	HouseTypeClass* FindParentCountry() const {
-		return HouseTypeClass::Find(this->ParentCountry);
+		return HouseTypeClass::Find(this->CountryName);
 	}
 
 	int FindParentCountryIndex() const {
-		return HouseTypeClass::FindIndexOfName(this->ParentCountry);
+		return HouseTypeClass::FindIndexOfName(this->CountryName);
 	}
 
 	static signed int __fastcall FindIndexOfName(const char *name)
@@ -61,7 +61,7 @@ protected:
 
 public:
 
-	FixedString<25> ParentCountry;
+	FixedString<25> CountryName;
 	PROTECTED_PROPERTY(BYTE, align_B1[3]);
 	int            ArrayIndex;
 	int            ArrayIndex2; //dunno why
