@@ -1,53 +1,32 @@
 #pragma once
 
 #include <ScenarioClass.h>
+#include <QueueClass.h>
 #include <TargetClass.h>
 #include <Unsorted.h>
 
 #pragma pack(push, 1)
-
-class EventClass;
-
-template<size_t Length>
-struct EventList
-{
-public:
-	int Count;
-	int Head;
-	int Tail;
-	EventClass List[Length];
-	int Timings[Length];
-};
-
 class EventClass
 {
 public:
 	DEFINE_ARRAY_REFERENCE(const char*, [47], EventNames, 0x0082091C)
 
-	DEFINE_REFERENCE(EventList<0x80>, OutList, 0x00A802C8)
-	DEFINE_REFERENCE(EventList<0x4000>, DoList, 0x008B41F8)
+	enum { MAX_EVENTS = 128 };
 
-	// If the event is a MegaMission, then add it to this list
-	DEFINE_REFERENCE(EventList<0x100>, MegaMissionList, 0x00A83ED0)
+	DEFINE_REFERENCE((QueueClass<EventClass, MAX_EVENTS>), OutList, 0x00A802C8)
+	DEFINE_REFERENCE((QueueClass<EventClass, MAX_EVENTS * 128>), DoList, 0x008B41F8)
+
+	// Seems to be some queue used internally, not added to from outside Execute_DoList
+	//DEFINE_REFERENCE((QueueClass<EventClass, MAX_EVENTS * 2>), SomeList, 0x00A83ED0)
 
 	// this points to CRCs from 0x100 last frames
 	DEFINE_ARRAY_REFERENCE(DWORD, [256], LatestFramesCRC, 0x00B04474)
 	DEFINE_REFERENCE(DWORD, CurrentFrameCRC, 0x00AC51FC)
 
+	[[deprecated("Use OutList.Add() instead.")]]
 	static bool AddEvent(const EventClass& event)
 	{
-		if (OutList.Count >= 128)
-			return false;
-
-		OutList.List[OutList.Tail] = event;
-
-#pragma warning(suppress: 4996)
-		OutList.Timings[OutList.Tail] = static_cast<int>(Imports::TimeGetTime()());
-
-		++OutList.Count;
-		OutList.Tail = (LOBYTE(OutList.Tail) + 1) & 127;
-
-		return true;
+		return OutList.Add(event);
 	}
 
 	explicit EventClass(int houseIndex, EventType eventType)

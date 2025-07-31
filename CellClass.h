@@ -381,6 +381,9 @@ public:
 	bool IsClearToMove(SpeedType speedType, bool ignoreInfantry, bool ignoreVehicles, int zone, MovementZone movementZone, int level, bool isBridge)
 		{ JMP_THIS(0x4834A0); }
 
+	void DamageWall(int damage)
+		{ JMP_THIS(0x480CB0); }
+
 protected:
 	//Constructor
 	CellClass() noexcept
