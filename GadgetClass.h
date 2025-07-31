@@ -30,7 +30,7 @@ class NOVTABLE GadgetClass : public LinkClass
 public:
 
 	//Destructor
-	virtual ~GadgetClass() RX;
+	virtual ~GadgetClass() override { JMP_THIS(0x4E1390); }
 
 	//LinkClass
 	virtual GadgetClass* GetNext() override { JMP_THIS(0x4E14A0); }

@@ -7,7 +7,7 @@ class LinkClass
 {
 public:
 	//Destructor
-	virtual ~LinkClass() RX;
+	virtual ~LinkClass() { JMP_THIS(0x5565A0); }
 
 	//LinkClass
 	virtual LinkClass* GetNext() { JMP_THIS(0x556620); }
