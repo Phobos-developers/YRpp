@@ -894,6 +894,7 @@ enum class InfDeath : unsigned int
 
 enum class LandType : int
 {
+	None = -1,
 	Clear = 0,
 	Road = 1,
 	Water = 2,
