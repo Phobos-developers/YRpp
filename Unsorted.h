@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 #include <ArrayClasses.h>
 #include <GeneralDefinitions.h>
@@ -29,6 +29,8 @@ static_assert(sizeof(MouseThreadClass) == 0x24);
 class Game
 {
 public:
+	DEFINE_REFERENCE(bool, IsReadingAudioFile, 0xB04BECu)
+
 	DEFINE_REFERENCE(MouseThreadClass, MouseThread, 0xB78138u)
 	// the magic checksum for version validation - linked in StaticInits
 	DEFINE_REFERENCE(DWORD, Savegame_Magic, 0x83D560u)
