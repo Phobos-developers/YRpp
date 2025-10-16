@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 #include <ArrayClasses.h>
 #include <GameModeOptionsClass.h>
@@ -6,7 +6,7 @@
 #include <IPX.h>
 #include <MPGameModeClass.h>
 #include <winsock.h>
-
+#include <VersionClass.h>
 #include <Helpers/CompileTime.h>
 
 struct SessionOptionsClass
@@ -94,7 +94,7 @@ public:
 	DWORD unknown_08;
 	DWORD unknown_0C;
 	DWORD unknown_10;
-	DWORD unknown_14;
+	CommProtocolType CommProtocol;
 	GameModeOptionsClass Config;
 	DWORD UniqueID;
 	char Handle[20];
