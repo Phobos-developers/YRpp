@@ -181,7 +181,7 @@ public:
 
 
 		//exit
-		static [[noreturn]] void __cdecl exit(int Code)
+		[[noreturn]] static void __cdecl exit(int Code)
 			{ JMP_STD(0x7CBDDC); }
 
 		_onexit_t __cdecl onexit(_onexit_t Func)
