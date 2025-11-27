@@ -17,9 +17,9 @@ public:
 	DEFINE_REFERENCE((QueueClass<EventClass, MAX_EVENTS * 128>), DoList, 0x008B41F8)
 
 	DEFINE_REFERENCE((QueueClass<EventClass, MAX_EVENTS * 2>), MegaMissionList, 0x00A83ED0)
-	// 8 houses, 8-time cache squad
-	DEFINE_ARRAY_REFERENCE(DWORD, [8 * 8], MegaMissionUnitNum, 0x00AC50FC)
-	DEFINE_ARRAY_REFERENCE(TargetClass, [MAX_EVENTS * 8 * 8], MegaMissionCompressWhom, 0x00AFA468)
+	// 8 houses, 8-time cache targets
+	DEFINE_ARRAY_REFERENCE(DWORD, [8 * 8], MegaMissionTargetNum, 0x00AC50FC)
+	DEFINE_ARRAY_REFERENCE(TargetClass, [8 * 8][MAX_EVENTS], MegaMissionTargets, 0x00AFA468)
 
 	// this points to CRCs from 0x100 last frames
 	DEFINE_ARRAY_REFERENCE(DWORD, [256], LatestFramesCRC, 0x00B04474)
