@@ -30,6 +30,12 @@ public:
 	virtual AbstractType WhatAmI() const RT(AbstractType);
 	virtual int Size() const R0;
 
+	ParticleClass* SpawnParticle(const CoordStruct& coords1, const CoordStruct& coords2)
+		{ JMP_THIS(0x62E380); }
+
+	ParticleClass* SpawnParticle(ParticleTypeClass* pType, const CoordStruct& coords)
+		{ JMP_THIS(0x62E430); }
+
 	//Constructor
 	ParticleSystemClass(
 		ParticleSystemTypeClass* pParticleSystemType,
