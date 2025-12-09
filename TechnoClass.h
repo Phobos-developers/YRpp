@@ -196,6 +196,9 @@ public:
 	//ObjectClass
 	virtual bool Limbo() override JMP_THIS(0x6F6AC0);
 
+	virtual void Flash(int duration) override JMP_THIS(0x6F9DD0);
+	virtual bool Select() override JMP_THIS(0x6FBFA0);
+
 	//TechnoClass
 	virtual bool IsUnitFactory() const R0;
 	virtual bool IsCloakable() const R0;
