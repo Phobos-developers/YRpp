@@ -67,6 +67,8 @@ public:
 		{ JMP_THIS(0x472160); }
 	void DecideUnitFate(TechnoClass *Unit)
 		{ JMP_THIS(0x4723B0); }
+	int GetControlledCount()
+		{ JMP_THIS(0x4722D0); }
 	HouseClass* GetOriginalOwner(TechnoClass *Unit) const
 		{ JMP_THIS(0x4722F0); }
 
