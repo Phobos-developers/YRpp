@@ -270,7 +270,7 @@ public:
 	//Constructor
 	TActionClass() noexcept
 		: TActionClass(noinit_t())
-	{ JMP_THIS(0x71E6A0); }
+	{ JMP_THIS(0x6DD000); }
 
 protected:
 	explicit __forceinline TActionClass(noinit_t) noexcept
