@@ -48,8 +48,8 @@ public:
 	void FreeAll()
 		{ JMP_THIS(0x472140); }
 
-	int NumControlNodes() const
-		{ return ControlNodes.Count; }
+	int GetControlledCount()
+		{ JMP_THIS(0x4722D0); }
 
 	bool CanCapture(TechnoClass *Target) const
 		{ JMP_THIS(0x471C90); }
