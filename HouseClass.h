@@ -744,6 +744,9 @@ public:
 	void CalculateCostMultipliers()
 		{ JMP_THIS(0x50BF60); }
 
+	double GetArmorMultiplier(TechnoTypeClass* pType)
+		{ JMP_THIS(0x50BD30); }
+
 	void ForceEnd()
 		{ JMP_THIS(0x4FCDC0); }
 
