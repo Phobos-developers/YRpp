@@ -68,7 +68,7 @@ public:
 	virtual BuildingClass* FindNearestDockBuilding(BuildingTypeClass* bType, DWORD dwUnk2, DWORD dwUnk3) const R0;
 	virtual void TryCrushCell(const CellStruct& cell, bool warn) RX;
 	virtual int GetCurrentSpeed() const R0;
-	virtual AbstractClass* vt_entry_53C(DWORD dwUnk) R0;
+	virtual AbstractClass* ApproachTarget(DWORD dwUnk) R0;
 	virtual void vt_entry_540(DWORD dwUnk) RX;
 	virtual void SetSpeedPercentage(double percentage) RX;
 	virtual void vt_entry_548() RX;

@@ -72,6 +72,9 @@ public:
 	void Killed(TechnoClass *Killer, HouseClass * ForcedOwnerHouse = nullptr)
 		{ JMP_THIS(0x6B0AE0); }
 
+	void AllGuard()
+		{ JMP_THIS(0x6B0C80); }
+
 	bool ShouldWakeUpNow()
 		{ JMP_THIS(0x6B1020); }
 
