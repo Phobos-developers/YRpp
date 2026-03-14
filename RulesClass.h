@@ -86,127 +86,127 @@ public:
 	DEFINE_REFERENCE(RulesClass*, Instance, 0x8871E0u)
 
 	// call this for the first INI file only
-	void Init(CCINIClass *pINI)
+	void Init(CCINIClass* pINI)
 		{ JMP_THIS(0x6686C0); }
 
 	// call this instead of Init for the later files (gamemode, map)
 	// reads the generic/list sections like [VehicleTypes] from pINI
 	// doesn't actually load [MTNK] or other list contents' sections
-	void Read_File(CCINIClass *pINI)
+	void Read_File(CCINIClass* pINI)
 		{ JMP_THIS(0x668BF0); }
 
-	bool Read_SpecialWeapons(CCINIClass *pINI)
+	bool Read_SpecialWeapons(CCINIClass* pINI)
 		{ JMP_THIS(0x668FB0); }
 
-	bool Read_AudioVisual(CCINIClass *pINI)
+	bool Read_AudioVisual(CCINIClass* pINI)
 		{ JMP_THIS(0x6691E0); }
 
-	bool Read_CrateRules(CCINIClass *pINI)
+	bool Read_CrateRules(CCINIClass* pINI)
 		{ JMP_THIS(0x66B900); }
 
-	bool Read_CombatDamage(CCINIClass *pINI)
+	bool Read_CombatDamage(CCINIClass* pINI)
 		{ JMP_THIS(0x66BBB0); }
 
-	bool Read_Radiation(CCINIClass *pINI)
+	bool Read_Radiation(CCINIClass* pINI)
 		{ JMP_THIS(0x66CF70); }
 
-	bool Read_ElevationModel(CCINIClass *pINI)
+	bool Read_ElevationModel(CCINIClass* pINI)
 		{ JMP_THIS(0x66D150); }
 
-	bool Read_WallModel(CCINIClass *pINI)
+	bool Read_WallModel(CCINIClass* pINI)
 		{ JMP_THIS(0x66D1F0); }
 
-	bool Read_Difficulty(CCINIClass *pINI)
+	bool Read_Difficulty(CCINIClass* pINI)
 		{ JMP_THIS(0x66D270); }
 
-	bool Read_Colors(CCINIClass *pINI)
+	bool Read_Colors(CCINIClass* pINI)
 		{ JMP_THIS(0x66D3A0); }
 
-	bool Read_ColorAdd(CCINIClass *pINI)
+	bool Read_ColorAdd(CCINIClass* pINI)
 		{ JMP_THIS(0x66D480); }
 
-	bool Read_General(CCINIClass *pINI)
+	bool Read_General(CCINIClass* pINI)
 		{ JMP_THIS(0x66D530); }
 
-	bool Read_MultiplayerDialogSettings(CCINIClass *pINI)
+	bool Read_MultiplayerDialogSettings(CCINIClass* pINI)
 		{ JMP_THIS(0x671EA0); }
 
-	bool Read_Maximums(CCINIClass *pINI)
+	bool Read_Maximums(CCINIClass* pINI)
 		{ JMP_THIS(0x672230); }
 
-	bool Read_InfantryTypes(CCINIClass *pINI)
+	bool Read_InfantryTypes(CCINIClass* pINI)
 		{ JMP_THIS(0x672280); }
 
-	bool Read_Countries(CCINIClass *pINI)
+	bool Read_Countries(CCINIClass* pINI)
 		{ JMP_THIS(0x6722F0); }
 
-	bool Read_VehicleTypes(CCINIClass *pINI)
+	bool Read_VehicleTypes(CCINIClass* pINI)
 		{ JMP_THIS(0x672360); }
 
-	bool Read_AircraftTypes(CCINIClass *pINI)
+	bool Read_AircraftTypes(CCINIClass* pINI)
 		{ JMP_THIS(0x6723D0); }
 
-	bool Read_Sides(CCINIClass *pINI)
+	bool Read_Sides(CCINIClass* pINI)
 		{ JMP_THIS(0x672440); }
 
-	bool Read_SuperWeaponTypes(CCINIClass *pINI)
+	bool Read_SuperWeaponTypes(CCINIClass* pINI)
 		{ JMP_THIS(0x6725F0); }
 
-	bool Read_BuildingTypes(CCINIClass *pINI)
+	bool Read_BuildingTypes(CCINIClass* pINI)
 		{ JMP_THIS(0x672660); }
 
-	bool Read_TerrainTypes(CCINIClass *pINI)
+	bool Read_TerrainTypes(CCINIClass* pINI)
 		{ JMP_THIS(0x6726D0); }
 
-	bool Read_Teams_Obsolete(CCINIClass *pINI)
+	bool Read_Teams_Obsolete(CCINIClass* pINI)
 		{ JMP_THIS(0x672740); }
 
-	bool Read_SmudgeTypes(CCINIClass *pINI)
+	bool Read_SmudgeTypes(CCINIClass* pINI)
 		{ JMP_THIS(0x6727D0); }
 
-	bool Read_OverlayTypes(CCINIClass *pINI)
+	bool Read_OverlayTypes(CCINIClass* pINI)
 		{ JMP_THIS(0x672840); }
 
-	bool Read_Animations(CCINIClass *pINI)
+	bool Read_Animations(CCINIClass* pINI)
 		{ JMP_THIS(0x6728B0); }
 
-	bool Read_VoxelAnims(CCINIClass *pINI)
+	bool Read_VoxelAnims(CCINIClass* pINI)
 		{ JMP_THIS(0x672920); }
 
-	bool Read_Warheads(CCINIClass *pINI)
+	bool Read_Warheads(CCINIClass* pINI)
 		{ JMP_THIS(0x672990); }
 
-	bool Read_Particles(CCINIClass *pINI)
+	bool Read_Particles(CCINIClass* pINI)
 		{ JMP_THIS(0x672A00); }
 
-	bool Read_ParticleSystems(CCINIClass *pINI)
+	bool Read_ParticleSystems(CCINIClass* pINI)
 		{ JMP_THIS(0x672A70); }
 
-	bool Read_AI(CCINIClass *pINI)
+	bool Read_AI(CCINIClass* pINI)
 		{ JMP_THIS(0x672AE0); }
 
-	bool Read_Powerups(CCINIClass *pINI)
+	bool Read_Powerups(CCINIClass* pINI)
 		{ JMP_THIS(0x673E80); }
 
-	bool Read_LandCharacteristics(CCINIClass *pINI)
+	bool Read_LandCharacteristics(CCINIClass* pINI)
 		{ JMP_THIS(0x674000); }
 
-	bool Read_IQ(CCINIClass *pINI)
+	bool Read_IQ(CCINIClass* pINI)
 		{ JMP_THIS(0x674240); }
 
-	bool Read_JumpjetControls(CCINIClass *pINI)
+	bool Read_JumpjetControls(CCINIClass* pINI)
 		{ JMP_THIS(0x6743D0); }
 
-	bool Read_Difficulties(CCINIClass *pINI)
+	bool Read_Difficulties(CCINIClass* pINI)
 		{ JMP_THIS(0x674500); }
 
-	bool Read_Movies(CCINIClass *pINI)
+	bool Read_Movies(CCINIClass* pINI)
 		{ JMP_THIS(0x674550); }
 
-	bool Read_AdvancedCommandBar(CCINIClass *pINI)
+	bool Read_AdvancedCommandBar(CCINIClass* pINI)
 		{ JMP_THIS(0x674650); }
 
-	bool LoadTypesFromINI(CCINIClass *pINI)
+	bool LoadTypesFromINI(CCINIClass* pINI)
 		{ JMP_THIS(0x679A10); }
 
 	void PointerGotInvalid(AbstractClass* pInvalid, bool removed)

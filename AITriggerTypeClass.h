@@ -51,7 +51,7 @@ public:
 	virtual AbstractType WhatAmI() const RT(AbstractType);
 	virtual int Size() const R0;
 
-	static bool LoadFromINIList(CCINIClass *pINI)
+	static bool LoadFromINIList(CCINIClass* pINI)
 		{ JMP_STD(0x41F2E0); }
 
 	// Global == saving into AI.ini as opposed to map?

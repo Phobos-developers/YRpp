@@ -79,6 +79,6 @@ public:
 	const char* GetFilename() const
 		{ JMP_THIS(0x753380) }
 
-	bool LoadFromINI(CCINIClass *pINI)
+	bool LoadFromINI(CCINIClass* pINI)
 		{ JMP_THIS(0x752DB0) }
 };

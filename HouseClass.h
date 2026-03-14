@@ -438,7 +438,7 @@ public:
 		return FindBySideName(GameStrings::Civilian);
 	}
 
-	static void __fastcall LoadFromINIList(CCINIClass *pINI)
+	static void __fastcall LoadFromINIList(CCINIClass* pINI)
 		{ JMP_STD(0x5009B0); }
 
 	int GetSpawnPosition() const {
