@@ -95,116 +95,119 @@ public:
 	void Read_File(CCINIClass *pINI)
 		{ JMP_THIS(0x668BF0); }
 
-	void Read_SpecialWeapons(CCINIClass *pINI)
+	bool Read_SpecialWeapons(CCINIClass *pINI)
 		{ JMP_THIS(0x668FB0); }
 
-	void Read_AudioVisual(CCINIClass *pINI)
+	bool Read_AudioVisual(CCINIClass *pINI)
 		{ JMP_THIS(0x6691E0); }
 
-	void Read_CrateRules(CCINIClass *pINI)
+	bool Read_CrateRules(CCINIClass *pINI)
 		{ JMP_THIS(0x66B900); }
 
-	void Read_CombatDamage(CCINIClass *pINI)
+	bool Read_CombatDamage(CCINIClass *pINI)
 		{ JMP_THIS(0x66BBB0); }
 
-	void Read_Radiation(CCINIClass *pINI)
+	bool Read_Radiation(CCINIClass *pINI)
 		{ JMP_THIS(0x66CF70); }
 
-	void Read_ElevationModel(CCINIClass *pINI)
+	bool Read_ElevationModel(CCINIClass *pINI)
 		{ JMP_THIS(0x66D150); }
 
-	void Read_WallModel(CCINIClass *pINI)
+	bool Read_WallModel(CCINIClass *pINI)
 		{ JMP_THIS(0x66D1F0); }
 
-	void Read_Difficulty(CCINIClass *pINI)
+	bool Read_Difficulty(CCINIClass *pINI)
 		{ JMP_THIS(0x66D270); }
 
-	void Read_Colors(CCINIClass *pINI)
+	bool Read_Colors(CCINIClass *pINI)
 		{ JMP_THIS(0x66D3A0); }
 
-	void Read_ColorAdd(CCINIClass *pINI)
+	bool Read_ColorAdd(CCINIClass *pINI)
 		{ JMP_THIS(0x66D480); }
 
-	void Read_General(CCINIClass *pINI)
+	bool Read_General(CCINIClass *pINI)
 		{ JMP_THIS(0x66D530); }
 
-	void Read_MultiplayerDialogSettings(CCINIClass *pINI)
+	bool Read_MultiplayerDialogSettings(CCINIClass *pINI)
 		{ JMP_THIS(0x671EA0); }
 
-	void Read_Maximums(CCINIClass *pINI)
+	bool Read_Maximums(CCINIClass *pINI)
 		{ JMP_THIS(0x672230); }
 
-	void Read_InfantryTypes(CCINIClass *pINI)
+	bool Read_InfantryTypes(CCINIClass *pINI)
 		{ JMP_THIS(0x672280); }
 
-	void Read_Countries(CCINIClass *pINI)
+	bool Read_Countries(CCINIClass *pINI)
 		{ JMP_THIS(0x6722F0); }
 
-	void Read_VehicleTypes(CCINIClass *pINI)
+	bool Read_VehicleTypes(CCINIClass *pINI)
 		{ JMP_THIS(0x672360); }
 
-	void Read_AircraftTypes(CCINIClass *pINI)
+	bool Read_AircraftTypes(CCINIClass *pINI)
 		{ JMP_THIS(0x6723D0); }
 
-	void Read_Sides(CCINIClass *pINI)
+	bool Read_Sides(CCINIClass *pINI)
 		{ JMP_THIS(0x672440); }
 
-	void Read_SuperWeaponTypes(CCINIClass *pINI)
+	bool Read_SuperWeaponTypes(CCINIClass *pINI)
 		{ JMP_THIS(0x6725F0); }
 
-	void Read_BuildingTypes(CCINIClass *pINI)
+	bool Read_BuildingTypes(CCINIClass *pINI)
 		{ JMP_THIS(0x672660); }
 
-	void Read_TerrainTypes(CCINIClass *pINI)
+	bool Read_TerrainTypes(CCINIClass *pINI)
 		{ JMP_THIS(0x6726D0); }
 
-	void Read_Teams_obsolete(CCINIClass *pINI)
+	bool Read_Teams_Obsolete(CCINIClass *pINI)
 		{ JMP_THIS(0x672740); }
 
-	void Read_SmudgeTypes(CCINIClass *pINI)
+	bool Read_SmudgeTypes(CCINIClass *pINI)
 		{ JMP_THIS(0x6727D0); }
 
-	void Read_OverlayTypes(CCINIClass *pINI)
+	bool Read_OverlayTypes(CCINIClass *pINI)
 		{ JMP_THIS(0x672840); }
 
-	void Read_Animations(CCINIClass *pINI)
+	bool Read_Animations(CCINIClass *pINI)
 		{ JMP_THIS(0x6728B0); }
 
-	void Read_VoxelAnims(CCINIClass *pINI)
+	bool Read_VoxelAnims(CCINIClass *pINI)
 		{ JMP_THIS(0x672920); }
 
-	void Read_Warheads(CCINIClass *pINI)
+	bool Read_Warheads(CCINIClass *pINI)
 		{ JMP_THIS(0x672990); }
 
-	void Read_Particles(CCINIClass *pINI)
+	bool Read_Particles(CCINIClass *pINI)
 		{ JMP_THIS(0x672A00); }
 
-	void Read_ParticleSystems(CCINIClass *pINI)
+	bool Read_ParticleSystems(CCINIClass *pINI)
 		{ JMP_THIS(0x672A70); }
 
-	void Read_AI(CCINIClass *pINI)
+	bool Read_AI(CCINIClass *pINI)
 		{ JMP_THIS(0x672AE0); }
 
-	void Read_Powerups(CCINIClass *pINI)
+	bool Read_Powerups(CCINIClass *pINI)
 		{ JMP_THIS(0x673E80); }
 
-	void Read_LandCharacteristics(CCINIClass *pINI)
+	bool Read_LandCharacteristics(CCINIClass *pINI)
 		{ JMP_THIS(0x674000); }
 
-	void Read_IQ(CCINIClass *pINI)
+	bool Read_IQ(CCINIClass *pINI)
 		{ JMP_THIS(0x674240); }
 
-	void Read_JumpjetControls(CCINIClass *pINI)
+	bool Read_JumpjetControls(CCINIClass *pINI)
 		{ JMP_THIS(0x6743D0); }
 
-	void Read_Difficulties(CCINIClass *pINI)
+	bool Read_Difficulties(CCINIClass *pINI)
 		{ JMP_THIS(0x674500); }
 
-	void Read_Movies(CCINIClass *pINI)
+	bool Read_Movies(CCINIClass *pINI)
 		{ JMP_THIS(0x674550); }
 
-	void Read_AdvancedCommandBar(CCINIClass *pINI)
+	bool Read_AdvancedCommandBar(CCINIClass *pINI)
 		{ JMP_THIS(0x674650); }
+
+	bool LoadTypesFromINI(CCINIClass *pINI)
+		{ JMP_THIS(0x679A10); }
 
 	void PointerGotInvalid(AbstractClass* pInvalid, bool removed)
 		{ JMP_THIS(0x678850); }
