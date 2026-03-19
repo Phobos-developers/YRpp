@@ -151,7 +151,7 @@ public:
 		}
 	}
 
-	explicit Wstring_base<TChar, TCharTraits>(const My_Type& another) noexcept : Wstring_base<TChar, TCharTraits> {}
+	Wstring_base<TChar, TCharTraits>(const My_Type& another) noexcept : Wstring_base<TChar, TCharTraits> {}
 	{
 		if (another.Buffer)
 		{
