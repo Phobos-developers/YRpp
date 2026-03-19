@@ -40,7 +40,7 @@ struct CharTrait
 		return strncat(_Dest, _Source, _Count);
 	}
 
-	char* Concat(char* _Destination, const char* _Source, size_t _Count)
+	char* Concat(char* _Destination, const char* _Source)
 	{
 		return strcat(_Destination, _Source);
 	}
@@ -101,7 +101,7 @@ struct WCharTrait
 		return wcsncat(_Dest, _Source, _Count);
 	}
 
-	wchar_t* Concat(wchar_t* _Destination, const wchar_t* _Source, size_t _Count)
+	wchar_t* Concat(wchar_t* _Destination, const wchar_t* _Source)
 	{
 		return wcscat(_Destination, _Source);
 	}
