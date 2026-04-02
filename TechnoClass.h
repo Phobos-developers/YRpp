@@ -296,7 +296,7 @@ public:
 	virtual int GetSecondaryWeaponIndex() const R0;
 	virtual int IsNotSprayAttack2() const R0;
 	virtual WeaponStruct* GetDeployWeapon() const R0;
-	virtual WeaponStruct* GetTurretWeapon() const R0;
+	virtual WeaponStruct* GetTurretWeapon() const JMP_THIS(0x70E1A0);
 	virtual WeaponStruct* GetWeapon(int nWeaponIndex) const R0;
 	virtual bool HasTurret() const R0;
 	virtual bool CanOccupyFire() const R0;
