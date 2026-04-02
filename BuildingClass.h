@@ -244,6 +244,9 @@ public:
 	bool CanBeOccupiedBy(InfantryClass* pInfantry) const
 		{ JMP_THIS(0x457CE0); }
 
+	int GetRadialIndicatorRange() const
+		{ JMP_THIS(0x4566B0); }
+
 	//Constructor
 	BuildingClass(BuildingTypeClass* pType, HouseClass* pOwner) noexcept
 		: BuildingClass(noinit_t())
