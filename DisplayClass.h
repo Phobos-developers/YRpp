@@ -17,8 +17,11 @@ public:
 		{ JMP_THIS(0x692300); }
 
 	// the foundation for placement with green/red
-	void  SetActiveFoundation(const CellStruct *Coords)
+	void SetActiveFoundation(const CellStruct *Coords)
 		{ JMP_THIS(0x4A8BF0); }
+
+	void SetBusyFoundation(const CellStruct *Coords)
+		{ JMP_THIS(0x4A8D50); }
 
 	// Building Adjacent etc. check. Pretty much always called with:
 	// foundationData = DisplayClass::CurrentFoundation_Data

@@ -40,7 +40,7 @@ public:
 		return *GetCrdOnRadar(pOutBuffer, &crd, bRestrictToBound);
 	}
 
-	void RefreshCrd(Point2D* pCrd)
+	void RefreshCrd(const Point2D& pCrd)
 	{
 		JMP_THIS(0x6562D0);
 	}
@@ -64,7 +64,7 @@ public:
 	DWORD unknown_1204;
 	DWORD unknown_1208;
 	RectangleStruct unknown_rect_120C;
-	DWORD unknown_121C;
+	DSurface* unknown_121C;
 	DWORD unknown_1220;
 	DynamicVectorClass<CellStruct> unknown_cells_1124;
 	DWORD unknown_123C;

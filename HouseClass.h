@@ -759,6 +759,12 @@ public:
 	double GetWeedStoragePercentage()
 		{ JMP_THIS(0x4F9750); }
 
+	void UnitFromFactory(AbstractType absType, int arrayIndex, bool isNaval, const CellStruct* pCell)
+		{ JMP_THIS(0x4FB0E0); }
+
+	bool IsValidBaseNode(BaseNodeClass* pBaseNode)
+		{ JMP_THIS(0x50CAD0); }
+
 	bool AISupers()
 		{ JMP_THIS(0x50B1D0); }
 

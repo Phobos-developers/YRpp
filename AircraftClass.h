@@ -49,6 +49,9 @@ public:
 		: AircraftClass(noinit_t())
 	{ JMP_THIS(0x413D20); }
 
+	CellClass* FindNearestDock() const
+		{ JMP_THIS(0x41A160); }
+
 	AbstractClass* FindFireLocation(AbstractClass* pTarget)
 		{ JMP_THIS(0x4197C0); }
 

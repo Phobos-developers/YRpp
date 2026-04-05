@@ -241,6 +241,12 @@ public:
 		return this->AnimStates[static_cast<int>(slot)];
 	}
 
+	bool WeaponFactoryOutsideBusy() const
+		{ JMP_THIS(0x449540); }
+
+	bool CanUpgradeBuilding(const BuildingTypeClass* pType, const HouseClass* pHouse) const
+		{ JMP_THIS(0x452670); }
+
 	bool CanBeOccupiedBy(InfantryClass* pInfantry) const
 		{ JMP_THIS(0x457CE0); }
 

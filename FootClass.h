@@ -127,6 +127,9 @@ public:
 	void ClearNavigationList()
 		{ JMP_THIS(0x4DA1C0); }
 
+	double GetThreatAvoidanceCoefficient() const
+		{ JMP_THIS(0x4DC760); }
+
 	// searches cell, sets destination, and returns whether unit is on that cell
 	bool MoveToTiberium(int radius, bool scanClose = false)
 		{ JMP_THIS(0x4DCFE0); }
@@ -182,7 +185,7 @@ public:
 	bool            HaveAttackMoveTarget; // fighting an enemy on the way
 	TeamClass*      Team;
 	FootClass*      NextTeamMember;        //next unit in team
-	DWORD           unknown_5DC;
+	AbstractClass*  unknown_5DC;
 	int             PathDirections[24]; // list of directions to move in next, like tube directions
 	DECLARE_PROPERTY(CDTimerClass, PathDelayTimer);
 	int             PathWaitTimes;

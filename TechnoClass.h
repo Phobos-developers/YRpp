@@ -265,7 +265,7 @@ public:
 	virtual bool ClickedEvent(EventType event) R0;
 
 	// depending on the mission you click, cells/Target are not always needed
-	virtual bool ClickedMission(Mission Mission, ObjectClass* pTarget, CellClass* TargetCell, CellClass* NearestTargetCellICanEnter) R0;
+	virtual bool ClickedMission(Mission Mission, AbstractClass* pTarget, CellClass* TargetCell, CellClass* NearestTargetCellICanEnter) R0;
 	virtual bool IsUnderEMP() const R0;
 	virtual bool IsParalyzed() const R0;
 	virtual bool CanCheer() const R0;
@@ -563,6 +563,9 @@ public:
 	// mind that this locks up the source too, Magnetron style
 	void ImbueLocomotor(FootClass* target, CLSID clsid)
 	{ JMP_THIS(0x710000); }
+
+	bool IsNearBridge() const
+		{ JMP_THIS(0x703B10); }
 
 	CellStruct* NearbyLocation(CellStruct* pCell, AbstractClass* pDest)
 		{ JMP_THIS(0x703590); }

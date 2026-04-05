@@ -522,11 +522,17 @@ public:
 
 	// Called on wall state updates etc. when the wall HAS been removed.
 	void ResetZones(CellStruct const& cell)
-	{ JMP_THIS(0x56D460); }
+		{ JMP_THIS(0x56D460); }
 
 	// Called on wall state updates etc
 	void RecalculateSubZones(CellStruct const& cell)
-	{ JMP_THIS(0x584550); }
+		{ JMP_THIS(0x584550); }
+
+	int GetCellPathIndex(const CellStruct& cell) const
+		{ JMP_THIS(0x56D3F0); }
+
+	int GetThreatPosedEstimates(HouseClass *pOwner, int level, int fromIdx, int toIdx) const
+		{ JMP_THIS(0x585F40); }
 
 	void RepairWoodBridgeAt(CellStruct const& cell)
 	{ JMP_THIS(0x570050); }
