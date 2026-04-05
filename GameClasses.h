@@ -15,7 +15,6 @@
 #include <MixFileClass.h>
 
 //AbstractClass Tree
-#include <AStarClass.h>
 #include <AircraftClass.h>
 #include <AITriggerTypeClass.h>
 #include <AirstrikeClass.h>
