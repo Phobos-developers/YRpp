@@ -47,7 +47,7 @@ public:
 	virtual int	Size() const R0;
 
 	//ObjectClass
-	virtual void Flash(int duration) override JMP_THIS(0x6F9DD0);
+	virtual void Flash(int duration) override JMP_THIS(0x456E00);
 
 	//MissionClass
 	//TechnoClass
