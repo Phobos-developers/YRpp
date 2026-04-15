@@ -107,6 +107,9 @@ public:
 	bool Scroll(bool up, int column)
 		{ JMP_THIS(0x6A6A00); }
 
+	int SetTab(int tabIndex)
+		{ JMP_THIS(0x6A7590); }
+
 protected:
 	//Constructor
 	SidebarClass() {}	//don't need this

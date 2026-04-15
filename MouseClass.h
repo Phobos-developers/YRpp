@@ -50,9 +50,6 @@ public:
 	void Activate(int control = 1)
 		{ JMP_THIS(0x6D04F0); }
 
-	int SetTab(int tabIndex)
-		{ JMP_THIS(0x6A7590); }
-
 	TabDataClass TabData;
 	CDTimerClass unknown_timer_552C;
 	CDTimerClass InsufficientFundsBlinkTimer;
