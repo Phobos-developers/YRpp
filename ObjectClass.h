@@ -37,6 +37,9 @@ public:
 	//global arrays
 	DEFINE_REFERENCE(DynamicVectorClass<ObjectClass*>, CurrentObjects, 0xA8ECB8u)
 
+	// Frame index LUT used by buildings for turret anim, projectiles etc.
+	DEFINE_ARRAY_REFERENCE(int, [40u], BodyShape, 0x7F4890u)
+
 	//IPersistStream
 	virtual HRESULT __stdcall Load(IStream* pStm) R0;
 

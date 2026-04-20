@@ -130,6 +130,9 @@ public:
 	void AddPassenger(FootClass* pPassenger)
 	{ JMP_THIS(0x4733A0); }
 
+	void RemovePassenger(FootClass* pPassenger)
+	{ JMP_THIS(0x4734B0); }
+
 	FootClass* GetFirstPassenger() const
 	{ return this->FirstPassenger; }
 
