@@ -161,6 +161,48 @@ enum class WWControlType : int
 	Default = 11
 };
 
+enum class WWUIStaticDrawMode : int
+{
+	Text = 0,
+	TypewriterText = 1,
+	PCX = 2,
+	Shape = 3,
+	AnimatedShape = 4
+};
+
+struct WWMovieHandle;
+
+struct WWMovieHandleVTable
+{
+	void(__thiscall* Destructor)(WWMovieHandle* pThis, int deleting);
+	bool(__thiscall* AdvanceFrame)(WWMovieHandle* pThis);
+	bool(__thiscall* Waiting)(WWMovieHandle* pThis);
+	void(__thiscall* Pause)(WWMovieHandle* pThis, int pause);
+	void(__thiscall* Stop)(WWMovieHandle* pThis);
+	bool(__thiscall* FramesLeft)(WWMovieHandle* pThis);
+	void(__thiscall* SetPosition)(WWMovieHandle* pThis, int x, int y);
+	void(__thiscall* SeekToFrame)(WWMovieHandle* pThis, int frame);
+	void(__thiscall* InitSubtitles)(WWMovieHandle* pThis);
+	int(__thiscall* Timing)(WWMovieHandle* pThis);
+	void(__thiscall* Blit)(WWMovieHandle* pThis);
+};
+
+static_assert(sizeof(WWMovieHandleVTable) == 0x2C, "WWMovieHandleVTable size mismatch");
+
+struct WWMovieHandle
+{
+	WWMovieHandleVTable* VTable;
+	bool State;
+	char Padding[3];
+	int Width;
+	int Height;
+	void* Player;
+};
+
+static_assert(sizeof(WWMovieHandle) == 0x14, "WWMovieHandle size mismatch");
+static_assert(offsetof(WWMovieHandle, Width) == 0x8, "WWMovieHandle::Width offset mismatch");
+static_assert(offsetof(WWMovieHandle, Height) == 0xC, "WWMovieHandle::Height offset mismatch");
+
 struct OwnerDrawDialogElement
 {
 	OwnerDrawDialogElement() { JMP_THIS(0x623340); }
@@ -407,6 +449,34 @@ public:
 	int& EditFocusRestorePendingFlag() { return this->FocusRestorePending; }
 	int& EditFocusRestoreReadyFlag() { return this->EditFocusRestoreReady; }
 	int& EditRestoreTabStopFlag() { return reinterpret_cast<int&>(this->LParam); }
+
+	Surface*& StaticCachedBackground() { return this->CacheSurface; }
+	Surface*& StaticImageSurface() { return this->ControlImage; }
+	wchar_t*& StaticText() { return this->TextBuffer; }
+	WWMovieHandle*& StaticMovieHandle() { return reinterpret_cast<WWMovieHandle*&>(this->Unknown_058); }
+	int& StaticLoopMovie() { return this->Unknown_05C; }
+	void*& StaticMovieAuxHandle() { return reinterpret_cast<void*&>(this->Unknown_060); }
+	BitFont*& StaticFont() { return reinterpret_cast<BitFont*&>(this->Font); }
+	WWUIStaticDrawMode& StaticDrawMode() { return reinterpret_cast<WWUIStaticDrawMode&>(this->DrawMode); }
+	ConvertClass*& StaticShapeDrawer() { return reinterpret_cast<ConvertClass*&>(this->BKDrawer); }
+	SHPStruct*& StaticShape() { return reinterpret_cast<SHPStruct*&>(this->CampaignImage); }
+	bool& StaticOwnsShape() { return this->FieldAt<bool>(0x7C); }
+	int& StaticTextRevealCount() { return this->HasCustomTextMetrics; }
+	int& StaticTextRevealDelay() { return this->TextHeightOrOffset; }
+	int& StaticTextRevealStep() { return reinterpret_cast<int&>(this->TextStyleClass); }
+	int& StaticColorAdjust() { return this->TextRenderFlags; }
+	int& StaticSoundIndex() { return this->CharTypedSound; }
+	int& StaticFrameCount() { return this->CurrentFrameHeight; }
+	int& StaticCurrentFrame() { return this->AnimationState; }
+	int& StaticLastFrameTick() { return this->LastTick; }
+	int& StaticFrameDelayMs() { return this->TimerInterval; }
+	HWND& StaticFrameNotifyHwnd() { return reinterpret_cast<HWND&>(this->Unknown_0A4); }
+	bool& StaticAnimationRunning() { return this->AnimationActive; }
+	int& StaticTextFlags() { return this->Unknown_0AC; }
+	bool& StaticFillBackground() { return this->FieldAt<bool>(0xB4); }
+	COLORREF& StaticFillColor() { return reinterpret_cast<COLORREF&>(this->TransitionFlags); }
+	bool& StaticSuppressPaint() { return this->SkipDraw; }
+	COLORREF& StaticTextColor() { return reinterpret_cast<COLORREF&>(this->Unknown_0EC); }
 
 	BitFont*& SliderFont() { return reinterpret_cast<BitFont*&>(this->Font); }
 	int& SliderIsMouseTracking() { return this->DrawItemState; }
@@ -675,6 +745,7 @@ public:
 	static int __fastcall PrintTextFixedLength(unsigned int color, BitFont* pFont, RectangleStruct* pRect, const wchar_t* pText, int length, int horizontalAlign, int verticalAlign, Surface* pSurface, int animPos) { JMP_STD(0x6211D0); }
 	static bool __fastcall CopyDimmedBackground(RectangleStruct* pRect, HWND hWnd, unsigned int dimAlpha) { JMP_STD(0x6214B0); }
 	static void __fastcall BlendGradientRect(RectangleStruct* pRect, Surface* pSurface, unsigned short color, int widthScale) { JMP_STD(0x6217E0); }
+	static WWMovieHandle* __fastcall InitMovieHandle(const char* pMovieName, DSurface* pSurface, RectangleStruct* pBounds) { JMP_STD(0x5C07D0); }
 	static BOOL CALLBACK CollectChildHwndProc(HWND hWnd, LPARAM lParam) { JMP_STD(0x622470); }
 	static BOOL CALLBACK SendTransitionCompleteToCustomTextChildProc(HWND hWnd, LPARAM lParam) { JMP_STD(0x60AA60); }
 	static BOOL CALLBACK InitCompactDialogControlsProc(HWND hWnd, LPARAM lParam) { JMP_STD(0x60AAB0); }
