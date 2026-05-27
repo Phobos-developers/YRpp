@@ -484,6 +484,12 @@ public:
 	bool& OwnerDrawButtonAlternateFrame() { return this->FieldAt<bool>(0xC5); }
 	BitFont*& OwnerDrawButtonFont() { return reinterpret_cast<BitFont*&>(this->Font); }
 
+	int& CheckboxUseNativePaint() { return this->NeedsControlImage; }
+	BitFont*& CheckboxFont() { return reinterpret_cast<BitFont*&>(this->Font); }
+	bool& CheckboxUseExtendedArt() { return this->Unknown_D9; }
+	bool& CheckboxArtVariant() { return this->Unknown_DA; }
+	int& CheckboxCheckState() { return this->DrawItemState; }
+
 	BitFont*& TabFont() { return reinterpret_cast<BitFont*&>(this->Font); }
 
 	BitFont*& SliderFont() { return reinterpret_cast<BitFont*&>(this->Font); }
