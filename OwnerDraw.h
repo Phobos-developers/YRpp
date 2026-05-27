@@ -490,6 +490,9 @@ public:
 	bool& CheckboxArtVariant() { return this->Unknown_DA; }
 	int& CheckboxCheckState() { return this->DrawItemState; }
 
+	BitFont*& RadioFont() { return reinterpret_cast<BitFont*&>(this->Font); }
+	int& RadioCheckState() { return this->DrawItemState; }
+
 	BitFont*& TabFont() { return reinterpret_cast<BitFont*&>(this->Font); }
 
 	BitFont*& SliderFont() { return reinterpret_cast<BitFont*&>(this->Font); }
