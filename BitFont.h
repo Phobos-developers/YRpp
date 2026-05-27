@@ -27,9 +27,19 @@ public:
 			this->Bounds = { 0,0,0,0 };
 	}
 
+	void SetRectangle(LTRBStruct* pRect)
+	{
+		this->SetBounds(pRect);
+	}
+
 	void SetColor(WORD nColor)
 	{
 		this->Color = nColor;
+	}
+
+	void SetClipMode(bool drawClipped)
+	{
+		this->field_41 = drawClipped;
 	}
 
 	void SetField20(int x)

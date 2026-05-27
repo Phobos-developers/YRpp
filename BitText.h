@@ -3,6 +3,7 @@
 #include <YRPP.h>
 
 class BitFont;
+class Surface;
 
 class BitText
 {

@@ -493,6 +493,8 @@ public:
 	BitFont*& RadioFont() { return reinterpret_cast<BitFont*&>(this->Font); }
 	int& RadioCheckState() { return this->DrawItemState; }
 
+	BitFont*& InputFont() { return reinterpret_cast<BitFont*&>(this->Font); }
+
 	BitFont*& TabFont() { return reinterpret_cast<BitFont*&>(this->Font); }
 
 	BitFont*& SliderFont() { return reinterpret_cast<BitFont*&>(this->Font); }
