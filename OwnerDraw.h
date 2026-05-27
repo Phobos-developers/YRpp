@@ -478,6 +478,8 @@ public:
 	bool& StaticSuppressPaint() { return this->SkipDraw; }
 	COLORREF& StaticTextColor() { return reinterpret_cast<COLORREF&>(this->Unknown_0EC); }
 
+	BitFont*& GroupBoxFont() { return reinterpret_cast<BitFont*&>(this->Font); }
+
 	BitFont*& TabFont() { return reinterpret_cast<BitFont*&>(this->Font); }
 
 	BitFont*& SliderFont() { return reinterpret_cast<BitFont*&>(this->Font); }
