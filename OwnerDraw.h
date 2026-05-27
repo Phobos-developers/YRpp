@@ -223,101 +223,153 @@ struct OwnerDrawDialogElement
 	~OwnerDrawDialogElement() { JMP_THIS(0x6233A0); }
 
 	int EnumParam;
-	void* ShortDictNext;
-	int Unknown_008;
-	HWND Hwnd_00C;
+
+private:
+	char TypeSpecific_004[0x0C];
+
+public:
 	Surface* CacheSurface;
 	Surface* ControlImage;
 	Surface* StateImageSurface;
-	int ComboHeightInitialized;
+
+private:
+	int ComboBoxHeightInitialized;
+
+public:
 	int NeedsControlImage;
-	LPARAM Erase1;
+
+private:
+	LPARAM Unknown_024;
+
+public:
 	wchar_t* TextBuffer;
 	int HasText;
-	WPARAM Erase2;
-	void* TextEntries;
+
+private:
+	int NewEditAsciiOnly;
+	char TypeSpecific_034[0x04];
+
+public:
 	int HasFocus;
-	WideWstring* WideString;
-	int Unknown_040;
-	int AnimationStart;
-	int Unknown_048;
-	int Unknown_04C;
-	LPARAM LParam3;
-	int UserDataAux;
-	int Unknown_058;
-	int Unknown_05C;
-	int Unknown_060;
+
+private:
+	WideWstring* NewEditText;
+	int NewEditCaretIndex;
+	int EditTextScrollStart;
+	int NewEditTextLimit;
+	int NewEditCaretBlinkState;
+	wchar_t* NewEditRejectChars;
+	int NewEditStyleFlags;
+	WWMovieHandle* StaticMovieHandle;
+	int StaticLoopMovie;
+	void* StaticMovieAuxHandle;
 	void* Font;
+
+public:
 	WWControlType ControlType;
 	int DialogID;
-	int DrawMode;
-	void* BKDrawer;
-	Surface* CampaignImage;
-	int CampaignImageLoadedFlag;
-	int HasCustomTextMetrics;
-	int TextHeightOrOffset;
-	void* TextStyleClass;
-	int TextRenderFlags;
-	int CharTypedSound;
-	int CurrentFrameHeight;
-	int AnimationState;
-	int LastTick;
-	int TimerInterval;
-	int Unknown_0A4;
-	bool AnimationActive;
-	bool Unknown_A9;
-	bool Unknown_AA;
-	bool Unknown_AB;
-	int Unknown_0AC;
+
+private:
+	WWUIStaticDrawMode StaticDrawMode;
+	ConvertClass* StaticShapeDrawer;
+	SHPStruct* StaticShape;
+	int StaticShapeFlags;
+	int StaticTextRevealCount;
+	int StaticTextRevealDelay;
+	int StaticTextRevealStep;
+	int StaticColorAdjust;
+	int StaticSoundIndex;
+	int StaticFrameCount;
+	int StaticCurrentFrame;
+	int StaticLastFrameTick;
+	int StaticFrameDelayMs;
+	HWND StaticFrameNotifyHwnd;
+	bool StaticAnimationRunning;
+	char Unknown_0A9[0x03];
+	int StaticTextFlags;
+
+public:
 	int LayoutBand;
-	int Unknown_0B4;
-	int TransitionFlags;
+
+private:
+	bool StaticFillBackground;
+	char Unknown_0B5[0x03];
+	COLORREF StaticFillColor;
+
+public:
 	bool SkipDraw;
 	bool HasOpenAnimation;
 	bool HasFadeAnimation;
-	bool Unknown_BF;
+
+private:
+	bool Unknown_0BF;
+
+public:
 	int TooltipVariant;
-	int HoverTimerFlags;
+
+private:
+	bool ButtonTimerActive;
+	bool ButtonAlternateFrame;
+	char Unknown_0C6[0x02];
+
+public:
 	int Alpha;
-	int ComboVisualFlags;
-	int RuntimeFlags;
-	bool Unknown_D4;
+
+private:
+	char TypeSpecific_0CC[0x04];
+	int ComboBoxMaxVisibleDropItems;
+	bool Unknown_0D4;
+
+public:
 	bool HasTopPanelAnimation;
 	bool HasButtonAnimation;
 	bool HasMainScreenAnimation;
 	bool FlagD8;
-	bool Unknown_D9;
-	bool Unknown_DA;
-	bool Unknown_DB;
+
+private:
+	bool CheckboxUseExtendedArt;
+	bool CheckboxArtVariant;
+	bool Unknown_0DB;
+
+public:
 	int ExtraWidth;
 	Surface* DialogBackground;
 	Surface* DialogBackgroundEx;
-	int DrawItemState;
-	int Unknown_0EC;
-	int FocusRestorePending;
-	int EditFocusRestoreReady;
-	LPARAM LParam;
-	WNDPROC PrevWndProc;
-	LPARAM LParam1;
-	LPARAM LParam2;
+
+private:
+	char TypeSpecific_0E8[0x20];
+
+public:
 	int Extra[62];
 
 private:
+	template<typename T>
+	T& FieldAt(size_t offset)
+	{
+		return *reinterpret_cast<T*>(reinterpret_cast<char*>(this) + offset);
+	}
+
+	template<typename T>
+	const T& FieldAt(size_t offset) const
+	{
+		return *reinterpret_cast<const T*>(reinterpret_cast<const char*>(this) + offset);
+	}
+
 	void CopyFrom(const OwnerDrawDialogElement& rhs)
 	{
 		auto* const pOwnedTextBuffer = this->TextBuffer;
-		auto* const pOwnedTextEntries = this->TextEntries;
-		auto* const pOwnedWideString = this->WideString;
+		auto* const pOwnedTextEntries = this->FieldAt<void*>(0x34);
+		auto* const pOwnedWideString = this->FieldAt<WideWstring*>(0x3C);
 
 		std::memcpy(this, &rhs, sizeof(*this));
 
 		this->TextBuffer = pOwnedTextBuffer;
-		this->TextEntries = pOwnedTextEntries;
-		this->WideString = pOwnedWideString;
+		this->FieldAt<void*>(0x34) = pOwnedTextEntries;
+		this->FieldAt<WideWstring*>(0x3C) = pOwnedWideString;
 
 		this->SetTextBufferCopy(rhs.TextBuffer);
-		this->SetTextEntriesCopy(rhs.TextEntries);
-		this->SetWideStringCopy(rhs.WideString);
+		this->SetTextEntriesCopy(rhs.FieldAt<void*>(0x34));
+		this->SetWideStringCopy(rhs.FieldAt<WideWstring*>(0x3C));
 	}
 
 	void ClearTextBuffer()
@@ -343,10 +395,12 @@ private:
 
 	void ClearTextEntries()
 	{
-		while (this->TextEntries)
+		auto& pTextEntries = this->FieldAt<void*>(0x34);
+
+		while (pTextEntries)
 		{
-			auto* const pEntry = static_cast<WWUIComboBoxItem*>(this->TextEntries);
-			this->TextEntries = pEntry->Next;
+			auto* const pEntry = static_cast<WWUIComboBoxItem*>(pTextEntries);
+			pTextEntries = pEntry->Next;
 			YRMemory::Deallocate(pEntry);
 		}
 	}
@@ -354,6 +408,7 @@ private:
 	void SetTextEntriesCopy(void* pSource)
 	{
 		this->ClearTextEntries();
+		auto& pTextEntries = this->FieldAt<void*>(0x34);
 
 		for (auto* pEntry = static_cast<WWUIComboBoxItem*>(pSource); pEntry; pEntry = pEntry->Next)
 		{
@@ -364,23 +419,25 @@ private:
 			if (!pCopy)
 				continue;
 
-			pCopy->Next = static_cast<WWUIComboBoxItem*>(this->TextEntries);
+			pCopy->Next = static_cast<WWUIComboBoxItem*>(pTextEntries);
 			pCopy->ItemData = pEntry->ItemData;
 			pCopy->Text = reinterpret_cast<wchar_t*>(reinterpret_cast<char*>(pCopy) + sizeof(WWUIComboBoxItem));
 			pCopy->IsWideText = pEntry->IsWideText;
 			std::wcscpy(pCopy->Text, pText);
 
-			this->TextEntries = pCopy;
+			pTextEntries = pCopy;
 		}
 	}
 
 	void ClearWideString()
 	{
-		if (this->WideString)
+		auto& pWideString = this->FieldAt<WideWstring*>(0x3C);
+
+		if (pWideString)
 		{
-			this->WideString->~WideWstring();
-			YRMemory::Deallocate(this->WideString);
-			this->WideString = nullptr;
+			pWideString->~WideWstring();
+			YRMemory::Deallocate(pWideString);
+			pWideString = nullptr;
 		}
 	}
 
@@ -395,57 +452,54 @@ private:
 		if (!pCopy)
 			return;
 
-		this->WideString = new (pCopy) WideWstring(*pSource);
+		this->FieldAt<WideWstring*>(0x3C) = new (pCopy) WideWstring(*pSource);
 	}
 
-	template<typename T>
-	T& FieldAt(size_t offset)
-	{
-		return *reinterpret_cast<T*>(reinterpret_cast<char*>(this) + offset);
-	}
+	friend struct OwnerDrawDialogElementLayoutVerifier;
 
-public:
 	struct ScrollBarData
 	{
 		OwnerDrawDialogElement& Data;
 
 		HWND& NotifyHwnd() { return this->Data.FieldAt<HWND>(0x08); }
 		bool& Disabled() { return this->Data.FieldAt<bool>(0xCD); }
-		int& IsMouseTracking() { return this->Data.DrawItemState; }
-		int& IsThumbDragging() { return this->Data.Unknown_0EC; }
-		int& RangeMax() { return this->Data.FocusRestorePending; }
-		int& Position() { return this->Data.EditFocusRestoreReady; }
-		int& UpButtonPressed() { return reinterpret_cast<int&>(this->Data.LParam); }
-		int& DownButtonPressed() { return reinterpret_cast<int&>(this->Data.PrevWndProc); }
-		int& RestoreCaptureToNotifyHwnd() { return reinterpret_cast<int&>(this->Data.LParam1); }
+		int& IsMouseTracking() { return this->Data.FieldAt<int>(0xE8); }
+		int& IsThumbDragging() { return this->Data.FieldAt<int>(0xEC); }
+		int& RangeMax() { return this->Data.FieldAt<int>(0xF0); }
+		int& Position() { return this->Data.FieldAt<int>(0xF4); }
+		int& UpButtonPressed() { return this->Data.FieldAt<int>(0xF8); }
+		int& DownButtonPressed() { return this->Data.FieldAt<int>(0xFC); }
+		int& RestoreCaptureToNotifyHwnd() { return this->Data.FieldAt<int>(0x100); }
 	};
 
 	struct ListBoxData
 	{
 		OwnerDrawDialogElement& Data;
 
-		HWND& ScrollBarHwnd() { return this->Data.Hwnd_00C; }
-		int& ScrollBarWidth() { return reinterpret_cast<int&>(this->Data.ShortDictNext); }
-		WWUIListBoxTextEntry*& TextEntries() { return reinterpret_cast<WWUIListBoxTextEntry*&>(this->Data.TextEntries); }
-		BitFont*& Font() { return reinterpret_cast<BitFont*&>(this->Data.Font); }
-		WWUIIntArray*& ItemData() { return reinterpret_cast<WWUIIntArray*&>(this->Data.DrawItemState); }
-		WWUIIntArray*& SelectionStates() { return reinterpret_cast<WWUIIntArray*&>(this->Data.Unknown_0EC); }
-		int& TopIndex() { return this->Data.FocusRestorePending; }
-		int& CurrentSelection() { return this->Data.EditFocusRestoreReady; }
-		WWUIListBoxColumnArray*& Columns() { return reinterpret_cast<WWUIListBoxColumnArray*&>(this->Data.LParam); }
+		HWND& ScrollBarHwnd() { return this->Data.FieldAt<HWND>(0x0C); }
+		int& ScrollBarWidth() { return this->Data.FieldAt<int>(0x04); }
+		WWUIListBoxTextEntry*& TextEntries() { return this->Data.FieldAt<WWUIListBoxTextEntry*>(0x34); }
+		BitFont*& Font() { return this->Data.FieldAt<BitFont*>(0x64); }
+		WWUIIntArray*& ItemData() { return this->Data.FieldAt<WWUIIntArray*>(0xE8); }
+		WWUIIntArray*& SelectionStates() { return this->Data.FieldAt<WWUIIntArray*>(0xEC); }
+		int& TopIndex() { return this->Data.FieldAt<int>(0xF0); }
+		int& CurrentSelection() { return this->Data.FieldAt<int>(0xF4); }
+		WWUIListBoxColumnArray*& Columns() { return this->Data.FieldAt<WWUIListBoxColumnArray*>(0xF8); }
+		int& SavedFont() { return this->Data.Extra[56]; }
 	};
 
 	struct ComboBoxData
 	{
 		OwnerDrawDialogElement& Data;
 
-		WWUIComboBoxItem*& TextEntries() { return reinterpret_cast<WWUIComboBoxItem*&>(this->Data.TextEntries); }
-		BitFont*& Font() { return reinterpret_cast<BitFont*&>(this->Data.Font); }
+		WWUIComboBoxItem*& TextEntries() { return this->Data.FieldAt<WWUIComboBoxItem*>(0x34); }
+		BitFont*& Font() { return this->Data.FieldAt<BitFont*>(0x64); }
+		int& HeightInitialized() { return this->Data.FieldAt<int>(0x1C); }
 		bool& UseItemColorOverrides() { return this->Data.FieldAt<bool>(0xCC); }
 		bool& UseAlternatePalette() { return this->Data.FieldAt<bool>(0xCD); }
-		int& MaxVisibleDropItems() { return this->Data.RuntimeFlags; }
-		HWND& DropDownHwnd() { return reinterpret_cast<HWND&>(this->Data.EditFocusRestoreReady); }
-		int& CurrentSelection() { return reinterpret_cast<int&>(this->Data.LParam); }
+		int& MaxVisibleDropItems() { return this->Data.FieldAt<int>(0xD0); }
+		HWND& DropDownHwnd() { return this->Data.FieldAt<HWND>(0xF4); }
+		int& CurrentSelection() { return this->Data.FieldAt<int>(0xF8); }
 		int* ItemColorOverrides() { return &this->Data.Extra[2]; }
 	};
 
@@ -453,26 +507,26 @@ public:
 	{
 		OwnerDrawDialogElement& Data;
 
-		WideWstring*& Text() { return this->Data.WideString; }
-		int& CaretIndex() { return this->Data.Unknown_040; }
-		int& ScrollStart() { return this->Data.AnimationStart; }
-		int& TextLimit() { return this->Data.Unknown_048; }
-		int& CaretBlinkState() { return this->Data.Unknown_04C; }
-		wchar_t*& RejectChars() { return reinterpret_cast<wchar_t*&>(this->Data.LParam3); }
-		int& AsciiOnly() { return reinterpret_cast<int&>(this->Data.Erase2); }
-		int& StyleFlags() { return this->Data.UserDataAux; }
-		BitFont*& Font() { return reinterpret_cast<BitFont*&>(this->Data.Font); }
+		WideWstring*& Text() { return this->Data.FieldAt<WideWstring*>(0x3C); }
+		int& CaretIndex() { return this->Data.FieldAt<int>(0x40); }
+		int& ScrollStart() { return this->Data.FieldAt<int>(0x44); }
+		int& TextLimit() { return this->Data.FieldAt<int>(0x48); }
+		int& CaretBlinkState() { return this->Data.FieldAt<int>(0x4C); }
+		wchar_t*& RejectChars() { return this->Data.FieldAt<wchar_t*>(0x50); }
+		int& AsciiOnly() { return this->Data.FieldAt<int>(0x30); }
+		int& StyleFlags() { return this->Data.FieldAt<int>(0x54); }
+		BitFont*& Font() { return this->Data.FieldAt<BitFont*>(0x64); }
 	};
 
 	struct EditData
 	{
 		OwnerDrawDialogElement& Data;
 
-		int& TextScrollStart() { return this->Data.AnimationStart; }
-		BitFont*& TextFont() { return reinterpret_cast<BitFont*&>(this->Data.Font); }
-		int& FocusRestorePendingFlag() { return this->Data.FocusRestorePending; }
-		int& FocusRestoreReadyFlag() { return this->Data.EditFocusRestoreReady; }
-		int& RestoreTabStopFlag() { return reinterpret_cast<int&>(this->Data.LParam); }
+		int& TextScrollStart() { return this->Data.FieldAt<int>(0x44); }
+		BitFont*& TextFont() { return this->Data.FieldAt<BitFont*>(0x64); }
+		int& FocusRestorePendingFlag() { return this->Data.FieldAt<int>(0xF0); }
+		int& FocusRestoreReadyFlag() { return this->Data.FieldAt<int>(0xF4); }
+		int& RestoreTabStopFlag() { return this->Data.FieldAt<int>(0xF8); }
 	};
 
 	struct StaticData
@@ -482,46 +536,47 @@ public:
 		Surface*& CachedBackground() { return this->Data.CacheSurface; }
 		Surface*& ImageSurface() { return this->Data.ControlImage; }
 		wchar_t*& Text() { return this->Data.TextBuffer; }
-		WWMovieHandle*& MovieHandle() { return reinterpret_cast<WWMovieHandle*&>(this->Data.Unknown_058); }
-		int& LoopMovie() { return this->Data.Unknown_05C; }
-		void*& MovieAuxHandle() { return reinterpret_cast<void*&>(this->Data.Unknown_060); }
-		BitFont*& Font() { return reinterpret_cast<BitFont*&>(this->Data.Font); }
-		WWUIStaticDrawMode& DrawMode() { return reinterpret_cast<WWUIStaticDrawMode&>(this->Data.DrawMode); }
-		ConvertClass*& ShapeDrawer() { return reinterpret_cast<ConvertClass*&>(this->Data.BKDrawer); }
-		SHPStruct*& Shape() { return reinterpret_cast<SHPStruct*&>(this->Data.CampaignImage); }
+		WWMovieHandle*& MovieHandle() { return this->Data.FieldAt<WWMovieHandle*>(0x58); }
+		int& LoopMovie() { return this->Data.FieldAt<int>(0x5C); }
+		void*& MovieAuxHandle() { return this->Data.FieldAt<void*>(0x60); }
+		BitFont*& Font() { return this->Data.FieldAt<BitFont*>(0x64); }
+		WWUIStaticDrawMode& DrawMode() { return this->Data.FieldAt<WWUIStaticDrawMode>(0x70); }
+		ConvertClass*& ShapeDrawer() { return this->Data.FieldAt<ConvertClass*>(0x74); }
+		SHPStruct*& Shape() { return this->Data.FieldAt<SHPStruct*>(0x78); }
 		bool& OwnsShape() { return this->Data.FieldAt<bool>(0x7C); }
-		int& TextRevealCount() { return this->Data.HasCustomTextMetrics; }
-		int& TextRevealDelay() { return this->Data.TextHeightOrOffset; }
-		int& TextRevealStep() { return reinterpret_cast<int&>(this->Data.TextStyleClass); }
-		int& ColorAdjust() { return this->Data.TextRenderFlags; }
-		int& SoundIndex() { return this->Data.CharTypedSound; }
-		int& FrameCount() { return this->Data.CurrentFrameHeight; }
-		int& CurrentFrame() { return this->Data.AnimationState; }
-		int& LastFrameTick() { return this->Data.LastTick; }
-		int& FrameDelayMs() { return this->Data.TimerInterval; }
-		HWND& FrameNotifyHwnd() { return reinterpret_cast<HWND&>(this->Data.Unknown_0A4); }
-		bool& AnimationRunning() { return this->Data.AnimationActive; }
-		int& TextFlags() { return this->Data.Unknown_0AC; }
+		int& TextRevealCount() { return this->Data.FieldAt<int>(0x80); }
+		int& TextRevealDelay() { return this->Data.FieldAt<int>(0x84); }
+		int& TextRevealStep() { return this->Data.FieldAt<int>(0x88); }
+		int& ColorAdjust() { return this->Data.FieldAt<int>(0x8C); }
+		int& SoundIndex() { return this->Data.FieldAt<int>(0x90); }
+		int& FrameCount() { return this->Data.FieldAt<int>(0x94); }
+		int& CurrentFrame() { return this->Data.FieldAt<int>(0x98); }
+		int& LastFrameTick() { return this->Data.FieldAt<int>(0x9C); }
+		int& FrameDelayMs() { return this->Data.FieldAt<int>(0xA0); }
+		HWND& FrameNotifyHwnd() { return this->Data.FieldAt<HWND>(0xA4); }
+		bool& AnimationRunning() { return this->Data.FieldAt<bool>(0xA8); }
+		int& TextFlags() { return this->Data.FieldAt<int>(0xAC); }
 		bool& FillBackground() { return this->Data.FieldAt<bool>(0xB4); }
-		COLORREF& FillColor() { return reinterpret_cast<COLORREF&>(this->Data.TransitionFlags); }
+		COLORREF& FillColor() { return this->Data.FieldAt<COLORREF>(0xB8); }
 		bool& SuppressPaint() { return this->Data.SkipDraw; }
-		COLORREF& TextColor() { return reinterpret_cast<COLORREF&>(this->Data.Unknown_0EC); }
+		COLORREF& TextColor() { return this->Data.FieldAt<COLORREF>(0xEC); }
 	};
 
 	struct GroupBoxData
 	{
 		OwnerDrawDialogElement& Data;
 
-		BitFont*& Font() { return reinterpret_cast<BitFont*&>(this->Data.Font); }
+		BitFont*& Font() { return this->Data.FieldAt<BitFont*>(0x64); }
 	};
 
-	struct OwnerDrawButtonData
+	struct ButtonData
 	{
 		OwnerDrawDialogElement& Data;
 
 		bool& TimerActive() { return this->Data.FieldAt<bool>(0xC4); }
 		bool& AlternateFrame() { return this->Data.FieldAt<bool>(0xC5); }
-		BitFont*& Font() { return reinterpret_cast<BitFont*&>(this->Data.Font); }
+		BitFont*& Font() { return this->Data.FieldAt<BitFont*>(0x64); }
+		int& DrawItemState() { return this->Data.FieldAt<int>(0xE8); }
 	};
 
 	struct CheckboxData
@@ -529,47 +584,47 @@ public:
 		OwnerDrawDialogElement& Data;
 
 		int& UseNativePaint() { return this->Data.NeedsControlImage; }
-		BitFont*& Font() { return reinterpret_cast<BitFont*&>(this->Data.Font); }
-		bool& UseExtendedArt() { return this->Data.Unknown_D9; }
-		bool& ArtVariant() { return this->Data.Unknown_DA; }
-		int& CheckState() { return this->Data.DrawItemState; }
+		BitFont*& Font() { return this->Data.FieldAt<BitFont*>(0x64); }
+		bool& UseExtendedArt() { return this->Data.FieldAt<bool>(0xD9); }
+		bool& ArtVariant() { return this->Data.FieldAt<bool>(0xDA); }
+		int& CheckState() { return this->Data.FieldAt<int>(0xE8); }
 	};
 
 	struct RadioData
 	{
 		OwnerDrawDialogElement& Data;
 
-		BitFont*& Font() { return reinterpret_cast<BitFont*&>(this->Data.Font); }
-		int& CheckState() { return this->Data.DrawItemState; }
+		BitFont*& Font() { return this->Data.FieldAt<BitFont*>(0x64); }
+		int& CheckState() { return this->Data.FieldAt<int>(0xE8); }
 	};
 
 	struct InputData
 	{
 		OwnerDrawDialogElement& Data;
 
-		BitFont*& Font() { return reinterpret_cast<BitFont*&>(this->Data.Font); }
+		BitFont*& Font() { return this->Data.FieldAt<BitFont*>(0x64); }
 	};
 
 	struct TabData
 	{
 		OwnerDrawDialogElement& Data;
 
-		BitFont*& Font() { return reinterpret_cast<BitFont*&>(this->Data.Font); }
+		BitFont*& Font() { return this->Data.FieldAt<BitFont*>(0x64); }
 	};
 
 	struct SliderData
 	{
 		OwnerDrawDialogElement& Data;
 
-		BitFont*& Font() { return reinterpret_cast<BitFont*&>(this->Data.Font); }
-		int& IsMouseTracking() { return this->Data.DrawItemState; }
-		int& IsThumbDragging() { return this->Data.Unknown_0EC; }
-		int& RangeSpan() { return this->Data.FocusRestorePending; }
-		int& PositionOffset() { return this->Data.EditFocusRestoreReady; }
-		int& RangeMin() { return reinterpret_cast<int&>(this->Data.LParam); }
-		int& ThumbOffsetPixels() { return reinterpret_cast<int&>(this->Data.PrevWndProc); }
-		int& StepValue() { return reinterpret_cast<int&>(this->Data.LParam1); }
-		int& ShowValueLabel() { return reinterpret_cast<int&>(this->Data.LParam2); }
+		BitFont*& Font() { return this->Data.FieldAt<BitFont*>(0x64); }
+		int& IsMouseTracking() { return this->Data.FieldAt<int>(0xE8); }
+		int& IsThumbDragging() { return this->Data.FieldAt<int>(0xEC); }
+		int& RangeSpan() { return this->Data.FieldAt<int>(0xF0); }
+		int& PositionOffset() { return this->Data.FieldAt<int>(0xF4); }
+		int& RangeMin() { return this->Data.FieldAt<int>(0xF8); }
+		int& ThumbOffsetPixels() { return this->Data.FieldAt<int>(0xFC); }
+		int& StepValue() { return this->Data.FieldAt<int>(0x100); }
+		int& ShowValueLabel() { return this->Data.FieldAt<int>(0x104); }
 		int& SuppressClickSound() { return this->Data.Extra[0]; }
 	};
 
@@ -577,165 +632,78 @@ public:
 	{
 		OwnerDrawDialogElement& Data;
 
-		int& MinValue() { return this->Data.DrawItemState; }
-		int& MaxValue() { return this->Data.Unknown_0EC; }
-		int& Position() { return this->Data.FocusRestorePending; }
+		int& MinValue() { return this->Data.FieldAt<int>(0xE8); }
+		int& MaxValue() { return this->Data.FieldAt<int>(0xEC); }
+		int& Position() { return this->Data.FieldAt<int>(0xF0); }
 	};
 
-	ScrollBarData AsScrollBar() { return { *this }; }
-	ListBoxData AsListBox() { return { *this }; }
-	ComboBoxData AsComboBox() { return { *this }; }
-	NewEditData AsNewEdit() { return { *this }; }
-	EditData AsEdit() { return { *this }; }
-	StaticData AsStatic() { return { *this }; }
-	GroupBoxData AsGroupBox() { return { *this }; }
-	OwnerDrawButtonData AsOwnerDrawButton() { return { *this }; }
-	CheckboxData AsCheckbox() { return { *this }; }
-	RadioData AsRadio() { return { *this }; }
-	InputData AsInput() { return { *this }; }
-	TabData AsTab() { return { *this }; }
-	SliderData AsSlider() { return { *this }; }
-	ProgressData AsProgress() { return { *this }; }
+public:
+	auto AsScrollBar() { return ScrollBarData { *this }; }
+	auto AsListBox() { return ListBoxData { *this }; }
+	auto AsComboBox() { return ComboBoxData { *this }; }
+	auto AsNewEdit() { return NewEditData { *this }; }
+	auto AsEdit() { return EditData { *this }; }
+	auto AsStatic() { return StaticData { *this }; }
+	auto AsGroupBox() { return GroupBoxData { *this }; }
+	auto AsButton() { return ButtonData { *this }; }
+	auto AsOwnerDrawButton() { return this->AsButton(); }
+	auto AsCheckbox() { return CheckboxData { *this }; }
+	auto AsRadio() { return RadioData { *this }; }
+	auto AsInput() { return InputData { *this }; }
+	auto AsTab() { return TabData { *this }; }
+	auto AsSlider() { return SliderData { *this }; }
+	auto AsProgress() { return ProgressData { *this }; }
 
-	HWND& ScrollBarNotifyHwnd() { return this->AsScrollBar().NotifyHwnd(); }
-	bool& ScrollBarDisabled() { return this->AsScrollBar().Disabled(); }
-	int& ScrollBarIsMouseTracking() { return this->AsScrollBar().IsMouseTracking(); }
-	int& ScrollBarIsThumbDragging() { return this->AsScrollBar().IsThumbDragging(); }
-	int& ScrollBarRangeMax() { return this->AsScrollBar().RangeMax(); }
-	int& ScrollBarPosition() { return this->AsScrollBar().Position(); }
-	int& ScrollBarUpButtonPressed() { return this->AsScrollBar().UpButtonPressed(); }
-	int& ScrollBarDownButtonPressed() { return this->AsScrollBar().DownButtonPressed(); }
-	int& ScrollBarRestoreCaptureToNotifyHwnd() { return this->AsScrollBar().RestoreCaptureToNotifyHwnd(); }
-
-	HWND& ListBoxScrollBarHwnd() { return this->AsListBox().ScrollBarHwnd(); }
-	int& ListBoxScrollBarWidth() { return this->AsListBox().ScrollBarWidth(); }
-	WWUIListBoxTextEntry*& ListBoxTextEntries() { return this->AsListBox().TextEntries(); }
-	BitFont*& ListBoxFont() { return this->AsListBox().Font(); }
-	WWUIIntArray*& ListBoxItemData() { return this->AsListBox().ItemData(); }
-	WWUIIntArray*& ListBoxSelectionStates() { return this->AsListBox().SelectionStates(); }
-	int& ListBoxTopIndex() { return this->AsListBox().TopIndex(); }
-	int& ListBoxCurrentSelection() { return this->AsListBox().CurrentSelection(); }
-	WWUIListBoxColumnArray*& ListBoxColumns() { return this->AsListBox().Columns(); }
-
-	WWUIComboBoxItem*& ComboBoxTextEntries() { return this->AsComboBox().TextEntries(); }
-	BitFont*& ComboBoxFont() { return this->AsComboBox().Font(); }
-	bool& ComboBoxUseItemColorOverrides() { return this->AsComboBox().UseItemColorOverrides(); }
-	bool& ComboBoxUseAlternatePalette() { return this->AsComboBox().UseAlternatePalette(); }
-	int& ComboBoxMaxVisibleDropItems() { return this->AsComboBox().MaxVisibleDropItems(); }
-	HWND& ComboBoxDropDownHwnd() { return this->AsComboBox().DropDownHwnd(); }
-	int& ComboBoxCurrentSelection() { return this->AsComboBox().CurrentSelection(); }
-	int* ComboBoxItemColorOverrides() { return this->AsComboBox().ItemColorOverrides(); }
-
-	WideWstring*& NewEditText() { return this->AsNewEdit().Text(); }
-	int& NewEditCaretIndex() { return this->AsNewEdit().CaretIndex(); }
-	int& NewEditScrollStart() { return this->AsNewEdit().ScrollStart(); }
-	int& NewEditTextLimit() { return this->AsNewEdit().TextLimit(); }
-	int& NewEditCaretBlinkState() { return this->AsNewEdit().CaretBlinkState(); }
-	wchar_t*& NewEditRejectChars() { return this->AsNewEdit().RejectChars(); }
-	int& NewEditAsciiOnly() { return this->AsNewEdit().AsciiOnly(); }
-	int& NewEditStyleFlags() { return this->AsNewEdit().StyleFlags(); }
-	BitFont*& NewEditFont() { return this->AsNewEdit().Font(); }
-
-	int& EditTextScrollStart() { return this->AsEdit().TextScrollStart(); }
-	BitFont*& EditTextFont() { return this->AsEdit().TextFont(); }
-	int& EditFocusRestorePendingFlag() { return this->AsEdit().FocusRestorePendingFlag(); }
-	int& EditFocusRestoreReadyFlag() { return this->AsEdit().FocusRestoreReadyFlag(); }
-	int& EditRestoreTabStopFlag() { return this->AsEdit().RestoreTabStopFlag(); }
-
-	Surface*& StaticCachedBackground() { return this->AsStatic().CachedBackground(); }
-	Surface*& StaticImageSurface() { return this->AsStatic().ImageSurface(); }
-	wchar_t*& StaticText() { return this->AsStatic().Text(); }
-	WWMovieHandle*& StaticMovieHandle() { return this->AsStatic().MovieHandle(); }
-	int& StaticLoopMovie() { return this->AsStatic().LoopMovie(); }
-	void*& StaticMovieAuxHandle() { return this->AsStatic().MovieAuxHandle(); }
-	BitFont*& StaticFont() { return this->AsStatic().Font(); }
-	WWUIStaticDrawMode& StaticDrawMode() { return this->AsStatic().DrawMode(); }
-	ConvertClass*& StaticShapeDrawer() { return this->AsStatic().ShapeDrawer(); }
-	SHPStruct*& StaticShape() { return this->AsStatic().Shape(); }
-	bool& StaticOwnsShape() { return this->AsStatic().OwnsShape(); }
-	int& StaticTextRevealCount() { return this->AsStatic().TextRevealCount(); }
-	int& StaticTextRevealDelay() { return this->AsStatic().TextRevealDelay(); }
-	int& StaticTextRevealStep() { return this->AsStatic().TextRevealStep(); }
-	int& StaticColorAdjust() { return this->AsStatic().ColorAdjust(); }
-	int& StaticSoundIndex() { return this->AsStatic().SoundIndex(); }
-	int& StaticFrameCount() { return this->AsStatic().FrameCount(); }
-	int& StaticCurrentFrame() { return this->AsStatic().CurrentFrame(); }
-	int& StaticLastFrameTick() { return this->AsStatic().LastFrameTick(); }
-	int& StaticFrameDelayMs() { return this->AsStatic().FrameDelayMs(); }
-	HWND& StaticFrameNotifyHwnd() { return this->AsStatic().FrameNotifyHwnd(); }
-	bool& StaticAnimationRunning() { return this->AsStatic().AnimationRunning(); }
-	int& StaticTextFlags() { return this->AsStatic().TextFlags(); }
-	bool& StaticFillBackground() { return this->AsStatic().FillBackground(); }
-	COLORREF& StaticFillColor() { return this->AsStatic().FillColor(); }
-	bool& StaticSuppressPaint() { return this->AsStatic().SuppressPaint(); }
-	COLORREF& StaticTextColor() { return this->AsStatic().TextColor(); }
-
-	BitFont*& GroupBoxFont() { return this->AsGroupBox().Font(); }
-
-	bool& OwnerDrawButtonTimerActive() { return this->AsOwnerDrawButton().TimerActive(); }
-	bool& OwnerDrawButtonAlternateFrame() { return this->AsOwnerDrawButton().AlternateFrame(); }
-	BitFont*& OwnerDrawButtonFont() { return this->AsOwnerDrawButton().Font(); }
-
-	int& CheckboxUseNativePaint() { return this->AsCheckbox().UseNativePaint(); }
-	BitFont*& CheckboxFont() { return this->AsCheckbox().Font(); }
-	bool& CheckboxUseExtendedArt() { return this->AsCheckbox().UseExtendedArt(); }
-	bool& CheckboxArtVariant() { return this->AsCheckbox().ArtVariant(); }
-	int& CheckboxCheckState() { return this->AsCheckbox().CheckState(); }
-
-	BitFont*& RadioFont() { return this->AsRadio().Font(); }
-	int& RadioCheckState() { return this->AsRadio().CheckState(); }
-
-	BitFont*& InputFont() { return this->AsInput().Font(); }
-
-	BitFont*& TabFont() { return this->AsTab().Font(); }
-
-	BitFont*& SliderFont() { return this->AsSlider().Font(); }
-	int& SliderIsMouseTracking() { return this->AsSlider().IsMouseTracking(); }
-	int& SliderIsThumbDragging() { return this->AsSlider().IsThumbDragging(); }
-	int& SliderRangeSpan() { return this->AsSlider().RangeSpan(); }
-	int& SliderPositionOffset() { return this->AsSlider().PositionOffset(); }
-	int& SliderRangeMin() { return this->AsSlider().RangeMin(); }
-	int& SliderThumbOffsetPixels() { return this->AsSlider().ThumbOffsetPixels(); }
-	int& SliderStepValue() { return this->AsSlider().StepValue(); }
-	int& SliderShowValueLabel() { return this->AsSlider().ShowValueLabel(); }
-	int& SliderSuppressClickSound() { return this->AsSlider().SuppressClickSound(); }
-
-	int& ProgressMinValue() { return this->AsProgress().MinValue(); }
-	int& ProgressMaxValue() { return this->AsProgress().MaxValue(); }
-	int& ProgressPosition() { return this->AsProgress().Position(); }
+	HWND& LinkedHwnd() { return this->FieldAt<HWND>(0x0C); }
+	LPARAM& UnknownProp24() { return this->FieldAt<LPARAM>(0x24); }
 };
 
 using WWWinData = OwnerDrawDialogElement;
 
 static_assert(sizeof(OwnerDrawDialogElement) == 0x200, "OwnerDrawDialogElement size mismatch");
 static_assert(sizeof(WWWinData) == 0x200, "WWWinData size mismatch");
-static_assert(offsetof(OwnerDrawDialogElement, Hwnd_00C) == 0x0C, "OwnerDrawDialogElement::Hwnd_00C offset mismatch");
+static_assert(offsetof(OwnerDrawDialogElement, EnumParam) == 0x00, "OwnerDrawDialogElement::EnumParam offset mismatch");
 static_assert(offsetof(OwnerDrawDialogElement, CacheSurface) == 0x10, "OwnerDrawDialogElement::CacheSurface offset mismatch");
+static_assert(offsetof(OwnerDrawDialogElement, ControlImage) == 0x14, "OwnerDrawDialogElement::ControlImage offset mismatch");
+static_assert(offsetof(OwnerDrawDialogElement, StateImageSurface) == 0x18, "OwnerDrawDialogElement::StateImageSurface offset mismatch");
 static_assert(offsetof(OwnerDrawDialogElement, NeedsControlImage) == 0x20, "OwnerDrawDialogElement::NeedsControlImage offset mismatch");
 static_assert(offsetof(OwnerDrawDialogElement, TextBuffer) == 0x28, "OwnerDrawDialogElement::TextBuffer offset mismatch");
+static_assert(offsetof(OwnerDrawDialogElement, HasText) == 0x2C, "OwnerDrawDialogElement::HasText offset mismatch");
 static_assert(offsetof(OwnerDrawDialogElement, HasFocus) == 0x38, "OwnerDrawDialogElement::HasFocus offset mismatch");
+static_assert(offsetof(OwnerDrawDialogElement, ControlType) == 0x68, "OwnerDrawDialogElement::ControlType offset mismatch");
 static_assert(offsetof(OwnerDrawDialogElement, DialogID) == 0x6C, "OwnerDrawDialogElement::DialogID offset mismatch");
-static_assert(offsetof(OwnerDrawDialogElement, DrawMode) == 0x70, "OwnerDrawDialogElement::DrawMode offset mismatch");
-static_assert(offsetof(OwnerDrawDialogElement, AnimationActive) == 0xA8, "OwnerDrawDialogElement::AnimationActive offset mismatch");
 static_assert(offsetof(OwnerDrawDialogElement, LayoutBand) == 0xB0, "OwnerDrawDialogElement::LayoutBand offset mismatch");
 static_assert(offsetof(OwnerDrawDialogElement, SkipDraw) == 0xBC, "OwnerDrawDialogElement::SkipDraw offset mismatch");
 static_assert(offsetof(OwnerDrawDialogElement, HasOpenAnimation) == 0xBD, "OwnerDrawDialogElement::HasOpenAnimation offset mismatch");
 static_assert(offsetof(OwnerDrawDialogElement, HasFadeAnimation) == 0xBE, "OwnerDrawDialogElement::HasFadeAnimation offset mismatch");
 static_assert(offsetof(OwnerDrawDialogElement, TooltipVariant) == 0xC0, "OwnerDrawDialogElement::TooltipVariant offset mismatch");
 static_assert(offsetof(OwnerDrawDialogElement, Alpha) == 0xC8, "OwnerDrawDialogElement::Alpha offset mismatch");
-static_assert(offsetof(OwnerDrawDialogElement, ComboVisualFlags) == 0xCC, "OwnerDrawDialogElement::ComboVisualFlags offset mismatch");
 static_assert(offsetof(OwnerDrawDialogElement, HasTopPanelAnimation) == 0xD5, "OwnerDrawDialogElement::HasTopPanelAnimation offset mismatch");
 static_assert(offsetof(OwnerDrawDialogElement, HasButtonAnimation) == 0xD6, "OwnerDrawDialogElement::HasButtonAnimation offset mismatch");
 static_assert(offsetof(OwnerDrawDialogElement, HasMainScreenAnimation) == 0xD7, "OwnerDrawDialogElement::HasMainScreenAnimation offset mismatch");
 static_assert(offsetof(OwnerDrawDialogElement, FlagD8) == 0xD8, "OwnerDrawDialogElement::FlagD8 offset mismatch");
-static_assert(offsetof(OwnerDrawDialogElement, DrawItemState) == 0xE8, "OwnerDrawDialogElement::DrawItemState offset mismatch");
-static_assert(offsetof(OwnerDrawDialogElement, Unknown_0EC) == 0xEC, "OwnerDrawDialogElement::Unknown_0EC offset mismatch");
-static_assert(offsetof(OwnerDrawDialogElement, FocusRestorePending) == 0xF0, "OwnerDrawDialogElement::FocusRestorePending offset mismatch");
-static_assert(offsetof(OwnerDrawDialogElement, EditFocusRestoreReady) == 0xF4, "OwnerDrawDialogElement::EditFocusRestoreReady offset mismatch");
-static_assert(offsetof(OwnerDrawDialogElement, LParam) == 0xF8, "OwnerDrawDialogElement::LParam offset mismatch");
-static_assert(offsetof(OwnerDrawDialogElement, PrevWndProc) == 0xFC, "OwnerDrawDialogElement::PrevWndProc offset mismatch");
-static_assert(offsetof(OwnerDrawDialogElement, LParam1) == 0x100, "OwnerDrawDialogElement::LParam1 offset mismatch");
+static_assert(offsetof(OwnerDrawDialogElement, ExtraWidth) == 0xDC, "OwnerDrawDialogElement::ExtraWidth offset mismatch");
+static_assert(offsetof(OwnerDrawDialogElement, DialogBackground) == 0xE0, "OwnerDrawDialogElement::DialogBackground offset mismatch");
+static_assert(offsetof(OwnerDrawDialogElement, DialogBackgroundEx) == 0xE4, "OwnerDrawDialogElement::DialogBackgroundEx offset mismatch");
 static_assert(offsetof(OwnerDrawDialogElement, Extra) == 0x108, "OwnerDrawDialogElement::Extra offset mismatch");
+
+struct OwnerDrawDialogElementLayoutVerifier
+{
+	static_assert(offsetof(OwnerDrawDialogElement, TypeSpecific_004) == 0x04, "OwnerDrawDialogElement::TypeSpecific_004 offset mismatch");
+	static_assert(offsetof(OwnerDrawDialogElement, ComboBoxHeightInitialized) == 0x1C, "OwnerDrawDialogElement::ComboBoxHeightInitialized offset mismatch");
+	static_assert(offsetof(OwnerDrawDialogElement, Unknown_024) == 0x24, "OwnerDrawDialogElement::Unknown_024 offset mismatch");
+	static_assert(offsetof(OwnerDrawDialogElement, NewEditAsciiOnly) == 0x30, "OwnerDrawDialogElement::NewEditAsciiOnly offset mismatch");
+	static_assert(offsetof(OwnerDrawDialogElement, TypeSpecific_034) == 0x34, "OwnerDrawDialogElement::TypeSpecific_034 offset mismatch");
+	static_assert(offsetof(OwnerDrawDialogElement, NewEditText) == 0x3C, "OwnerDrawDialogElement::NewEditText offset mismatch");
+	static_assert(offsetof(OwnerDrawDialogElement, StaticDrawMode) == 0x70, "OwnerDrawDialogElement::StaticDrawMode offset mismatch");
+	static_assert(offsetof(OwnerDrawDialogElement, StaticFillBackground) == 0xB4, "OwnerDrawDialogElement::StaticFillBackground offset mismatch");
+	static_assert(offsetof(OwnerDrawDialogElement, Unknown_0BF) == 0xBF, "OwnerDrawDialogElement::Unknown_0BF offset mismatch");
+	static_assert(offsetof(OwnerDrawDialogElement, ButtonTimerActive) == 0xC4, "OwnerDrawDialogElement::ButtonTimerActive offset mismatch");
+	static_assert(offsetof(OwnerDrawDialogElement, TypeSpecific_0CC) == 0xCC, "OwnerDrawDialogElement::TypeSpecific_0CC offset mismatch");
+	static_assert(offsetof(OwnerDrawDialogElement, ComboBoxMaxVisibleDropItems) == 0xD0, "OwnerDrawDialogElement::ComboBoxMaxVisibleDropItems offset mismatch");
+	static_assert(offsetof(OwnerDrawDialogElement, CheckboxUseExtendedArt) == 0xD9, "OwnerDrawDialogElement::CheckboxUseExtendedArt offset mismatch");
+	static_assert(offsetof(OwnerDrawDialogElement, TypeSpecific_0E8) == 0xE8, "OwnerDrawDialogElement::TypeSpecific_0E8 offset mismatch");
+};
 
 enum WWControlMessage : UINT
 {
