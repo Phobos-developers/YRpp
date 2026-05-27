@@ -4,7 +4,9 @@
 
 #include <Helpers/CompileTime.h>
 
+#include <BasicStructures.h>
 #include <Dictionary.h>
+#include <Surface.h>
 #include <Unsorted.h>
 #include <Wstring.h>
 
@@ -28,6 +30,40 @@ struct OwnerDrawLayoutSize
 
 static_assert(sizeof(OwnerDrawLayoutSize) == 0x8, "OwnerDrawLayoutSize size mismatch");
 
+struct OwnerDrawHWNDVector
+{
+	int Count;
+	int Capacity;
+	HWND* Items;
+};
+
+static_assert(sizeof(OwnerDrawHWNDVector) == 0xC, "OwnerDrawHWNDVector size mismatch");
+
+struct OwnerDrawWindowMessageKey
+{
+	UINT Message;
+	HWND Hwnd;
+
+	bool operator==(const OwnerDrawWindowMessageKey& rhs) const
+	{
+		return Message == rhs.Message && Hwnd == rhs.Hwnd;
+	}
+};
+
+static_assert(sizeof(OwnerDrawWindowMessageKey) == 0x8, "OwnerDrawWindowMessageKey size mismatch");
+
+struct OwnerDrawTooltipBlitState
+{
+	RectangleStruct Rect;
+	Surface* BackingSurface;
+	wchar_t Text[0x80];
+	int Active;
+	int BackgroundRestored;
+	HWND OwnerHwnd;
+};
+
+static_assert(sizeof(OwnerDrawTooltipBlitState) == 0x120, "OwnerDrawTooltipBlitState size mismatch");
+
 enum class WWControlType : int
 {
 	Button = 0,
@@ -44,41 +80,115 @@ enum class WWControlType : int
 	Default = 11
 };
 
-struct WWWinData
+struct OwnerDrawDialogElement
 {
-	WWWinData() { JMP_THIS(0x623340); }
+	OwnerDrawDialogElement() { JMP_THIS(0x623340); }
 
-	~WWWinData() { JMP_THIS(0x6233A0); }
+	~OwnerDrawDialogElement() { JMP_THIS(0x6233A0); }
 
-	BYTE Unknown_00[0x6C];
+	int EnumParam;
+	void* ShortDictNext;
+	int Unknown_008;
+	HWND Hwnd_00C;
+	Surface* CacheSurface;
+	Surface* ControlImage;
+	Surface* StateImageSurface;
+	int ComboHeightInitialized;
+	int NeedsControlImage;
+	LPARAM Erase1;
+	wchar_t* TextBuffer;
+	int HasText;
+	WPARAM Erase2;
+	void* TextEntries;
+	int HasFocus;
+	WideWstring* WideString;
+	int Unknown_040;
+	int AnimationStart;
+	int Unknown_048;
+	int Unknown_04C;
+	LPARAM LParam3;
+	int UserDataAux;
+	int Unknown_058;
+	int Unknown_05C;
+	int Unknown_060;
+	void* Font;
+	WWControlType ControlType;
 	int DialogID;
-	BYTE Unknown_70[0x40];
+	int DrawMode;
+	void* BKDrawer;
+	Surface* CampaignImage;
+	int CampaignImageLoadedFlag;
+	int HasCustomTextMetrics;
+	int TextHeightOrOffset;
+	void* TextStyleClass;
+	int TextRenderFlags;
+	int CharTypedSound;
+	int CurrentFrameHeight;
+	int AnimationState;
+	int LastTick;
+	int TimerInterval;
+	int Unknown_0A4;
+	bool AnimationActive;
+	bool Unknown_A9;
+	bool Unknown_AA;
+	bool Unknown_AB;
+	int Unknown_0AC;
 	int LayoutBand;
-	BYTE Unknown_B4[0x8];
+	int Unknown_0B4;
+	int TransitionFlags;
 	bool SkipDraw;
 	bool HasOpenAnimation;
 	bool HasFadeAnimation;
-	BYTE Unknown_BF[0x1];
+	bool Unknown_BF;
 	int TooltipVariant;
-	BYTE Unknown_C4[0x11];
+	int HoverTimerFlags;
+	int Alpha;
+	int ComboVisualFlags;
+	int RuntimeFlags;
+	bool Unknown_D4;
 	bool HasTopPanelAnimation;
 	bool HasButtonAnimation;
 	bool HasMainScreenAnimation;
 	bool FlagD8;
-	BYTE Unknown_D9[0x127];
+	bool Unknown_D9;
+	bool Unknown_DA;
+	bool Unknown_DB;
+	int ExtraWidth;
+	Surface* DialogBackground;
+	Surface* DialogBackgroundEx;
+	int DrawItemState;
+	int Unknown_0EC;
+	int FocusRestorePending;
+	int EditFocusRestoreReady;
+	LPARAM LParam;
+	WNDPROC PrevWndProc;
+	LPARAM LParam1;
+	LPARAM LParam2;
+	int Extra[62];
 };
 
+using WWWinData = OwnerDrawDialogElement;
+
+static_assert(sizeof(OwnerDrawDialogElement) == 0x200, "OwnerDrawDialogElement size mismatch");
 static_assert(sizeof(WWWinData) == 0x200, "WWWinData size mismatch");
-static_assert(offsetof(WWWinData, DialogID) == 0x6C, "WWWinData::DialogID offset mismatch");
-static_assert(offsetof(WWWinData, LayoutBand) == 0xB0, "WWWinData::LayoutBand offset mismatch");
-static_assert(offsetof(WWWinData, SkipDraw) == 0xBC, "WWWinData::SkipDraw offset mismatch");
-static_assert(offsetof(WWWinData, HasOpenAnimation) == 0xBD, "WWWinData::HasOpenAnimation offset mismatch");
-static_assert(offsetof(WWWinData, HasFadeAnimation) == 0xBE, "WWWinData::HasFadeAnimation offset mismatch");
-static_assert(offsetof(WWWinData, TooltipVariant) == 0xC0, "WWWinData::TooltipVariant offset mismatch");
-static_assert(offsetof(WWWinData, HasTopPanelAnimation) == 0xD5, "WWWinData::HasTopPanelAnimation offset mismatch");
-static_assert(offsetof(WWWinData, HasButtonAnimation) == 0xD6, "WWWinData::HasButtonAnimation offset mismatch");
-static_assert(offsetof(WWWinData, HasMainScreenAnimation) == 0xD7, "WWWinData::HasMainScreenAnimation offset mismatch");
-static_assert(offsetof(WWWinData, FlagD8) == 0xD8, "WWWinData::FlagD8 offset mismatch");
+static_assert(offsetof(OwnerDrawDialogElement, Hwnd_00C) == 0x0C, "OwnerDrawDialogElement::Hwnd_00C offset mismatch");
+static_assert(offsetof(OwnerDrawDialogElement, CacheSurface) == 0x10, "OwnerDrawDialogElement::CacheSurface offset mismatch");
+static_assert(offsetof(OwnerDrawDialogElement, NeedsControlImage) == 0x20, "OwnerDrawDialogElement::NeedsControlImage offset mismatch");
+static_assert(offsetof(OwnerDrawDialogElement, TextBuffer) == 0x28, "OwnerDrawDialogElement::TextBuffer offset mismatch");
+static_assert(offsetof(OwnerDrawDialogElement, HasFocus) == 0x38, "OwnerDrawDialogElement::HasFocus offset mismatch");
+static_assert(offsetof(OwnerDrawDialogElement, DialogID) == 0x6C, "OwnerDrawDialogElement::DialogID offset mismatch");
+static_assert(offsetof(OwnerDrawDialogElement, DrawMode) == 0x70, "OwnerDrawDialogElement::DrawMode offset mismatch");
+static_assert(offsetof(OwnerDrawDialogElement, AnimationActive) == 0xA8, "OwnerDrawDialogElement::AnimationActive offset mismatch");
+static_assert(offsetof(OwnerDrawDialogElement, LayoutBand) == 0xB0, "OwnerDrawDialogElement::LayoutBand offset mismatch");
+static_assert(offsetof(OwnerDrawDialogElement, SkipDraw) == 0xBC, "OwnerDrawDialogElement::SkipDraw offset mismatch");
+static_assert(offsetof(OwnerDrawDialogElement, HasOpenAnimation) == 0xBD, "OwnerDrawDialogElement::HasOpenAnimation offset mismatch");
+static_assert(offsetof(OwnerDrawDialogElement, HasFadeAnimation) == 0xBE, "OwnerDrawDialogElement::HasFadeAnimation offset mismatch");
+static_assert(offsetof(OwnerDrawDialogElement, TooltipVariant) == 0xC0, "OwnerDrawDialogElement::TooltipVariant offset mismatch");
+static_assert(offsetof(OwnerDrawDialogElement, HasTopPanelAnimation) == 0xD5, "OwnerDrawDialogElement::HasTopPanelAnimation offset mismatch");
+static_assert(offsetof(OwnerDrawDialogElement, HasButtonAnimation) == 0xD6, "OwnerDrawDialogElement::HasButtonAnimation offset mismatch");
+static_assert(offsetof(OwnerDrawDialogElement, HasMainScreenAnimation) == 0xD7, "OwnerDrawDialogElement::HasMainScreenAnimation offset mismatch");
+static_assert(offsetof(OwnerDrawDialogElement, FlagD8) == 0xD8, "OwnerDrawDialogElement::FlagD8 offset mismatch");
+static_assert(offsetof(OwnerDrawDialogElement, Extra) == 0x108, "OwnerDrawDialogElement::Extra offset mismatch");
 
 enum WWControlMessage : UINT
 {
@@ -93,6 +203,7 @@ enum WWControlMessage : UINT
 	WW_INITDIALOG = 0x497,
 	WW_SETCOLOR = 0x498,
 	WW_SETUNKNOWNPROP24 = 0x49A,
+	WW_UNKNOWN49B = 0x49B,
 	WW_SETIMAGE = 0x49C,
 	WW_SETHASIMAGE = 0x49D,
 	WW_SETGDIPROPS = 0x49E,
@@ -219,19 +330,26 @@ public:
 	DEFINE_REFERENCE(COLORREF, UnusedDarkAccentColor, 0xAC1B90);
 
 	using HwndProcDict = Dictionary<HWND, WNDPROC>;
-	struct MsgInProcessGuard
-	{
-		HWND Hwnd;
-		bool InProcess;
-	};
-	using MsgInProcessDict = Dictionary<UINT, MsgInProcessGuard>;
-	using HwndWinDataDict = Dictionary<HWND, WWWinData>;
+	using MsgInProcessDict = Dictionary<OwnerDrawWindowMessageKey, bool>;
+	using HwndWinDataDict = Dictionary<HWND, OwnerDrawDialogElement>;
 
 	DEFINE_REFERENCE(HwndProcDict, DialogProcs, 0xAC1B48); // Windows control's default window procedures 
 	DEFINE_REFERENCE(HwndProcDict, SubclassProcs, 0xAC18C0); // Custom subclass procedures for owner-draw controls, 
-	DEFINE_REFERENCE(MsgInProcessDict, MessageProcessedGuard, 0xAC18C0); // generic OwnerDraw::WindowProc preventing a message being processed multiple times
+	DEFINE_REFERENCE(MsgInProcessDict, MessageProcessedGuard, 0xAC1858); // Generic OwnerDraw::WindowProc recursion guard.
 	DEFINE_REFERENCE(HwndWinDataDict, Dialogs, 0xAC1B00); // Primary owner-draw dialog/control table keyed by HWND.
 	DEFINE_REFERENCE(HwndWinDataDict, WinData, 0xAC1B00); // Backward-compatible alias for Dialogs.
+	DEFINE_REFERENCE(int, ActiveWindowStackCount, 0xAC1DE0);
+	DEFINE_REFERENCE(int, ActiveWindowStackCapacity, 0xAC1DE4);
+	DEFINE_REFERENCE(HWND*, ActiveWindowStack, 0xAC1DE8);
+	DEFINE_REFERENCE(int, AboutToCallSetWindowPos, 0xAC48E8);
+	DEFINE_REFERENCE(OwnerDrawTooltipBlitState, TooltipBlitState, 0xAC1CB8);
+	DEFINE_REFERENCE(int, PaintDepth, 0xAC48DC);
+	DEFINE_REFERENCE(int, PaintRight, 0xAC48E0);
+	DEFINE_REFERENCE(int, PaintBottom, 0xAC48E4);
+	DEFINE_REFERENCE(int, PaintLeft, 0x83367C);
+	DEFINE_REFERENCE(int, PaintTop, 0x833680);
+	DEFINE_REFERENCE(HWND, ComboDropActiveDropHwnd, 0xAC48C0);
+	DEFINE_REFERENCE(HWND, ComboDropActiveParentHwnd, 0xAC48C4);
 
 	// WWControlType::Button
 	DEFINE_REFERENCE(WNDPROC, CheckBoxButtonHandler, 0x6163A0);
@@ -271,6 +389,15 @@ public:
 	// Get rectangle relative to game main window's client area
 	static int __fastcall GetRectangle(HWND hWnd, LPRECT lpRect) { JMP_STD(0x775690); }
 
+	static bool __fastcall ServiceIMEMessage(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam) { JMP_STD(0x778030); }
+	static LRESULT __fastcall GetIMEResult() { JMP_STD(0x778120); }
+	static void __fastcall CancelIMEComposition() { JMP_STD(0x777E00); }
+	static bool __fastcall IsWebBrowserVisible() { JMP_STD(0x774070); }
+	static void __fastcall WideToCharString(char* pBuffer, const wchar_t* pText, size_t bufferSize) { JMP_STD(0x735090); }
+	static bool __fastcall RunOpenAnimationIfNeeded(HWND hWnd) { JMP_STD(0x608260); }
+	static bool __fastcall DrawTooltip(bool captureBackground) { JMP_STD(0x610950); }
+	static bool RestoreTooltipBackground() { JMP_STD(0x610B50); }
+	static BOOL CALLBACK CollectChildHwndProc(HWND hWnd, LPARAM lParam) { JMP_STD(0x622470); }
 	static BOOL CALLBACK SendTransitionCompleteToCustomTextChildProc(HWND hWnd, LPARAM lParam) { JMP_STD(0x60AA60); }
 	static BOOL CALLBACK InitCompactDialogControlsProc(HWND hWnd, LPARAM lParam) { JMP_STD(0x60AAB0); }
 	static BOOL CALLBACK ClassifyLayoutBand(HWND hWnd, LPARAM lParam) { JMP_STD(0x60A330); }
