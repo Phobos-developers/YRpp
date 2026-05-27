@@ -402,6 +402,12 @@ public:
 	int& NewEditStyleFlags() { return this->UserDataAux; }
 	BitFont*& NewEditFont() { return reinterpret_cast<BitFont*&>(this->Font); }
 
+	int& EditTextScrollStart() { return this->AnimationStart; }
+	BitFont*& EditTextFont() { return reinterpret_cast<BitFont*&>(this->Font); }
+	int& EditFocusRestorePendingFlag() { return this->FocusRestorePending; }
+	int& EditFocusRestoreReadyFlag() { return this->EditFocusRestoreReady; }
+	int& EditRestoreTabStopFlag() { return reinterpret_cast<int&>(this->LParam); }
+
 	BitFont*& SliderFont() { return reinterpret_cast<BitFont*&>(this->Font); }
 	int& SliderIsMouseTracking() { return this->DrawItemState; }
 	int& SliderIsThumbDragging() { return this->Unknown_0EC; }
