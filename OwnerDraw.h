@@ -6,8 +6,27 @@
 
 #include <Dictionary.h>
 #include <Unsorted.h>
+#include <Wstring.h>
 
+#include <cstddef>
 #include <cstring>
+
+struct OwnerDrawTooltipRequest
+{
+	HWND ControlHwnd;
+	LPARAM HitCode;
+	WideWstring Text;
+};
+
+static_assert(sizeof(OwnerDrawTooltipRequest) == 0xC, "OwnerDrawTooltipRequest size mismatch");
+
+struct OwnerDrawLayoutSize
+{
+	int Width;
+	int Height;
+};
+
+static_assert(sizeof(OwnerDrawLayoutSize) == 0x8, "OwnerDrawLayoutSize size mismatch");
 
 enum class WWControlType : int
 {
@@ -31,9 +50,35 @@ struct WWWinData
 
 	~WWWinData() { JMP_THIS(0x6233A0); }
 
-	char data[0x200];
+	BYTE Unknown_00[0x6C];
+	int DialogID;
+	BYTE Unknown_70[0x40];
+	int LayoutBand;
+	BYTE Unknown_B4[0x8];
+	bool SkipDraw;
+	bool HasOpenAnimation;
+	bool HasFadeAnimation;
+	BYTE Unknown_BF[0x1];
+	int TooltipVariant;
+	BYTE Unknown_C4[0x11];
+	bool HasTopPanelAnimation;
+	bool HasButtonAnimation;
+	bool HasMainScreenAnimation;
+	bool FlagD8;
+	BYTE Unknown_D9[0x127];
 };
+
 static_assert(sizeof(WWWinData) == 0x200, "WWWinData size mismatch");
+static_assert(offsetof(WWWinData, DialogID) == 0x6C, "WWWinData::DialogID offset mismatch");
+static_assert(offsetof(WWWinData, LayoutBand) == 0xB0, "WWWinData::LayoutBand offset mismatch");
+static_assert(offsetof(WWWinData, SkipDraw) == 0xBC, "WWWinData::SkipDraw offset mismatch");
+static_assert(offsetof(WWWinData, HasOpenAnimation) == 0xBD, "WWWinData::HasOpenAnimation offset mismatch");
+static_assert(offsetof(WWWinData, HasFadeAnimation) == 0xBE, "WWWinData::HasFadeAnimation offset mismatch");
+static_assert(offsetof(WWWinData, TooltipVariant) == 0xC0, "WWWinData::TooltipVariant offset mismatch");
+static_assert(offsetof(WWWinData, HasTopPanelAnimation) == 0xD5, "WWWinData::HasTopPanelAnimation offset mismatch");
+static_assert(offsetof(WWWinData, HasButtonAnimation) == 0xD6, "WWWinData::HasButtonAnimation offset mismatch");
+static_assert(offsetof(WWWinData, HasMainScreenAnimation) == 0xD7, "WWWinData::HasMainScreenAnimation offset mismatch");
+static_assert(offsetof(WWWinData, FlagD8) == 0xD8, "WWWinData::FlagD8 offset mismatch");
 
 enum WWControlMessage : UINT
 {
@@ -124,6 +169,8 @@ enum WWControlMessage : UINT
 	WW_GETTOOLTIPTEXT = 0x4E9,
 	WW_DROPDOWN_UNKNOWN4EA = 0x4EA,
 	WW_SETUNKNOWNPROP50 = 0x4EB,
+	WW_TRANSITION_COMPLETE = 0x4EC,
+	WW_TRANSITION_CLOSED = 0x4ED,
 	WW_STATIC_REVEALTEXTS = 0x4EE,
 	WW_LB_GETSCROLLBARHWND = 0x4EF,
 	WW_STATIC_BLITMOVIE = 0x4F0,
@@ -134,10 +181,19 @@ enum WWControlMessage : UINT
 class OwnerDraw
 {
 public:
+	enum ControlID : int
+	{
+		TooltipText = 1685,
+		TransitionMovie = 1818
+	};
+
+	static constexpr OwnerDrawLayoutSize BaseLayoutSize { 640, 480 };
+
 	DEFINE_REFERENCE(int, CachedSurfaceCount, 0xAC48B4);
 	DEFINE_REFERENCE(WORD, ColorShiftRed, 0xAC48B8);
 	DEFINE_REFERENCE(WORD, ColorShiftGreen, 0xAC48BA);
 	DEFINE_REFERENCE(WORD, ColorShiftBlue, 0xAC48BC);
+	DEFINE_REFERENCE(HWND, CurrentDialogHwnd, 0xAC48A8);
 
 	// Default owner-draw/common-dialog style globals.
 	DEFINE_REFERENCE(int, ControlInsetPx, 0xAC1DF0);
@@ -174,7 +230,8 @@ public:
 	DEFINE_REFERENCE(HwndProcDict, DialogProcs, 0xAC1B48); // Windows control's default window procedures 
 	DEFINE_REFERENCE(HwndProcDict, SubclassProcs, 0xAC18C0); // Custom subclass procedures for owner-draw controls, 
 	DEFINE_REFERENCE(MsgInProcessDict, MessageProcessedGuard, 0xAC18C0); // generic OwnerDraw::WindowProc preventing a message being processed multiple times
-	DEFINE_REFERENCE(HwndWinDataDict, WinData, 0xAC1B00); // Windata - "ComboBox dropdown windata = NULL\n"
+	DEFINE_REFERENCE(HwndWinDataDict, Dialogs, 0xAC1B00); // Primary owner-draw dialog/control table keyed by HWND.
+	DEFINE_REFERENCE(HwndWinDataDict, WinData, 0xAC1B00); // Backward-compatible alias for Dialogs.
 
 	// WWControlType::Button
 	DEFINE_REFERENCE(WNDPROC, CheckBoxButtonHandler, 0x6163A0);
@@ -213,6 +270,30 @@ public:
 
 	// Get rectangle relative to game main window's client area
 	static int __fastcall GetRectangle(HWND hWnd, LPRECT lpRect) { JMP_STD(0x775690); }
+
+	static BOOL CALLBACK SendTransitionCompleteToCustomTextChildProc(HWND hWnd, LPARAM lParam) { JMP_STD(0x60AA60); }
+	static BOOL CALLBACK InitCompactDialogControlsProc(HWND hWnd, LPARAM lParam) { JMP_STD(0x60AAB0); }
+	static BOOL CALLBACK ClassifyLayoutBand(HWND hWnd, LPARAM lParam) { JMP_STD(0x60A330); }
+	static BOOL CALLBACK ResetControlDrawModeAndTimerProc(HWND hWnd, LPARAM lParam) { JMP_STD(0x60A5B0); }
+	static BOOL CALLBACK ReplaceEditWithListboxProc(HWND hWnd, LPARAM lParam) { JMP_STD(0x60F320); }
+	static BOOL CALLBACK SetNeedsControlImage(HWND hWnd, LPARAM lParam) { JMP_STD(0x60F760); }
+	static BOOL CALLBACK RegisterChildControlProc(HWND hWnd, LPARAM lParam) { JMP_STD(0x60F9A0); }
+
+	static void __fastcall PrepareDialogChildControls(HWND hWnd, int mode) { JMP_STD(0x60F4B0); }
+	static void __fastcall ScaleControls(HWND hWnd) { JMP_STD(0x775BA0); }
+	static void __fastcall SetDialogID(HWND hWnd, int dialogID) { JMP_STD(0x60D2C0); }
+	static void __fastcall LoadNotInGameResources(HWND hWnd) { JMP_STD(0x60CF00); }
+	static bool __fastcall UpdateTopPanelAnimationFlag(HWND hWnd) { JMP_STD(0x60CAF0); }
+	static bool __fastcall UpdateButtonAnimationFlag(HWND hWnd) { JMP_STD(0x60C930); }
+	static bool __fastcall UpdateMainScreenAnimationFlag(HWND hWnd) { JMP_STD(0x60CCC0); }
+	static bool __fastcall UpdateFlagD8FromDialogID(HWND hWnd) { JMP_STD(0x60CDB0); }
+	static bool __fastcall TrySetDialogLayoutBand1(HWND hWnd) { JMP_STD(0x60C540); }
+	static bool __fastcall TrySetDialogLayoutBand2(HWND hWnd) { JMP_STD(0x60C7D0); }
+	static void __fastcall UpdateControlPosition(HWND hWnd, OwnerDrawLayoutSize* pBaseSize) { JMP_STD(0x60C4A0); }
+	static void __fastcall DrawItem(DRAWITEMSTRUCT* pDrawItem) { JMP_STD(0x6213A0); }
+	static void __fastcall Paint(HWND hWnd) { JMP_STD(0x621E90); }
+	static const char* __fastcall GetTooltipStringLabel(HWND dialogHwnd, HWND controlHwnd) { JMP_STD(0x6040B0); }
+	static void __fastcall DrawCampaignMenuTransition(HWND dialogHwnd, bool isOpening) { JMP_STD(0x6071E0); }
 };
 
 namespace SessionIpb
