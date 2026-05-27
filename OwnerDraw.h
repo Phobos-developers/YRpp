@@ -365,6 +365,17 @@ public:
 	HWND& ComboBoxDropDownHwnd() { return reinterpret_cast<HWND&>(this->EditFocusRestoreReady); }
 	int& ComboBoxCurrentSelection() { return reinterpret_cast<int&>(this->LParam); }
 	int* ComboBoxItemColorOverrides() { return &this->Extra[2]; }
+
+	BitFont*& SliderFont() { return reinterpret_cast<BitFont*&>(this->Font); }
+	int& SliderIsMouseTracking() { return this->DrawItemState; }
+	int& SliderIsThumbDragging() { return this->Unknown_0EC; }
+	int& SliderRangeSpan() { return this->FocusRestorePending; }
+	int& SliderPositionOffset() { return this->EditFocusRestoreReady; }
+	int& SliderRangeMin() { return reinterpret_cast<int&>(this->LParam); }
+	int& SliderThumbOffsetPixels() { return reinterpret_cast<int&>(this->PrevWndProc); }
+	int& SliderStepValue() { return reinterpret_cast<int&>(this->LParam1); }
+	int& SliderShowValueLabel() { return reinterpret_cast<int&>(this->LParam2); }
+	int& SliderSuppressClickSound() { return this->Extra[0]; }
 };
 
 using WWWinData = OwnerDrawDialogElement;
@@ -404,6 +415,8 @@ enum WWControlMessage : UINT
 	WW_GETITEMDATA = 0x199,
 	WW_SETITEMDATA = 0x19A,
 	WW_SLIDER_GETPOS = 0x400,
+	WW_SLIDER_GETRANGEMIN = 0x401,
+	WW_SLIDER_GETRANGEMAX = 0x402,
 	WW_PROGRESS_SETRANGE = 0x401,
 	WW_PROGRESS_SETPOS = 0x402,
 	WW_INPUT_GETKEY = 0x402,
