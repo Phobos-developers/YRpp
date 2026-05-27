@@ -376,6 +376,10 @@ public:
 	int& SliderStepValue() { return reinterpret_cast<int&>(this->LParam1); }
 	int& SliderShowValueLabel() { return reinterpret_cast<int&>(this->LParam2); }
 	int& SliderSuppressClickSound() { return this->Extra[0]; }
+
+	int& ProgressMinValue() { return this->DrawItemState; }
+	int& ProgressMaxValue() { return this->Unknown_0EC; }
+	int& ProgressPosition() { return this->FocusRestorePending; }
 };
 
 using WWWinData = OwnerDrawDialogElement;
