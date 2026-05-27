@@ -13,6 +13,7 @@
 #include <cstddef>
 #include <cstring>
 #include <cwchar>
+#include <new>
 
 class BitFont;
 
@@ -274,6 +275,7 @@ private:
 
 		this->SetTextBufferCopy(rhs.TextBuffer);
 		this->SetTextEntriesCopy(rhs.TextEntries);
+		this->SetWideStringCopy(rhs.WideString);
 	}
 
 	void ClearTextBuffer()
@@ -330,6 +332,30 @@ private:
 		}
 	}
 
+	void ClearWideString()
+	{
+		if (this->WideString)
+		{
+			this->WideString->~WideWstring();
+			YRMemory::Deallocate(this->WideString);
+			this->WideString = nullptr;
+		}
+	}
+
+	void SetWideStringCopy(const WideWstring* pSource)
+	{
+		this->ClearWideString();
+
+		if (!pSource)
+			return;
+
+		auto* const pCopy = static_cast<WideWstring*>(YRMemory::Allocate(sizeof(WideWstring)));
+		if (!pCopy)
+			return;
+
+		this->WideString = new (pCopy) WideWstring(*pSource);
+	}
+
 	template<typename T>
 	T& FieldAt(size_t offset)
 	{
@@ -365,6 +391,16 @@ public:
 	HWND& ComboBoxDropDownHwnd() { return reinterpret_cast<HWND&>(this->EditFocusRestoreReady); }
 	int& ComboBoxCurrentSelection() { return reinterpret_cast<int&>(this->LParam); }
 	int* ComboBoxItemColorOverrides() { return &this->Extra[2]; }
+
+	WideWstring*& NewEditText() { return this->WideString; }
+	int& NewEditCaretIndex() { return this->Unknown_040; }
+	int& NewEditScrollStart() { return this->AnimationStart; }
+	int& NewEditTextLimit() { return this->Unknown_048; }
+	int& NewEditCaretBlinkState() { return this->Unknown_04C; }
+	wchar_t*& NewEditRejectChars() { return reinterpret_cast<wchar_t*&>(this->LParam3); }
+	int& NewEditAsciiOnly() { return reinterpret_cast<int&>(this->Erase2); }
+	int& NewEditStyleFlags() { return this->UserDataAux; }
+	BitFont*& NewEditFont() { return reinterpret_cast<BitFont*&>(this->Font); }
 
 	BitFont*& SliderFont() { return reinterpret_cast<BitFont*&>(this->Font); }
 	int& SliderIsMouseTracking() { return this->DrawItemState; }
@@ -554,6 +590,10 @@ public:
 	DEFINE_REFERENCE(COLORREF, SelectedTabTextColor, 0xAC4608);
 	DEFINE_REFERENCE(COLORREF, TooltipBackgroundColor, 0xAC48B0);
 	DEFINE_REFERENCE(COLORREF, UnusedDarkAccentColor, 0xAC1B90);
+	DEFINE_ARRAY_REFERENCE(wchar_t, [0x101], IMECompositionString, 0xB73318);
+	DEFINE_REFERENCE(int, IMECompositionStringLength, 0xB73564);
+	DEFINE_REFERENCE(int, IMECompositionCursorPos, 0xB73568);
+	DEFINE_REFERENCE(int, IMEComposing, 0xB7356C);
 
 	using HwndProcDict = Dictionary<HWND, WNDPROC>;
 	using MsgInProcessDict = Dictionary<OwnerDrawWindowMessageKey, bool>;
@@ -618,6 +658,8 @@ public:
 	static bool __fastcall ServiceIMEMessage(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam) { JMP_STD(0x778030); }
 	static LRESULT __fastcall GetIMEResult() { JMP_STD(0x778120); }
 	static void __fastcall CancelIMEComposition() { JMP_STD(0x777E00); }
+	static void __fastcall UpdateIMECompositionString() { JMP_STD(0x777EA0); }
+	static wchar_t __fastcall ConvertIMECharToWide(UINT wParam, LPARAM lParam) { JMP_STD(0x7781B0); }
 	static bool __fastcall IsWebBrowserVisible() { JMP_STD(0x774070); }
 	static void __fastcall WideToCharString(char* pBuffer, const wchar_t* pText, size_t bufferSize) { JMP_STD(0x735090); }
 	static bool __fastcall RunOpenAnimationIfNeeded(HWND hWnd) { JMP_STD(0x608260); }
