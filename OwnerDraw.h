@@ -165,6 +165,24 @@ struct OwnerDrawDialogElement
 	LPARAM LParam1;
 	LPARAM LParam2;
 	int Extra[62];
+
+private:
+	template<typename T>
+	T& FieldAt(size_t offset)
+	{
+		return *reinterpret_cast<T*>(reinterpret_cast<char*>(this) + offset);
+	}
+
+public:
+	HWND& ScrollBarNotifyHwnd() { return this->FieldAt<HWND>(0x08); }
+	bool& ScrollBarDisabled() { return this->FieldAt<bool>(0xCD); }
+	int& ScrollBarIsMouseTracking() { return this->DrawItemState; }
+	int& ScrollBarIsThumbDragging() { return this->Unknown_0EC; }
+	int& ScrollBarRangeMax() { return this->FocusRestorePending; }
+	int& ScrollBarPosition() { return this->EditFocusRestoreReady; }
+	int& ScrollBarUpButtonPressed() { return reinterpret_cast<int&>(this->LParam); }
+	int& ScrollBarDownButtonPressed() { return reinterpret_cast<int&>(this->PrevWndProc); }
+	int& ScrollBarRestoreCaptureToNotifyHwnd() { return reinterpret_cast<int&>(this->LParam1); }
 };
 
 using WWWinData = OwnerDrawDialogElement;
@@ -184,10 +202,19 @@ static_assert(offsetof(OwnerDrawDialogElement, SkipDraw) == 0xBC, "OwnerDrawDial
 static_assert(offsetof(OwnerDrawDialogElement, HasOpenAnimation) == 0xBD, "OwnerDrawDialogElement::HasOpenAnimation offset mismatch");
 static_assert(offsetof(OwnerDrawDialogElement, HasFadeAnimation) == 0xBE, "OwnerDrawDialogElement::HasFadeAnimation offset mismatch");
 static_assert(offsetof(OwnerDrawDialogElement, TooltipVariant) == 0xC0, "OwnerDrawDialogElement::TooltipVariant offset mismatch");
+static_assert(offsetof(OwnerDrawDialogElement, Alpha) == 0xC8, "OwnerDrawDialogElement::Alpha offset mismatch");
+static_assert(offsetof(OwnerDrawDialogElement, ComboVisualFlags) == 0xCC, "OwnerDrawDialogElement::ComboVisualFlags offset mismatch");
 static_assert(offsetof(OwnerDrawDialogElement, HasTopPanelAnimation) == 0xD5, "OwnerDrawDialogElement::HasTopPanelAnimation offset mismatch");
 static_assert(offsetof(OwnerDrawDialogElement, HasButtonAnimation) == 0xD6, "OwnerDrawDialogElement::HasButtonAnimation offset mismatch");
 static_assert(offsetof(OwnerDrawDialogElement, HasMainScreenAnimation) == 0xD7, "OwnerDrawDialogElement::HasMainScreenAnimation offset mismatch");
 static_assert(offsetof(OwnerDrawDialogElement, FlagD8) == 0xD8, "OwnerDrawDialogElement::FlagD8 offset mismatch");
+static_assert(offsetof(OwnerDrawDialogElement, DrawItemState) == 0xE8, "OwnerDrawDialogElement::DrawItemState offset mismatch");
+static_assert(offsetof(OwnerDrawDialogElement, Unknown_0EC) == 0xEC, "OwnerDrawDialogElement::Unknown_0EC offset mismatch");
+static_assert(offsetof(OwnerDrawDialogElement, FocusRestorePending) == 0xF0, "OwnerDrawDialogElement::FocusRestorePending offset mismatch");
+static_assert(offsetof(OwnerDrawDialogElement, EditFocusRestoreReady) == 0xF4, "OwnerDrawDialogElement::EditFocusRestoreReady offset mismatch");
+static_assert(offsetof(OwnerDrawDialogElement, LParam) == 0xF8, "OwnerDrawDialogElement::LParam offset mismatch");
+static_assert(offsetof(OwnerDrawDialogElement, PrevWndProc) == 0xFC, "OwnerDrawDialogElement::PrevWndProc offset mismatch");
+static_assert(offsetof(OwnerDrawDialogElement, LParam1) == 0x100, "OwnerDrawDialogElement::LParam1 offset mismatch");
 static_assert(offsetof(OwnerDrawDialogElement, Extra) == 0x108, "OwnerDrawDialogElement::Extra offset mismatch");
 
 enum WWControlMessage : UINT
