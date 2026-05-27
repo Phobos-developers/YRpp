@@ -480,6 +480,10 @@ public:
 
 	BitFont*& GroupBoxFont() { return reinterpret_cast<BitFont*&>(this->Font); }
 
+	bool& OwnerDrawButtonTimerActive() { return this->FieldAt<bool>(0xC4); }
+	bool& OwnerDrawButtonAlternateFrame() { return this->FieldAt<bool>(0xC5); }
+	BitFont*& OwnerDrawButtonFont() { return reinterpret_cast<BitFont*&>(this->Font); }
+
 	BitFont*& TabFont() { return reinterpret_cast<BitFont*&>(this->Font); }
 
 	BitFont*& SliderFont() { return reinterpret_cast<BitFont*&>(this->Font); }
@@ -696,6 +700,16 @@ public:
 	DEFINE_REFERENCE(int, PaintTop, 0x833680);
 	DEFINE_REFERENCE(HWND, ComboDropActiveDropHwnd, 0xAC48C0);
 	DEFINE_REFERENCE(HWND, ComboDropActiveParentHwnd, 0xAC48C4);
+	DEFINE_REFERENCE(char, ButtonSliceVariant, 0x833684);
+	DEFINE_REFERENCE(SHPStruct*, SideButtonShape, 0xB0F9EC);
+	DEFINE_REFERENCE(BYTE, ButtonDisabledSide0Red, 0xB0F9FC);
+	DEFINE_REFERENCE(WORD, ButtonDisabledSide0GreenBlue, 0xB0F9FD);
+	DEFINE_REFERENCE(BYTE, ButtonDisabledSide1Red, 0xB0FB14);
+	DEFINE_REFERENCE(WORD, ButtonDisabledSide1GreenBlue, 0xB0FB15);
+	DEFINE_REFERENCE(BYTE, ButtonDisabledSideOtherRed, 0xB0FB19);
+	DEFINE_REFERENCE(WORD, ButtonDisabledSideOtherGreenBlue, 0xB0FB1A);
+	DEFINE_REFERENCE(SHPStruct*, SmallButtonAnimShape, 0xB0FAC4);
+	DEFINE_REFERENCE(SHPStruct*, CloseButtonShape, 0xB0FACC);
 
 	// WWControlType::Button
 	DEFINE_REFERENCE(WNDPROC, CheckBoxButtonHandler, 0x6163A0);
@@ -775,6 +789,9 @@ public:
 	static void __fastcall Paint(HWND hWnd) { JMP_STD(0x621E90); }
 	static const char* __fastcall GetTooltipStringLabel(HWND dialogHwnd, HWND controlHwnd) { JMP_STD(0x6040B0); }
 	static void __fastcall DrawCampaignMenuTransition(HWND dialogHwnd, bool isOpening) { JMP_STD(0x6071E0); }
+	static ConvertClass* __fastcall GetSmallButtonAnimConvert() { JMP_STD(0x72E2C0); }
+	static ConvertClass* __fastcall GetSideButtonConvert() { JMP_STD(0x72F4B0); }
+	static ConvertClass* __fastcall GetCloseButtonConvert() { JMP_STD(0x72B050); }
 };
 
 namespace SessionIpb
