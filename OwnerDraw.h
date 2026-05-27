@@ -12,6 +12,7 @@
 
 #include <cstddef>
 #include <cstring>
+#include <cwchar>
 
 class BitFont;
 
@@ -133,6 +134,16 @@ struct WWUIListBoxTextEntry
 
 static_assert(sizeof(WWUIListBoxTextEntry) == 0x10, "WWUIListBoxTextEntry size mismatch");
 
+struct WWUIComboBoxItem
+{
+	WWUIComboBoxItem* Next;
+	int ItemData;
+	wchar_t* Text;
+	int IsWideText;
+};
+
+static_assert(sizeof(WWUIComboBoxItem) == 0x10, "WWUIComboBoxItem size mismatch");
+
 enum class WWControlType : int
 {
 	Button = 0,
@@ -152,6 +163,19 @@ enum class WWControlType : int
 struct OwnerDrawDialogElement
 {
 	OwnerDrawDialogElement() { JMP_THIS(0x623340); }
+
+	OwnerDrawDialogElement(const OwnerDrawDialogElement& rhs) : OwnerDrawDialogElement()
+	{
+		this->CopyFrom(rhs);
+	}
+
+	OwnerDrawDialogElement& operator=(const OwnerDrawDialogElement& rhs)
+	{
+		if (this != &rhs)
+			this->CopyFrom(rhs);
+
+		return *this;
+	}
 
 	~OwnerDrawDialogElement() { JMP_THIS(0x6233A0); }
 
@@ -236,6 +260,76 @@ struct OwnerDrawDialogElement
 	int Extra[62];
 
 private:
+	void CopyFrom(const OwnerDrawDialogElement& rhs)
+	{
+		auto* const pOwnedTextBuffer = this->TextBuffer;
+		auto* const pOwnedTextEntries = this->TextEntries;
+		auto* const pOwnedWideString = this->WideString;
+
+		std::memcpy(this, &rhs, sizeof(*this));
+
+		this->TextBuffer = pOwnedTextBuffer;
+		this->TextEntries = pOwnedTextEntries;
+		this->WideString = pOwnedWideString;
+
+		this->SetTextBufferCopy(rhs.TextBuffer);
+		this->SetTextEntriesCopy(rhs.TextEntries);
+	}
+
+	void ClearTextBuffer()
+	{
+		if (this->TextBuffer)
+		{
+			YRMemory::Deallocate(this->TextBuffer);
+			this->TextBuffer = nullptr;
+		}
+	}
+
+	void SetTextBufferCopy(const wchar_t* pSource)
+	{
+		this->ClearTextBuffer();
+
+		if (!pSource || !pSource[0])
+			return;
+
+		const auto bytes = (std::wcslen(pSource) + 1) * sizeof(wchar_t);
+		this->TextBuffer = static_cast<wchar_t*>(YRMemory::Allocate(bytes));
+		std::wcscpy(this->TextBuffer, pSource);
+	}
+
+	void ClearTextEntries()
+	{
+		while (this->TextEntries)
+		{
+			auto* const pEntry = static_cast<WWUIComboBoxItem*>(this->TextEntries);
+			this->TextEntries = pEntry->Next;
+			YRMemory::Deallocate(pEntry);
+		}
+	}
+
+	void SetTextEntriesCopy(void* pSource)
+	{
+		this->ClearTextEntries();
+
+		for (auto* pEntry = static_cast<WWUIComboBoxItem*>(pSource); pEntry; pEntry = pEntry->Next)
+		{
+			const auto* const pText = pEntry->Text ? pEntry->Text : L"";
+			const auto bytes = sizeof(WWUIComboBoxItem) + (std::wcslen(pText) + 1) * sizeof(wchar_t);
+			auto* const pCopy = static_cast<WWUIComboBoxItem*>(YRMemory::Allocate(bytes));
+
+			if (!pCopy)
+				continue;
+
+			pCopy->Next = static_cast<WWUIComboBoxItem*>(this->TextEntries);
+			pCopy->ItemData = pEntry->ItemData;
+			pCopy->Text = reinterpret_cast<wchar_t*>(reinterpret_cast<char*>(pCopy) + sizeof(WWUIComboBoxItem));
+			pCopy->IsWideText = pEntry->IsWideText;
+			std::wcscpy(pCopy->Text, pText);
+
+			this->TextEntries = pCopy;
+		}
+	}
+
 	template<typename T>
 	T& FieldAt(size_t offset)
 	{
@@ -262,6 +356,15 @@ public:
 	int& ListBoxTopIndex() { return this->FocusRestorePending; }
 	int& ListBoxCurrentSelection() { return this->EditFocusRestoreReady; }
 	WWUIListBoxColumnArray*& ListBoxColumns() { return reinterpret_cast<WWUIListBoxColumnArray*&>(this->LParam); }
+
+	WWUIComboBoxItem*& ComboBoxTextEntries() { return reinterpret_cast<WWUIComboBoxItem*&>(this->TextEntries); }
+	BitFont*& ComboBoxFont() { return reinterpret_cast<BitFont*&>(this->Font); }
+	bool& ComboBoxUseItemColorOverrides() { return this->FieldAt<bool>(0xCC); }
+	bool& ComboBoxUseAlternatePalette() { return this->FieldAt<bool>(0xCD); }
+	int& ComboBoxMaxVisibleDropItems() { return this->RuntimeFlags; }
+	HWND& ComboBoxDropDownHwnd() { return reinterpret_cast<HWND&>(this->EditFocusRestoreReady); }
+	int& ComboBoxCurrentSelection() { return reinterpret_cast<int&>(this->LParam); }
+	int* ComboBoxItemColorOverrides() { return &this->Extra[2]; }
 };
 
 using WWWinData = OwnerDrawDialogElement;
@@ -528,6 +631,7 @@ public:
 	static bool __fastcall TrySetDialogLayoutBand2(HWND hWnd) { JMP_STD(0x60C7D0); }
 	static void __fastcall UpdateControlPosition(HWND hWnd, OwnerDrawLayoutSize* pBaseSize) { JMP_STD(0x60C4A0); }
 	static void __fastcall DrawItem(DRAWITEMSTRUCT* pDrawItem) { JMP_STD(0x6213A0); }
+	static int __fastcall DrawWideText(Surface* pSurface, const wchar_t* pText, RECT* pRect, BitFont* pFont, COLORREF color, int style, int verticalAlign, int unused8, int backgroundMode, int colorAdjust) { JMP_STD(0x621040); }
 	static void __fastcall Paint(HWND hWnd) { JMP_STD(0x621E90); }
 	static const char* __fastcall GetTooltipStringLabel(HWND dialogHwnd, HWND controlHwnd) { JMP_STD(0x6040B0); }
 	static void __fastcall DrawCampaignMenuTransition(HWND dialogHwnd, bool isOpening) { JMP_STD(0x6071E0); }
