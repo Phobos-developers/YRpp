@@ -13,6 +13,8 @@
 #include <cstddef>
 #include <cstring>
 
+class BitFont;
+
 struct OwnerDrawTooltipRequest
 {
 	HWND ControlHwnd;
@@ -63,6 +65,73 @@ struct OwnerDrawTooltipBlitState
 };
 
 static_assert(sizeof(OwnerDrawTooltipBlitState) == 0x120, "OwnerDrawTooltipBlitState size mismatch");
+
+struct WWUIIntArray
+{
+	int Count;
+	int Capacity;
+	int* Items;
+};
+
+static_assert(sizeof(WWUIIntArray) == 0xC, "WWUIIntArray size mismatch");
+
+enum class WWUIListBoxCellFormat : int
+{
+	Empty = 0,
+	Text = 1,
+	Image = 2,
+	Progress = 3,
+	ItemText = 4
+};
+
+struct WWUIListBoxCell
+{
+	WWUIListBoxCellFormat Format;
+	WideWstring PrimaryText;
+	WideWstring SecondaryText;
+	COLORREF TextColor;
+	Surface* Image;
+	int Value;
+};
+
+static_assert(sizeof(WWUIListBoxCell) == 0x18, "WWUIListBoxCell size mismatch");
+static_assert(offsetof(WWUIListBoxCell, PrimaryText) == 0x04, "WWUIListBoxCell::PrimaryText offset mismatch");
+static_assert(offsetof(WWUIListBoxCell, SecondaryText) == 0x08, "WWUIListBoxCell::SecondaryText offset mismatch");
+static_assert(offsetof(WWUIListBoxCell, TextColor) == 0x0C, "WWUIListBoxCell::TextColor offset mismatch");
+static_assert(offsetof(WWUIListBoxCell, Image) == 0x10, "WWUIListBoxCell::Image offset mismatch");
+static_assert(offsetof(WWUIListBoxCell, Value) == 0x14, "WWUIListBoxCell::Value offset mismatch");
+
+struct WWUIListBoxColumn
+{
+	int X;
+	int Width;
+	int CellCount;
+	int CellCapacity;
+	WWUIListBoxCell* Cells;
+};
+
+static_assert(sizeof(WWUIListBoxColumn) == 0x14, "WWUIListBoxColumn size mismatch");
+static_assert(offsetof(WWUIListBoxColumn, CellCount) == 0x08, "WWUIListBoxColumn::CellCount offset mismatch");
+static_assert(offsetof(WWUIListBoxColumn, Cells) == 0x10, "WWUIListBoxColumn::Cells offset mismatch");
+
+struct WWUIListBoxColumnArray
+{
+	int Count;
+	int Capacity;
+	WWUIListBoxColumn* Items;
+};
+
+static_assert(sizeof(WWUIListBoxColumnArray) == 0xC, "WWUIListBoxColumnArray size mismatch");
+
+struct WWUIListBoxTextEntry
+{
+	WWUIListBoxTextEntry* Next;
+	int ItemData;
+	wchar_t* Text;
+	int IsWide;
+};
+
+static_assert(sizeof(WWUIListBoxTextEntry) == 0x10, "WWUIListBoxTextEntry size mismatch");
 
 enum class WWControlType : int
 {
@@ -183,6 +252,16 @@ public:
 	int& ScrollBarUpButtonPressed() { return reinterpret_cast<int&>(this->LParam); }
 	int& ScrollBarDownButtonPressed() { return reinterpret_cast<int&>(this->PrevWndProc); }
 	int& ScrollBarRestoreCaptureToNotifyHwnd() { return reinterpret_cast<int&>(this->LParam1); }
+
+	HWND& ListBoxScrollBarHwnd() { return this->Hwnd_00C; }
+	int& ListBoxScrollBarWidth() { return reinterpret_cast<int&>(this->ShortDictNext); }
+	WWUIListBoxTextEntry*& ListBoxTextEntries() { return reinterpret_cast<WWUIListBoxTextEntry*&>(this->TextEntries); }
+	BitFont*& ListBoxFont() { return reinterpret_cast<BitFont*&>(this->Font); }
+	WWUIIntArray*& ListBoxItemData() { return reinterpret_cast<WWUIIntArray*&>(this->DrawItemState); }
+	WWUIIntArray*& ListBoxSelectionStates() { return reinterpret_cast<WWUIIntArray*&>(this->Unknown_0EC); }
+	int& ListBoxTopIndex() { return this->FocusRestorePending; }
+	int& ListBoxCurrentSelection() { return this->EditFocusRestoreReady; }
+	WWUIListBoxColumnArray*& ListBoxColumns() { return reinterpret_cast<WWUIListBoxColumnArray*&>(this->LParam); }
 };
 
 using WWWinData = OwnerDrawDialogElement;
@@ -424,6 +503,10 @@ public:
 	static bool __fastcall RunOpenAnimationIfNeeded(HWND hWnd) { JMP_STD(0x608260); }
 	static bool __fastcall DrawTooltip(bool captureBackground) { JMP_STD(0x610950); }
 	static bool RestoreTooltipBackground() { JMP_STD(0x610B50); }
+	static int __fastcall DrawBeveledBorder(Surface* pSurface, RectangleStruct* pRect, int thickness, int color) { JMP_STD(0x6208F0); }
+	static int __fastcall PrintTextFixedLength(unsigned int color, BitFont* pFont, RectangleStruct* pRect, const wchar_t* pText, int length, int horizontalAlign, int verticalAlign, Surface* pSurface, int animPos) { JMP_STD(0x6211D0); }
+	static bool __fastcall CopyDimmedBackground(RectangleStruct* pRect, HWND hWnd, unsigned int dimAlpha) { JMP_STD(0x6214B0); }
+	static void __fastcall BlendGradientRect(RectangleStruct* pRect, Surface* pSurface, unsigned short color, int widthScale) { JMP_STD(0x6217E0); }
 	static BOOL CALLBACK CollectChildHwndProc(HWND hWnd, LPARAM lParam) { JMP_STD(0x622470); }
 	static BOOL CALLBACK SendTransitionCompleteToCustomTextChildProc(HWND hWnd, LPARAM lParam) { JMP_STD(0x60AA60); }
 	static BOOL CALLBACK InitCompactDialogControlsProc(HWND hWnd, LPARAM lParam) { JMP_STD(0x60AAB0); }
