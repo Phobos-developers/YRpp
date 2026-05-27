@@ -152,7 +152,7 @@ enum class WWControlType : int
 	Static = 2,
 	ComboBox = 3,
 	ListBox = 4,
-	ColorTextInput = 5,	// Not seen anywhere but 11 seems to be default value and has same behavior as this one, leave 5 skipped seems weird so maybe this is it
+	SysListView = 5,	// SysListView32 reaches the fallback handler at 0x612A60 for label-edit coloring.
 	Progress = 6,
 	TrackBar = 7,
 	ScrollBar = 8,
@@ -746,8 +746,8 @@ public:
 	DEFINE_REFERENCE(WNDPROC, HotkeyHandler, 0x61ECA0);
 	// WWControlType::SysTab
 	DEFINE_REFERENCE(WNDPROC, SysTabHandler, 0x6137D0);
-	// WWControlType::ColorTextInput
-	DEFINE_REFERENCE(WNDPROC, ColorTextInputHandler, 0x612A60);
+	// WWControlType::SysListView
+	DEFINE_REFERENCE(WNDPROC, SysListViewHandler, 0x612A60);
 
 	// Westwood Registered extra handlers
 	// ComboDropWin
