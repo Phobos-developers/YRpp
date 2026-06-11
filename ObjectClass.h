@@ -98,12 +98,12 @@ public:
 	virtual bool IsControllable() const R0;
 
 	// On non-buildings this is same as GetCenterCoord(), on buildings it returns the target coordinate that is affected by TargetCoordOffset.
-	virtual CoordStruct* GetTargetCoords(CoordStruct* pCrd) const R0;
+	virtual CoordStruct GetTargetCoords() const RT(CoordStruct);
 	// gets a building's free dock coordinates for a unit. falls back to this->GetCoords(pCrd);
-	virtual CoordStruct* GetDockCoords(CoordStruct* pCrd, TechnoClass* docker) const R0;
-	virtual CoordStruct* GetRenderCoords(CoordStruct* pCrd) const { JMP_THIS(0x41BE00); }
-	virtual CoordStruct* GetFLH(CoordStruct *pDest, int idxWeapon, CoordStruct BaseCoords) const R0;
-	virtual CoordStruct* GetExitCoords(CoordStruct* pCrd, DWORD dwUnk) const R0;
+	virtual CoordStruct GetDockCoords(TechnoClass* docker) const RT(CoordStruct);
+	virtual CoordStruct GetRenderCoords() const { JMP_THIS(0x41BE00); }
+	virtual CoordStruct GetFLH(int idxWeapon, CoordStruct BaseCoords = CoordStruct {0, 0, 0}) const RT(CoordStruct);
+	virtual CoordStruct GetExitCoords(DWORD dwUnk) const RT(CoordStruct);
 	virtual int GetYSort() const { JMP_THIS(0x5F6BD0); }
 	virtual bool IsOnBridge(TechnoClass* pDocker = nullptr) const R0; // pDocker is passed to GetDestination
 	virtual bool IsStandingStill() const R0;
@@ -181,11 +181,11 @@ public:
 	virtual void SetLocation(const CoordStruct& crd) RX;
 
 // these two work through the object's Location
-	virtual CellStruct* GetMapCoords(CellStruct* pUCell) const R0;
+	virtual CellStruct GetMapCoords() const RT(CellStruct);
 	virtual CellClass* GetCell() const R0;
 
 // these two call ::GetCoords_() instead
-	virtual CellStruct* GetMapCoordsAgain(CellStruct* pUCell) const R0;
+	virtual CellStruct GetMapCoordsAgain() const RT(CellStruct);
 	virtual CellClass* GetCellAgain() const R0;
 
 	virtual int GetHeight() const R0;
@@ -232,38 +232,6 @@ public:
 
 	bool IsCrushable(TechnoClass* pCrusher)
 		{ JMP_THIS(0x5F6CD0); }
-
-	CellStruct GetMapCoords() const {
-		CellStruct ret;
-		this->GetMapCoords(&ret);
-		return ret;
-	}
-
-	CellStruct GetMapCoordsAgain() const {
-		CellStruct ret;
-		this->GetMapCoordsAgain(&ret);
-		return ret;
-	}
-
-	// On non-buildings this is same as GetCenterCoord(), on buildings it returns the target coordinate that is affected by TargetCoordOffset.
-	CoordStruct GetTargetCoords() const
-	{
-		CoordStruct ret;
-		this->GetTargetCoords(&ret);
-		return ret;
-	}
-
-	CoordStruct GetRenderCoords() const {
-		CoordStruct ret;
-		this->GetRenderCoords(&ret);
-		return ret;
-	}
-
-	CoordStruct GetFLH(int idxWeapon, const CoordStruct& base) const {
-		CoordStruct ret;
-		this->GetFLH(&ret, idxWeapon, base);
-		return ret;
-	}
 
 	//Constructor NEVER CALL IT DIRECTLY
 	/*ObjectClass()  noexcept

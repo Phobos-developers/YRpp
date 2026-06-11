@@ -32,7 +32,7 @@ public:
 	virtual int Size() const R0;
 
 	//ObjectTypeClass
-	virtual CoordStruct* vt_entry_6C(CoordStruct* pDest,CoordStruct* pSrc) const R0;
+	virtual CoordStruct vt_entry_6C(CoordStruct* pSrc) const RT(CoordStruct);
 
 	virtual bool SpawnAtMapCoords(CellStruct* pMapCoords,HouseClass* pOwner) R0;
 	virtual ObjectClass* CreateObject(HouseClass* pOwner) R0;

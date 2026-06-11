@@ -28,7 +28,7 @@ public:
 	virtual ~ObjectTypeClass() RX;
 
 	//ObjectTypeClass
-	virtual CoordStruct* vt_entry_6C(CoordStruct* pDest, CoordStruct* pSrc) const R0;
+	virtual CoordStruct vt_entry_6C(CoordStruct* pSrc) const RT(CoordStruct);
 	virtual DWORD GetOwners() const R0;
 	virtual int GetPipMax() const R0;
 	virtual void vt_entry_78(DWORD dwUnk) const RX;

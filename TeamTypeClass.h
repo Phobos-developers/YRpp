@@ -48,10 +48,10 @@ public:
 	int GetGroup() const
 		{ JMP_THIS(0x6F1870); }
 
-	CellStruct* GetWaypoint(CellStruct *buffer) const
+	CellStruct GetWaypoint() const
 		{ JMP_THIS(0x6F18A0); }
 
-	CellStruct* GetTransportWaypoint(CellStruct *buffer) const
+	CellStruct GetTransportWaypoint() const
 		{ JMP_THIS(0x6F18E0); }
 
 	bool CanRecruitUnit(FootClass* pUnit, HouseClass* pOwner) const

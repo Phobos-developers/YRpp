@@ -127,15 +127,8 @@ public:
 		return this->TurretCount > 0;
 	}
 
-	CoordStruct* GetParticleSysOffset(CoordStruct* pBuffer) const
-		{ JMP_THIS(0x7178C0); }
-
 	CoordStruct GetParticleSysOffset() const
-	{
-		CoordStruct buffer;
-		GetParticleSysOffset(&buffer);
-		return buffer;
-	}
+		{ JMP_THIS(0x7178C0); }
 
 	bool InOwners(DWORD const bitHouseType) const {
 		return 0u != (this->GetOwners() & bitHouseType);

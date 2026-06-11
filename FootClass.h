@@ -42,7 +42,7 @@ public:
 	virtual bool CanDeployNow() const R0;
 	virtual void AddSensorsAt(CellStruct cell) RX;
 	virtual void RemoveSensorsAt(CellStruct cell) RX;
-	virtual CoordStruct* vt_entry_4F0(CoordStruct* pCrd) R0;
+	virtual CoordStruct vt_entry_4F0() RT(CoordStruct);
 	virtual void vt_entry_4F4() RX;
 	virtual bool vt_entry_4F8() R0;
 	virtual bool MoveTo(CoordStruct* pCrd) R0;

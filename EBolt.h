@@ -27,14 +27,8 @@ public:
 	void ClearOwner()
 		{ JMP_THIS(0x4C1E50); }
 
-	CoordStruct* GetSourceCoords(CoordStruct* outBuffer) const
+	CoordStruct GetSourceCoords() const
 		{ JMP_THIS(0x4C2B40); }
-
-	CoordStruct GetSourceCoords() const {
-		CoordStruct buffer;
-		GetSourceCoords(&buffer);
-		return buffer;
-	}
 
 	void Fire(CoordStruct P1, CoordStruct P2, DWORD arg18)
 		{ JMP_THIS(0x4C2A60); }

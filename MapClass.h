@@ -255,25 +255,12 @@ public:
 	}
 
 	// gets a coordinate in a random direction a fixed distance in leptons away from coords
-	static CoordStruct* __fastcall GetRandomCoordsNear(CoordStruct &outBuffer, const CoordStruct &coords, int distance, bool center) {
+	static CoordStruct __fastcall GetRandomCoordsNear(const CoordStruct &coords, int distance, bool center) {
 		JMP_STD(0x49F420);
 	}
 
-	// gets a coordinate in a random direction a fixed distance in leptons away from coords
-	static CoordStruct GetRandomCoordsNear(const CoordStruct &coords, int distance, bool center) {
-		CoordStruct outBuffer;
-		GetRandomCoordsNear(outBuffer, coords, distance, center);
-		return outBuffer;
-	}
-
-	static CoordStruct* __stdcall PickInfantrySublocation(CoordStruct &outBuffer, const CoordStruct &coords, bool ignoreContents = false)
+	static CoordStruct __stdcall PickInfantrySublocation(const CoordStruct &coords, bool ignoreContents = false)
 		{ JMP_STD(0x4ACA10); }
-
-	static CoordStruct PickInfantrySublocation(const CoordStruct &coords, bool ignoreContents = false) {
-		CoordStruct outBuffer;
-		PickInfantrySublocation(outBuffer, coords, ignoreContents);
-		return outBuffer;
-	}
 
 	static void __fastcall UnselectAll()
 		{ JMP_STD(0x48DC90); }
@@ -330,17 +317,9 @@ public:
 	int GetCellFloorHeight(const CoordStruct& crd) const
 		{ JMP_THIS(0x578080); }
 
-	CellStruct * PickCellOnEdge(CellStruct &buffer, Edge Edge, const CellStruct &CurrentLocation, const CellStruct &Fallback,
-		SpeedType SpeedType, bool ValidateReachability, MovementZone MovZone) const
-			{ JMP_THIS(0x4AA440); }
-
 	CellStruct PickCellOnEdge(Edge Edge, const CellStruct &CurrentLocation, const CellStruct &Fallback,
 		SpeedType SpeedType, bool ValidateReachability, MovementZone MovZone) const
-	{
-		CellStruct buffer;
-		this->PickCellOnEdge(buffer, Edge, CurrentLocation, Fallback, SpeedType, ValidateReachability, MovZone);
-		return buffer;
-	}
+			{ JMP_THIS(0x4AA440); }
 
 // Pathfinding voodoo
 // do not touch them, mmkay, they trigger ZoneConnection recalc which is a MUST for firestorm to work
@@ -352,14 +331,8 @@ public:
 		{ JMP_THIS(0x586990); }
 
 	// Find nearest spot
-	CellStruct* NearByLocation(CellStruct &outBuffer, const CellStruct &position, SpeedType SpeedType, int a5, MovementZone MovementZone, bool alt, int SpaceSizeX, int SpaceSizeY, bool disallowOverlay, bool a11, bool requireBurrowable, bool allowBridge, const CellStruct &closeTo, bool a15, bool buildable)
+	CellStruct NearByLocation(const CellStruct &position, SpeedType SpeedType, int a5, MovementZone MovementZone, bool alt, int SpaceSizeX, int SpaceSizeY, bool disallowOverlay, bool a11, bool requireBurrowable, bool allowBridge, const CellStruct &closeTo, bool a15, bool buildable)
 		{ JMP_THIS(0x56DC20); }
-
-	CellStruct NearByLocation(const CellStruct &position, SpeedType SpeedType, int a5, MovementZone MovementZone, bool alt, int SpaceSizeX, int SpaceSizeY, bool disallowOverlay, bool a11, bool requireBurrowable, bool allowBridge, const CellStruct &closeTo, bool a15, bool buildable) {
-		CellStruct outBuffer;
-		NearByLocation(outBuffer, position, SpeedType, a5, MovementZone, alt, SpaceSizeX, SpaceSizeY, disallowOverlay, a11, requireBurrowable, allowBridge, closeTo, a15, buildable);
-		return outBuffer;
-	}
 
 	void  AddContentAt(CellStruct *coords, TechnoClass *Content)
 		{ JMP_THIS(0x5683C0); }
@@ -394,24 +367,6 @@ public:
 	// Checks if the area is in the visible portion of map.
 	bool InLocalRadar(RectangleStruct* pRect, bool checkLevel)
 		{ JMP_THIS(0x578390); }
-
-// ====================================
-//         FIRESTORM RELATED
-// ====================================
-
-	CoordStruct* FindFirstFirestorm(
-		CoordStruct* pOutBuffer, const CoordStruct& start,
-		const CoordStruct& end, HouseClass const* pHouse = nullptr) const
-	{ JMP_THIS(0x5880A0); }
-
-	CoordStruct FindFirstFirestorm(
-		const CoordStruct& start, const CoordStruct& end,
-		HouseClass const* pHouse = nullptr) const
-	{
-		CoordStruct outBuffer;
-		FindFirstFirestorm(&outBuffer, start, end, pHouse);
-		return outBuffer;
-	}
 
 // ====================================
 //        MAP REVEAL BRAINDAMAGE

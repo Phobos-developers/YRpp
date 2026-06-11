@@ -112,14 +112,8 @@ public:
 	bool IsDefinedWaypoint(int idx)
 		{ JMP_THIS(0x68BD80); }
 
-	CellStruct * GetWaypointCoords(CellStruct *dest, int idx)
+	CellStruct GetWaypointCoords(int idx)
 		{ JMP_THIS(0x68BCC0); }
-
-	CellStruct GetWaypointCoords(int idx) {
-		CellStruct dest;
-		GetWaypointCoords(&dest, idx);
-		return dest;
-	}
 
 	//CTOR / DTOR
 protected:

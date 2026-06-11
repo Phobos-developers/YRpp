@@ -27,7 +27,7 @@ public:
 	void SetTacticalPosition(CoordStruct* pCoord)
 		JMP_THIS(0x6D6070);
 
-	CellStruct* CoordsToCell(CellStruct* pDest, CoordStruct* pSource)
+	CellStruct CoordsToCell(CoordStruct* pSource)
 		JMP_THIS(0x6D6590);
 
 	[[deprecated]]// inlined in game
@@ -54,15 +54,8 @@ public:
 		return Point2D { x, y - AdjustForZ(coord.Z) };
 	}
 
-	CoordStruct* ClientToCoords(CoordStruct* pOutBuffer, Point2D const& client) const
-		JMP_THIS(0x6D2280);
-
 	CoordStruct ClientToCoords(Point2D const& client) const
-	{
-		CoordStruct buffer;
-		this->ClientToCoords(&buffer, client);
-		return buffer;
-	}
+		JMP_THIS(0x6D2280);
 
 	char GetOcclusion(const CellStruct& cell, bool fog) const
 		JMP_THIS(0x6D8700);

@@ -200,7 +200,7 @@ public:
 	bool CheckFog()
 		{ JMP_THIS(0x457A10); }
 
-	Matrix3D* GetVoxelBarrelOffsetMatrix(Matrix3D& ret)
+	Matrix3D GetVoxelBarrelOffsetMatrix()
 		{ JMP_THIS(0x458810); }
 
 	// returns false if this is a gate that is closed, true otherwise

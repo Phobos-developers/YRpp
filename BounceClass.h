@@ -29,23 +29,11 @@ public:
 			double maxVelocity, const Vector3D<float>& velocity, double angularVelocity)
 		{ JMP_THIS(0x4397E0); }
 
-	CoordStruct* GetCoords(CoordStruct* pBuffer) const
+	CoordStruct GetCoords() const
 		{ JMP_THIS(0x4399A0); }
 
-	CoordStruct GetCoords() const {
-		CoordStruct buffer;
-		this->GetCoords(&buffer);
-		return buffer;
-	}
-
-	Matrix3D* GetDrawingMatrix(Matrix3D* pBuffer) const
+	Matrix3D GetDrawingMatrix() const
 		{ JMP_THIS(0x4399E0); }
-
-	Matrix3D GetDrawingMatrix() const {
-		Matrix3D buffer;
-		this->GetDrawingMatrix(&buffer);
-		return buffer;
-	}
 
 	Status Update()
 		{ JMP_THIS(0x439B00); }

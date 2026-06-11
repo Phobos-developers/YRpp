@@ -230,8 +230,8 @@ public:
 	virtual ZGradient GetZGradient() const RT(ZGradient);
 	virtual CellStruct GetLastFlightMapCoords() const RT(CellStruct);
 	virtual void SetLastFlightMapCoords(CellStruct coord) RX;
-	virtual CellStruct* vt_entry_2FC(CellStruct* Buffer, DWORD dwUnk2, DWORD dwUnk3) const R0;
-	virtual CoordStruct* vt_entry_300(CoordStruct* Buffer, DWORD dwUnk2) const R0;
+	virtual CellStruct vt_entry_2FC(DWORD dwUnk2, DWORD dwUnk3) const RT(CellStruct);
+	virtual CoordStruct vt_entry_300(DWORD dwUnk2) const RT(CoordStruct);
 	virtual DWORD vt_entry_304(DWORD dwUnk, DWORD dwUnk2) const R0;
 	virtual DirStruct* GetRealFacing(DirStruct* pBuffer) const R0;
 	virtual InfantryTypeClass* GetCrew() const R0;
@@ -250,7 +250,7 @@ public:
 	virtual bool IsSensorVisibleToHouse(HouseClass* House) const R0;
 	virtual bool IsEngineer() const R0;
 	virtual void ProceedToNextPlanningWaypoint() RX;
-	virtual CellStruct* ScanForTiberium(CellStruct*, int range, DWORD dwUnk3) const R0;
+	virtual CellStruct ScanForTiberium(int range, DWORD dwUnk3) const RT(CellStruct)
 	virtual bool EnterGrinder() R0;
 	virtual bool EnterBioReactor() R0;
 	virtual bool EnterTankBunker() R0;
@@ -314,7 +314,7 @@ public:
 	virtual void Reload() RX;
 	virtual void vt_entry_428() RX;
 	// Returns target's coordinates if on attack mission & have target, otherwise own coordinates.
-	virtual CoordStruct* GetAttackCoordinates(CoordStruct* pCrd) const R0;
+	virtual CoordStruct GetAttackCoordinates() const RT(CoordStruct);
 	virtual bool IsNotWarpingIn() const R0;
 	virtual bool vt_entry_434(DWORD dwUnk) const R0;
 	virtual void DrawActionLines(bool Force, DWORD dwUnk2) RX;
@@ -351,7 +351,7 @@ public:
 	virtual bool HaveMegaMission() const R0;
 	virtual bool HaveAttackMoveTarget() const R0;
 	virtual Mission GetMegaMission() const RT(Mission);
-	virtual CoordStruct* GetAttackMoveCoords(CoordStruct* pBuffer) R0;
+	virtual CoordStruct GetAttackMoveCoords() RT(CoordStruct);
 	virtual bool CanUseWaypoint() const R0;
 	virtual bool CanAttackOnTheMove() const R0;
 	virtual bool MegaMissionIsAttackMove() const R0;

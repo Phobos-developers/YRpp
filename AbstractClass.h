@@ -87,11 +87,11 @@ public:
 	virtual HouseClass* GetOwningHouse() const R0;
 	virtual int GetArrayIndex() const R0;
 	virtual bool IsDead() const R0;
-	virtual CoordStruct* GetCoords(CoordStruct* pCrd) const R0;
-	virtual CoordStruct* GetDestination(CoordStruct* pCrd, TechnoClass* pDocker = nullptr) const R0; // where this is moving, or a building's dock for a techno. iow, a rendez-vous point
+	virtual CoordStruct GetCoords() const RT(CoordStruct);
+	virtual CoordStruct GetDestination(TechnoClass* pDocker = nullptr) const RT(CoordStruct); // where this is moving, or a building's dock for a techno. iow, a rendez-vous point
 	virtual bool IsOnFloor() const R0;
 	virtual bool IsInAir() const R0;
-	virtual CoordStruct* GetCenterCoords(CoordStruct* pCrd) const R0;
+	virtual CoordStruct GetCenterCoords() const RT(CoordStruct);
 	virtual void Update() RX;
 
 	//non-virtual
@@ -102,24 +102,6 @@ public:
 
 	void AnnounceExpiredPointer(bool removed = true) {
 		AnnounceExpiredPointer(this, removed);
-	}
-
-	CoordStruct GetCoords() const {
-		CoordStruct ret;
-		this->GetCoords(&ret);
-		return ret;
-	}
-
-	CoordStruct GetDestination(TechnoClass* pDocker = nullptr) const {
-		CoordStruct ret;
-		this->GetDestination(&ret, pDocker);
-		return ret;
-	}
-
-	CoordStruct GetCenterCoords() const {
-		CoordStruct ret;
-		this->GetCenterCoords(&ret);
-		return ret;
 	}
 
 	DirStruct* GetTargetDirection(DirStruct* pDir, AbstractClass* pTarget) const

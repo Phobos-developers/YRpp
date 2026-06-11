@@ -23,7 +23,7 @@ public:
 
 	//ILocomotion
 	virtual bool __stdcall Is_Moving() R0;
-	virtual CoordStruct* __stdcall Destination(CoordStruct* pcoord) R0;
+	virtual CoordStruct __stdcall Destination() RT(CoordStruct);
 	virtual bool __stdcall Process() R0;
 	virtual void __stdcall Move_To(CoordStruct to) RX;
 	virtual void __stdcall Stop_Moving() RX;

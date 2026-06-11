@@ -657,23 +657,11 @@ public:
 	bool Fire_SW(int idx, const CellStruct &coords)
 		{ JMP_THIS(0x4FAE50); }
 
-	CellStruct* PickTargetByType(CellStruct &outBuffer, QuarryType targetType) const
+	CellStruct PickTargetByType(QuarryType targetType) const
 		{ JMP_THIS(0x50D170); }
 
-	CellStruct PickTargetByType(QuarryType targetType) const {
-		CellStruct outBuffer;
-		this->PickTargetByType(outBuffer, targetType);
-		return outBuffer;
-	}
-
-	CellStruct* PickIonCannonTarget(CellStruct &outBuffer) const
+	CellStruct PickIonCannonTarget() const
 		{ JMP_THIS(0x50CBF0); }
-
-	CellStruct PickIonCannonTarget() const {
-		CellStruct outBuffer;
-		this->PickIonCannonTarget(outBuffer);
-		return outBuffer;
-	}
 
 	bool IsIonCannonEligibleTarget(const TechnoClass* pTechno) const;
 
