@@ -306,3 +306,15 @@ EXPORT_FUNC(funcname)
 // CAUTION: funcname must be the same as in DEFINE_HOOK.
 #define DEFINE_HOOK_AGAIN(hook, funcname, size) \
 declhook(hook, funcname, size)
+
+// Feature flags set by Syringe at injection time.
+// DLLs can check these at runtime to verify that the running Syringe
+// version supports the features they rely on. Each flag defaults to false
+// and is set to true by Syringe after the DLL is loaded into the target
+// process. If a DLL is loaded by an older Syringe that does not know about
+// feature flags, the values will remain false.
+namespace SyringeFeatures
+{
+	extern "C" __declspec(dllexport) inline bool ESPModification = false;
+	extern "C" __declspec(dllexport) inline bool ZFPreservation = false;
+}
