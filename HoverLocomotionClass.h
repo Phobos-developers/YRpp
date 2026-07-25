@@ -14,6 +14,14 @@ public:
 	//Destructor
 	virtual ~HoverLocomotionClass() RX;
 
+	// NOTE (Antares): upstream does not bind these two. Ares calls the first from
+	// its hover-locomotor hooks.
+	void sub_514F70(bool arg)
+		{ JMP_THIS(0x514F70); }
+
+	void sub_5164D0(bool arg)
+		{ JMP_THIS(0x5164D0); }
+
 	//Constructor
 	HoverLocomotionClass()
 		: LocomotionClass(noinit_t())
