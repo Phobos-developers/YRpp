@@ -343,41 +343,7 @@ enum class TriggerEvent : unsigned int
 	PowerFull = 0x3A,
 	EnteredOrOverflownBy = 0x3B,
 	TechTypeExists = 0x3C,
-	TechTypeDoesntExist = 0x3D,
-
-	// --- Ares extensions -----------------------------------------------------
-	// gamemd's own TEventType enum ends at TEVENT_RA2_TECHTYPE_DOESNT_EXIST = 0x3D
-	// with TEVENT_COUNT = 0x3E, so 62.. is free for Ares. TeventExt::HasOccured
-	// (Ares.dll 0x10050400) dispatches `EventKind - 62` through a 27-entry byte
-	// table at 0x10050A20, which fixes the range as exactly 62..88.
-	// Names follow the case table in reference/new-ext/teventext-layout.md 5.2/5.3.
-	UnderEMP = 0x3E,                      // 62
-	UnderEMP_ByHouse = 0x3F,              // 63
-	RemoveEMP = 0x40,                     // 64
-	RemoveEMP_ByHouse = 0x41,             // 65
-	EnemyInSpotlightNow = 0x42,           // 66
-	DriverKiller = 0x43,                  // 67
-	DriverKilled_ByHouse = 0x44,          // 68
-	VehicleTaken = 0x45,                  // 69
-	VehicleTaken_ByHouse = 0x46,          // 70
-	Abducted = 0x47,                      // 71
-	Abducted_ByHouse = 0x48,              // 72
-	AbductSomething = 0x49,               // 73
-	AbductSomething_OfHouse = 0x4A,       // 74
-	SuperActivated = 0x4B,                // 75
-	SuperDeactivated = 0x4C,              // 76
-	SuperNearWaypoint = 0x4D,             // 77
-	ReverseEngineered = 0x4E,             // 78
-	ReverseEngineerAnything = 0x4F,       // 79
-	ReverseEngineerType = 0x50,           // 80
-	HouseOwnTechnoType = 0x51,            // 81
-	HouseDoesntOwnTechnoType = 0x52,      // 82
-	AttackedOrDestroyedByAnybody = 0x53,  // 83
-	AttackedOrDestroyedByHouse = 0x54,    // 84
-	DestroyedByHouse = 0x55,              // 85
-	TechnoTypeDoesntExistMoreThan = 0x56, // 86
-	AllKeepAlivesDestroyed = 0x57,        // 87
-	AllKeepAlivesBuildingDestroyed = 0x58 // 88 (IDB spells this "Kepp"; normalised)
+	TechTypeDoesntExist = 0x3D
 };
 
 enum class TriggerAction : unsigned int
@@ -527,16 +493,7 @@ enum class TriggerAction : unsigned int
 	RetintRed = 0x8E,
 	RetintGreen = 0x8F,
 	RetintBlue = 0x90,
-	JumpCameraHome = 0x91,
-
-	// --- Ares extensions -----------------------------------------------------
-	// gamemd's own TActionType enum ends at TACTION_YR_JUMP_CAMERA_HOME = 0x91
-	// with TACTION_COUNT = 0x92, so 146.. is free for Ares. The four names come
-	// from reference/ares-docs/new/triggeractions.txt lines 46/61/79/97.
-	AuxiliaryPower = 0x92,  // 146
-	KillDriversOf = 0x93,   // 147
-	SetEVAVoice = 0x94,     // 148
-	SetGroup = 0x95         // 149
+	JumpCameraHome = 0x91
 };
 
 enum class TriggerAttachType : int
@@ -1203,33 +1160,7 @@ enum class SuperWeaponType : int
 	SpyPlane = 8,
 	GeneticMutator = 9,
 	ForceShield = 10,
-	PsychicReveal = 11,
-
-	// --- Ares extensions -----------------------------------------------------
-	// gamemd's own SpecialWeaponType ends at SPC_Psychic_Reveal = 0xB with
-	// SPC_COUNT = 0xC, matching SWTypeExt::FirstCustomType == 12. The 18 slots
-	// below are the NewSWType registration order (Ares.dll NewSWType_Reg
-	// 0x1006D630, 18-slot array at 0x100C31C8), ending at SW_Battery = 29.
-	// This registration order is savegame-semantic: append only.
-	FirstCustomType = 12,
-	SonarPulse = 12,
-	UnitDelivery = 13,
-	GenericWarhead = 14,
-	Firewall = 15,
-	Protect = 16,
-	Reveal = 17,
-	ParaDropAres = 18,
-	SpyPlaneAres = 19,
-	ChronoSphereAres = 20,
-	ChronoWarpAres = 21,
-	GeneticMutatorAres = 22,
-	PsychicDominatorAres = 23,
-	LightningStormAres = 24,
-	NuclearMissileAres = 25,
-	HunterSeeker = 26,
-	DropPod = 27,
-	EMPulse = 28,
-	Battery = 29
+	PsychicReveal = 11
 };
 
 enum class MouseCursorType : unsigned int
