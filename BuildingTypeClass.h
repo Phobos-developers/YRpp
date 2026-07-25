@@ -34,12 +34,6 @@ public:
 	//Array
 	ABSTRACTTYPE_ARRAY(BuildingTypeClass, 0xA83C68u);
 
-	// NOTE (Antares): the game's own symbol here is LEVEL_LEPTON_H (104). It is the
-	// lepton height of one building level; BuildingTypeClass::Lepton_Dimensions
-	// multiplies by it at gamemd 0x464AFC (`imul ecx, LEVEL_LEPTON_H`). Upstream
-	// has no binding for it and Ares needs one.
-	DEFINE_REFERENCE(int, HeightInLeptons, 0x89DDB8u)
-
 	//IPersist
 	virtual HRESULT __stdcall GetClassID(CLSID* pClassID) R0;
 
