@@ -34,6 +34,12 @@ public:
 	//Array
 	ABSTRACTTYPE_ARRAY(BuildingTypeClass, 0xA83C68u);
 
+	// NOTE (Antares): the game's own symbol here is LEVEL_LEPTON_H (104). It is the
+	// lepton height of one building level; BuildingTypeClass::Lepton_Dimensions
+	// multiplies by it at gamemd 0x464AFC (`imul ecx, LEVEL_LEPTON_H`). Upstream
+	// has no binding for it and Ares needs one.
+	DEFINE_REFERENCE(int, HeightInLeptons, 0x89DDB8u)
+
 	//IPersist
 	virtual HRESULT __stdcall GetClassID(CLSID* pClassID) R0;
 
@@ -295,7 +301,17 @@ public:
 	bool ConcentricRadialIndicator;
 	int PsychicDetectionRadius;
 	int BarrelStartPitch;
-	char VoxelBarrelFile [0x1C];
+	char VoxelBarrelFile [0x14];
+
+	// NOTE (Antares): upstream declares VoxelBarrelFile as [0x1C], which swallows
+	// this double. BuildingClass::GetBarrelMatrix (gamemd 0x458810) does
+	// `fld qword ptr [ecx+1728h]` at 0045897B and feeds the result to
+	// Matrix3D::Scale_X/Y/Z, so +0x1728 is a double and the name array ends at
+	// +0x1714 + 0x14. The game reads it but never writes it -- neither the ctor
+	// nor Read_INI touch it -- so vanilla leaves it zero. Splitting the array is
+	// size-neutral: 0x14 + 8 == 0x1C.
+	double VoxelBarrelScale;
+
 	CoordStruct VoxelBarrelOffsetToPitchPivotPoint;
 	CoordStruct VoxelBarrelOffsetToRotatePivotPoint;
 	CoordStruct VoxelBarrelOffsetToBuildingPivotPoint;
@@ -315,3 +331,8 @@ public:
 	VectorClass<CoordStruct> DockingOffsets;
 private: DWORD align_1794;
 };
+
+// Antares: layout guards for the two additions above. The double at +0x1728 is
+// read by BuildingClass::GetBarrelMatrix (gamemd 0x458810, `fld qword ptr [ecx+1728h]`).
+static_assert(offsetof(BuildingTypeClass, VoxelBarrelScale) == 0x1728, "BuildingTypeClass::VoxelBarrelScale moved");
+static_assert(offsetof(BuildingTypeClass, VoxelBarrelFile) == 0x1714, "BuildingTypeClass::VoxelBarrelFile moved");
