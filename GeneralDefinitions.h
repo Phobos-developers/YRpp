@@ -1519,20 +1519,27 @@ enum class VoxPriority : int
 	Critical = 3
 };
 
-// NOTE (Antares): Laser and BigLaser are deliberately NOT in upstream's order.
-// Upstream numbers them BigLaser = 1, Laser = 2. Ares 3.0p1's
-// TechnoClass_Fire_OtherWaves (Ares.dll 0x10057B10) computes the wave type as
-// `(pWeaponExt->Wave_IsBigLaser != 0) + 1`, so a plain laser is 1 and a big
-// laser is 2, and the same function uses 3 for the magnetron path -- a value
-// both trees agree is Magnetron, which anchors the scale. WaveClass::Type
-// (+0xB0, seeded by the ctor at gamemd 0x75E950) is serialized, so adopting
-// upstream's order would both invert big-laser selection and change savegame
-// content. Do not "fix" this to match upstream.
+// NOTE (Antares): BigLaser is 1 and Laser is 2, not the other way round -- this is
+// upstream's order and it is the correct one. WaveClass::WaveClass (gamemd
+// 0x75E950) guards the block that sets LaserIntensity and MatrixScale with
+// `if (type > WAVE_SONIC && type <= WAVE_LASER)`, a single range that has to cover
+// both laser kinds; that only closes if WAVE_LASER is the *higher* value, i.e.
+// Sonic(0) < BigLaser(1) <= Laser(2). Magnetron is 3.
+//
+// The pinned YRpp had these two labels swapped, and src/Ext/WeaponType/Hooks.Wave.cpp
+// had a compensating swap in its ternary, so the numbers Ares actually wrote were
+// right by accident. Both were corrected together; the number stored in
+// WaveClass::Type (+0xB0) is unchanged, so this is not a savegame-format change.
+// Beware: the INI keys read counter-intuitively against this enum --
+// `Wave.IsBigLaser` selects WaveType::Laser (2) and plain `Wave.IsLaser` selects
+// WaveType::BigLaser (1). That is what shipped Ares 3.0p1 does
+// (TechnoClass_Fire_OtherWaves, Ares.dll 0x10057B10: `(Wave_IsBigLaser != 0) + 1`),
+// and the INI key names must not be changed -- mods depend on them.
 enum class WaveType : int
 {
 	Sonic = 0,
-	Laser = 1,
-	BigLaser = 2,
+	BigLaser = 1,
+	Laser = 2,
 	Magnetron = 3
 };
 
