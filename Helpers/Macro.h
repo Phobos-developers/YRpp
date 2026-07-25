@@ -34,7 +34,7 @@
 // negating 68 hand-derived literals, and a slip there produces a wrong stack read:
 // a runtime crash or silent garbage that no gate in this tree can see. So the old
 // name keeps the old meaning, and upstream's STACK_OFFSET keeps its own.
-#define STACK_OFFS(cur_offset, wanted_offset) \r
+#define STACK_OFFS(cur_offset, wanted_offset) \
 		(cur_offset - wanted_offset)
 
 
