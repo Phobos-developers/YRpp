@@ -49,6 +49,64 @@ struct BuildType
 		{ JMP_STD(0x6A8420); }
 };
 
+struct StripClass;
+
+// NOTE (Antares): upstream has no model for the per-cameo button gadget. This is
+// the game's own SelectClass; the layout and the array stride are asserted below
+// because getting them wrong crashes the sidebar (see the unknown_34 comment).
+// the per-cameo button. an array of 4 strips times 60 buttons, stride 0x38.
+// sizeof() == 0x38
+struct SelectClass
+{
+	static SelectClass* Array()
+		{ return reinterpret_cast<SelectClass*>(0xB07E80); }
+
+	// horizontal distance between the two cameo columns
+	static int CameoPitchX()
+		{ return *reinterpret_cast<int*>(0xB0B4FC); }
+
+	// vertical distance between two cameo rows
+	static int CameoPitchY()
+		{ return *reinterpret_cast<int*>(0xB0B500); }
+
+	enum { ButtonID = 202, CameoWidth = 60, CameoHeight = 48 };
+
+	void Zap()
+		{ JMP_THIS(0x5565F0); }
+
+	void* VTable;
+	SelectClass* Next;
+	SelectClass* Previous;
+	int X;
+	int Y;
+	int Width;
+	int Height;
+	DWORD Flags;
+	DWORD Status;
+	unsigned int ID;
+	SelectClass* SendTo;
+	StripClass* Strip;
+	int Index;
+
+	// Four bytes this tree has never identified. They only have to EXIST: the
+	// game's array stride is 0x38, and without them the members above add up to
+	// 0x34, so Array()[i] walks 4 bytes short per element and every write lands
+	// progressively earlier. At i = 3 the X store hits the real element's
+	// vftable pointer, and SidebarClass::InitGUI then calls through it
+	// (`call [edx+64h]` at 0x6ABF96) with a screen coordinate as the vptr.
+	DWORD unknown_34;
+};
+
+// The stride is what makes SelectClass::Array() indexable at all, so it is
+// asserted rather than left to a comment -- the comment above this struct
+// already said 0x38 while the members summed to 0x34.
+static_assert(sizeof(SelectClass) == 0x38, "SelectClass must match the game's array stride");
+static_assert(offsetof(SelectClass, X) == 0x0C, "SelectClass layout slipped");
+static_assert(offsetof(SelectClass, Width) == 0x14, "SelectClass layout slipped");
+static_assert(offsetof(SelectClass, ID) == 0x24, "SelectClass layout slipped");
+static_assert(offsetof(SelectClass, Strip) == 0x2C, "SelectClass layout slipped");
+static_assert(offsetof(SelectClass, Index) == 0x30, "SelectClass layout slipped");
+
 // SidebarClass::StripClass
 struct StripClass
 {
@@ -59,16 +117,33 @@ struct StripClass
 	RectangleStruct   Bounds;
 	int               Index; // the index of this tab
 	bool              NeedsRedraw;
-	BYTE              unknown_3D;
-	BYTE              unknown_3E;
-	BYTE              unknown_3F;
-	DWORD             unknown_40;
+	bool              IsBuilding;       // [ANT] named by the Ares sidebar rework
+	bool              IsScrollingDown;  // [ANT]
+	bool              IsScrolling;      // [ANT]
+	int               Flasher;          // [ANT]
 	int               TopRowIndex; // scroll position, which row is topmost visible
-	DWORD             unknown_48;
-	DWORD             unknown_4C;
-	DWORD             unknown_50;
+	int               Scroller;         // [ANT]
+	int               Slid;             // [ANT]
+	int               LastSlid;         // [ANT]
 	int               CameoCount; // filled cameos
 	BuildType         Cameos[75];
+
+	// NOTE (Antares): five entry points upstream does not bind; Ares's sidebar
+	// rework calls all of them.
+	void Initialize(int index)
+		{ JMP_THIS(0x6A8220); }
+
+	void Activate()
+		{ JMP_THIS(0x6A8330); }
+
+	void Deactivate()
+		{ JMP_THIS(0x6A83E0); }
+
+	void AddButtons()
+		{ JMP_THIS(0x6A93F0); }
+
+	void RemoveButtons()
+		{ JMP_THIS(0x6A94B0); }
 };
 
 class NOVTABLE SidebarClass : public PowerClass
