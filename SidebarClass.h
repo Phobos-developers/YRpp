@@ -127,6 +127,16 @@ public:
 	void BlitSidebar(bool force)
 		{ JMP_THIS(0x6A70E0); }
 
+	// NOTE (Antares): two entry points upstream does not bind, both needed by
+	// Ares's cameo-list rework. SidebarClass::UpdateScrollButtons enables or
+	// disables the two scroll buttons; GetVisibleCameoCount reports how many cameo
+	// buttons fit on the strip at the current resolution.
+	void UpdateScrollButtons()
+		{ JMP_THIS(0x6A6610); }
+
+	int GetVisibleCameoCount()
+		{ JMP_THIS(0x6AC430); }
+
 protected:
 	//Constructor
 	SidebarClass() {}	//don't need this
