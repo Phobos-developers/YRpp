@@ -189,21 +189,8 @@ static Point2D* Fancy_Text_Print_Wide(const Point2D& retBuffer, const wchar_t* T
 #pragma warning(pop)
 
 
-// NOTE (Antares): upstream leaves this commented out. It is NOT the same function
-// as DSurface::DrawText / Fancy_Text_Print_Wide (0x4A60E0), the __cdecl
-// vswprintf-formatting wrapper that ultimately calls *this*; do not substitute one
-// for the other. This one takes a plain string and is __fastcall.
-//
-// Signature is the game's own, from the mangled export at 0x4A5EB0:
-//   ?Simple_Text_Print_Wide@@YI?AVPoint2D@@PB_WPAVXSurface@@PAVRect@@PAV1@IIW4TextPrintType@@H@Z
-//   ^Y I = __fastcall  ?AVPoint2D@@ = returns Point2D by value (hidden ptr)
-//   PB_W wchar_t const*  PAVXSurface@@  PAVRect@@  PAV1@ Point2D*
-//   I unsigned  I unsigned  W4TextPrintType@@  H int
-// Confirmed by the epilogue: `retn 1Ch` = 7 stack dwords, i.e. 9 parameters with
-// the first two (the hidden return pointer and the string) in ECX/EDX -- so the
-// trailing parameter is an int, not the bool upstream's comment guesses.
-//
-// Beware the other overload at 0x4A6010, which takes a ColorScheme* in place of
+// takes a plain string; Fancy_Text_Print_Wide (0x4A60E0) is the formatting wrapper
+// that calls this. A second overload at 0x4A6010 takes a ColorScheme* in place of
 // the two colour dwords.
 inline Point2D* __fastcall Simple_Text_Print_Wide(
 	Point2D* pRetVal, const wchar_t* pText, Surface* pSurface,

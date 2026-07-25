@@ -74,15 +74,9 @@ public:
 	bool IsOnlyInstanceOfType() const
 		{ JMP_THIS(0x6E5850); }
 
-	// NOTE (Antares): the fifth parameter is not always a TechnoClass*. It is the
-	// event's "source", and for the whole family of _ByHouse events the game
-	// compares it against a house -- shipped Ares 3.0p1 passes a HouseClass* here
-	// for DestroyedByHouse and friends. Typing it TechnoClass*, as upstream does,
-	// makes every such call a reinterpret_cast at the call site and hides that.
-	// void* is the honest typing for a polymorphic argument.
 	bool RaiseEvent(
 		TriggerEvent event, ObjectClass* pTagOwner, CellStruct location,
-		bool forceAllOccured = false, void* pSource = nullptr)
+		bool forceAllOccured = false, TechnoClass* pSource = nullptr)
 	{ JMP_THIS(0x6E53A0); }
 
 	// whether the tag transfers when the owner is "changed",

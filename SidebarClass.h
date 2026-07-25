@@ -12,14 +12,6 @@ struct BuildType
 {
 	int               ItemIndex{ -1 };
 	AbstractType      ItemType{ AbstractType::None };
-	// NOTE (Antares): deliberately BYTE, not upstream's bool. This one byte holds
-	// the BuildCat of a building, not a flag. StripClass_AddCameo_ReplaceItAll
-	// (Ares.dll 0x1002CE98) calls Get_BuildCat and stores the result with
-	// `LOBYTE(item[2]) = BuildCat`, and SelectClass_ProcessInput_LoadCameoData1
-	// (0x1002CC79) reads it back with `movzx ecx, byte ptr [edx+8]` and pushes the
-	// zero-extended value as an int. BuildCat runs 0..5, so a bool would collapse
-	// Tech/Resource/Power/Infrastructure/Combat into one value. Layout is unchanged:
-	// one byte either way.
 	BYTE              IsAlt{ 0 }; // the BuildCat of buildings, 0 for everything else
 	FactoryClass*     CurrentFactory{ nullptr };
 	DWORD             unknown_10{ 0 };
@@ -51,11 +43,7 @@ struct BuildType
 
 struct StripClass;
 
-// NOTE (Antares): upstream has no model for the per-cameo button gadget. This is
-// the game's own SelectClass; the layout and the array stride are asserted below
-// because getting them wrong crashes the sidebar (see the unknown_34 comment).
-// the per-cameo button. an array of 4 strips times 60 buttons, stride 0x38.
-// sizeof() == 0x38
+// the per-cameo button; an array of 4 strips times 60 buttons, stride 0x38
 struct SelectClass
 {
 	static SelectClass* Array()
@@ -88,18 +76,10 @@ struct SelectClass
 	StripClass* Strip;
 	int Index;
 
-	// Four bytes this tree has never identified. They only have to EXIST: the
-	// game's array stride is 0x38, and without them the members above add up to
-	// 0x34, so Array()[i] walks 4 bytes short per element and every write lands
-	// progressively earlier. At i = 3 the X store hits the real element's
-	// vftable pointer, and SidebarClass::InitGUI then calls through it
-	// (`call [edx+64h]` at 0x6ABF96) with a screen coordinate as the vptr.
+	// unidentified, but it has to exist: without it the stride is 0x34 and Array()[i] walks short
 	DWORD unknown_34;
 };
 
-// The stride is what makes SelectClass::Array() indexable at all, so it is
-// asserted rather than left to a comment -- the comment above this struct
-// already said 0x38 while the members summed to 0x34.
 static_assert(sizeof(SelectClass) == 0x38, "SelectClass must match the game's array stride");
 static_assert(offsetof(SelectClass, X) == 0x0C, "SelectClass layout slipped");
 static_assert(offsetof(SelectClass, Width) == 0x14, "SelectClass layout slipped");
@@ -117,19 +97,17 @@ struct StripClass
 	RectangleStruct   Bounds;
 	int               Index; // the index of this tab
 	bool              NeedsRedraw;
-	bool              IsBuilding;       // [ANT] named by the Ares sidebar rework
-	bool              IsScrollingDown;  // [ANT]
-	bool              IsScrolling;      // [ANT]
-	int               Flasher;          // [ANT]
+	bool              IsBuilding;
+	bool              IsScrollingDown;
+	bool              IsScrolling;
+	int               Flasher;
 	int               TopRowIndex; // scroll position, which row is topmost visible
-	int               Scroller;         // [ANT]
-	int               Slid;             // [ANT]
-	int               LastSlid;         // [ANT]
+	int               Scroller;
+	int               Slid;
+	int               LastSlid;
 	int               CameoCount; // filled cameos
 	BuildType         Cameos[75];
 
-	// NOTE (Antares): five entry points upstream does not bind; Ares's sidebar
-	// rework calls all of them.
 	void Initialize(int index)
 		{ JMP_THIS(0x6A8220); }
 
@@ -202,13 +180,11 @@ public:
 	void BlitSidebar(bool force)
 		{ JMP_THIS(0x6A70E0); }
 
-	// NOTE (Antares): two entry points upstream does not bind, both needed by
-	// Ares's cameo-list rework. SidebarClass::UpdateScrollButtons enables or
-	// disables the two scroll buttons; GetVisibleCameoCount reports how many cameo
-	// buttons fit on the strip at the current resolution.
+	// enables or disables the two scroll buttons
 	void UpdateScrollButtons()
 		{ JMP_THIS(0x6A6610); }
 
+	// how many cameo buttons fit on the strip at the current resolution
 	int GetVisibleCameoCount()
 		{ JMP_THIS(0x6AC430); }
 

@@ -33,9 +33,7 @@ struct BasePlanningCellContainer {
 	static int __cdecl Comparator(const void *, const void *)
 		{ JMP_STD(0x5108F0); }
 };
-// NOTE (Antares): upstream has no model for the game's name/value tables, e.g.
-// the 11-entry pip table at 0x81B958 and the RTTI name table at 0x816EE0. This is
-// their element type; it exists in gamemd whether or not Ares is loaded.
+// element type of the game's name/value tables, e.g. the pip table at 0x81B958
 struct NamedValue {
 	const char* Name;
 	int Value;

@@ -45,12 +45,7 @@ public:
 	static bool __fastcall IsBuildCat5(AbstractType abstractID, int idx)
 		{ JMP_STD(0x5004E0); }
 
-	// NOTE (Antares): 0x5004E0 returns the BuildCat, not a bool -- shipped
-	// StripClass_AddCameo_ReplaceItAll (Ares.dll 0x1002CE98) calls it and stores
-	// the full byte into BuildType::IsAlt, which the sidebar then pushes as an int
-	// (0x1002CC79, `movzx ecx, byte ptr [edx+8]`). The bool-returning spelling above
-	// is upstream's and is kept; this one is the same thunk with the return type the
-	// value actually has.
+	// the same thunk as IsBuildCat5, with the return type the value actually has
 	static BuildCat __fastcall GetBuildCat(AbstractType abstractID, int idx)
 		{ JMP_STD(0x5004E0); }
 

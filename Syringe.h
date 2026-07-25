@@ -283,7 +283,7 @@ namespace SyringeData { namespace Hosts { __declspec(allocate(".syexe00")) hostd
 _YR_DEFINE_INCLUDE_ANCHOR(_YR_PP_CAT(YrKeepHost_, exename), &SyringeData::Hosts::_hst__ ## exename)
 
 #define declhook(hook, funcname, size) \
-namespace SyringeData { namespace Hooks { __declspec(allocate(".syhks00")) hookdecl _hk__ ## hook ## funcname  {  0x ## hook, 0x ## size, #funcname }; }; }; \
+namespace SyringeData { namespace Hooks { __declspec(allocate(".syhks00")) hookdecl _hk__ ## hook ## funcname  {  hook, size, #funcname }; }; }; \
 _YR_DEFINE_INCLUDE_ANCHOR(_YR_PP_CAT(YrKeepHook_, _YR_PP_CAT(hook, funcname)), &SyringeData::Hooks::_hk__ ## hook ## funcname)
 
 #endif // SYR_VER == 2

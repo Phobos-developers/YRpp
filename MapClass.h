@@ -380,10 +380,7 @@ public:
 	bool CoordinatesLegal(const CellStruct& cell) const
 		{ JMP_THIS(0x568300); }
 
-	// NOTE (Antares): MapClass::In_Map_Coord -- the same diamond-shaped bounds test
-	// as the cell form above, but taking leptons. Upstream binds only the cell form,
-	// and Ares's hunter-seeker path asks the question about a CoordStruct: a
-	// coordinate walking off the map edge is exactly when this gets asked.
+	// In_Map_Coord: the same bounds test, in leptons
 	bool CoordinatesLegal(const CoordStruct& coords) const
 		{ JMP_THIS(0x568350); }
 

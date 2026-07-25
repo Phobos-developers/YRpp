@@ -206,12 +206,7 @@ class CellSpreadEnumerator
 public:
 	static const size_t Max = 0x100u;
 
-	// NOTE (Antares): the clamp has to be in the initialiser. Upstream's body did
-	//     spread(spread) ... if(spread > Max) { spread = Max; }
-	// which assigns to the *parameter* after the member is already initialised, so
-	// this->spread kept the unclamped value and operator bool() ran the walk far
-	// past Max. src/Ext/WarheadType/Hooks.CellSpread.cpp constructs one straight
-	// from a mod-supplied CellSpread, so an unbounded value is reachable from INI.
+	// the clamp belongs in the initialiser: assigning to the parameter afterwards leaves this->spread unclamped
 	CellSpreadEnumerator(size_t spread, size_t start=0u) : current(CellStruct()), spread(spread > Max ? Max : spread), curspread(0u), hasTwo(false), hadTwo(false) {
 		reset(start);
 	}

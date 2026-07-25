@@ -126,13 +126,7 @@ public:
 	void DestroyNthAnim(BuildingAnimSlot Slot)
 		{ JMP_THIS(0x451E40); }
 
-	// NOTE (Antares): the game resolves which of the slot's three names to play
-	// (normal / damaged / garrisoned) itself, so the two states are the caller's
-	// to supply. This is a plain binding, NOT a wrapper that picks a name and
-	// forwards to PlayAnim below -- those are different routines, and composing
-	// the name here diverges wherever the game's own selection does. Ares 3.0p1
-	// thunks straight to 0x451750 (Ares.dll 0x100169D0) from all three of its
-	// call sites, each computing the pair exactly as written here.
+	// the game picks the slot's normal/damaged/garrisoned name from these two states
 	void PlayNthAnim(BuildingAnimSlot Slot, bool Damaged, bool Garrisoned, int effectDelay = 0)
 		{ JMP_THIS(0x451750); }
 

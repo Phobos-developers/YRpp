@@ -34,13 +34,11 @@ public:
 	void LiberateMember(FootClass* pFoot, int idx = -1, byte count = 0)
 		JMP_THIS(0x6EA870);
 
-	// if bKeepQuantity is false, this will not change the quantity of each techno member
-	// NOTE (Antares): upstream does not bind this one. The living, on-map member
-	// with the highest TechnoTypeClass::LeadershipRating; mangled in the game as
-	// ?Fetch_A_Leader@TeamClass@@QBEPAVFootClass@@XZ.
+	// the living, on-map member with the highest LeadershipRating
 	FootClass* FetchALeader() const
 		{ JMP_THIS(0x6EC3D0); }
 
+	// if bKeepQuantity is false, this will not change the quantity of each techno member
 	bool AddMember(FootClass* pFoot, bool bForce)
 		JMP_THIS(0x6EA500);
 

@@ -705,8 +705,7 @@ public:
 	FactoryClass* GetPrimaryFactory(AbstractType absID, bool naval, BuildCat buildCat) const
 		{ JMP_THIS(0x500510); }
 
-	// NOTE (Antares): upstream does not bind this one. zone: 0 = core, 1 = north,
-	// 2 = east, 3 = south, 4 = west. Used by Ares's AI super-weapon targeting.
+	// zone: 0 = core, 1 = north, 2 = east, 3 = south, 4 = west
 	CellStruct* PickRandomCellInZone(CellStruct& outBuffer, int zone) const
 		{ JMP_THIS(0x501AC0); }
 
