@@ -1519,11 +1519,20 @@ enum class VoxPriority : int
 	Critical = 3
 };
 
+// NOTE (Antares): Laser and BigLaser are deliberately NOT in upstream's order.
+// Upstream numbers them BigLaser = 1, Laser = 2. Ares 3.0p1's
+// TechnoClass_Fire_OtherWaves (Ares.dll 0x10057B10) computes the wave type as
+// `(pWeaponExt->Wave_IsBigLaser != 0) + 1`, so a plain laser is 1 and a big
+// laser is 2, and the same function uses 3 for the magnetron path -- a value
+// both trees agree is Magnetron, which anchors the scale. WaveClass::Type
+// (+0xB0, seeded by the ctor at gamemd 0x75E950) is serialized, so adopting
+// upstream's order would both invert big-laser selection and change savegame
+// content. Do not "fix" this to match upstream.
 enum class WaveType : int
 {
 	Sonic = 0,
-	BigLaser = 1,
-	Laser = 2,
+	Laser = 1,
+	BigLaser = 2,
 	Magnetron = 3
 };
 
