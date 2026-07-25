@@ -12,7 +12,15 @@ struct BuildType
 {
 	int               ItemIndex{ -1 };
 	AbstractType      ItemType{ AbstractType::None };
-	bool              IsAlt{ false }; // set on buildings that go on tab 2
+	// NOTE (Antares): deliberately BYTE, not upstream's bool. This one byte holds
+	// the BuildCat of a building, not a flag. StripClass_AddCameo_ReplaceItAll
+	// (Ares.dll 0x1002CE98) calls Get_BuildCat and stores the result with
+	// `LOBYTE(item[2]) = BuildCat`, and SelectClass_ProcessInput_LoadCameoData1
+	// (0x1002CC79) reads it back with `movzx ecx, byte ptr [edx+8]` and pushes the
+	// zero-extended value as an int. BuildCat runs 0..5, so a bool would collapse
+	// Tech/Resource/Power/Infrastructure/Combat into one value. Layout is unchanged:
+	// one byte either way.
+	BYTE              IsAlt{ 0 }; // the BuildCat of buildings, 0 for everything else
 	FactoryClass*     CurrentFactory{ nullptr };
 	DWORD             unknown_10{ 0 };
 	StageClass        Progress{}; // 0 to 54, how much of this object is constructed (gclock anim level)
