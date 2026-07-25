@@ -1519,22 +1519,33 @@ enum class VoxPriority : int
 	Critical = 3
 };
 
-// NOTE (Antares): BigLaser is 1 and Laser is 2, not the other way round -- this is
-// upstream's order and it is the correct one. WaveClass::WaveClass (gamemd
-// 0x75E950) guards the block that sets LaserIntensity and MatrixScale with
-// `if (type > WAVE_SONIC && type <= WAVE_LASER)`, a single range that has to cover
-// both laser kinds; that only closes if WAVE_LASER is the *higher* value, i.e.
-// Sonic(0) < BigLaser(1) <= Laser(2). Magnetron is 3.
+// NOTE (Antares): BigLaser is 1 and Laser is 2, not the other way round. This is
+// upstream's order and it is the correct one; the pinned YRpp had the two labels
+// swapped. Proved from the geometry table, without relying on any
+// researcher-assigned name: WaveClass_Draw_NonMagnetic (gamemd 0x761640) indexes
+// NonMagWaveMatrixes[Type], and its one-time initialiser writes
 //
-// The pinned YRpp had these two labels swapped, and src/Ext/WeaponType/Hooks.Wave.cpp
-// had a compensating swap in its ternary, so the numbers Ares actually wrote were
-// right by accident. Both were corrected together; the number stored in
-// WaveClass::Type (+0xB0) is unchanged, so this is not a savegame-format change.
-// Beware: the INI keys read counter-intuitively against this enum --
-// `Wave.IsBigLaser` selects WaveType::Laser (2) and plain `Wave.IsLaser` selects
-// WaveType::BigLaser (1). That is what shipped Ares 3.0p1 does
-// (TechnoClass_Fire_OtherWaves, Ares.dll 0x10057B10: `(Wave_IsBigLaser != 0) + 1`),
-// and the INI key names must not be changed -- mods depend on them.
+//     [0] Row0 = (-30, -100)   sonic
+//     [1] Row0 = (-34,  -44)   <-- the larger of the two laser waves
+//     [2] Row0 = (-27,  -34)
+//     [3] Row0 = (-30,  -50)   magnetron
+//
+// so slot 1 is the big one. Corroborated by WaveClass::WaveClass (0x75E950),
+// which sets LaserIntensity = 160 and MatrixScale1 = 1.0 under a single
+// `Type > 0 && Type <= 2` range (0075EB62 `cmp eax,ebx` / `jle`, 0075EB66
+// `cmp eax,2` / `jg`) covering both laser kinds, while 0075EB09 tests Type == 3
+// for the magnetron.
+//
+// Beware the INI keys, which read backwards against this enum and must not be
+// renamed -- mods depend on them. Shipped Ares 3.0p1 computes
+// `(pWeaponExt->Wave_IsBigLaser != 0) + 1` (TechnoClass_Fire_OtherWaves,
+// Ares.dll 0x10057B10, reading WeaponTypeExt +0x3A; +0x39 is Wave_IsLaser), so
+// `Wave.IsBigLaser` stores 2 = WaveType::Laser, the *smaller* engine wave, and
+// plain `Wave.IsLaser` stores 1 = WaveType::BigLaser. That inversion is shipped
+// behaviour and is reproduced deliberately.
+//
+// Nothing about the numbers written to WaveClass::Type (+0xB0) changes here, so
+// this is a relabelling only and not a savegame-format change.
 enum class WaveType : int
 {
 	Sonic = 0,
