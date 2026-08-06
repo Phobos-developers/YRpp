@@ -219,7 +219,7 @@ public:
 	virtual bool IsInSameZoneAs(AbstractClass* pTarget) R0;          // Is the target reachable?
 	virtual DWORD vt_entry_2C8(DWORD dwUnk, DWORD dwUnk2) R0;
 	virtual bool IsInSameZoneAsCoords(const CoordStruct& coord) R0;  // Are the coords reachable?
-	virtual int GetCrewCount() const R0;
+	virtual int GetCrewCount() const JMP_THIS(0x6F3950);
 	virtual int GetAntiAirValue() const R0;
 	virtual int GetAntiArmorValue() const R0;
 	virtual int GetAntiInfantryValue() const R0;
