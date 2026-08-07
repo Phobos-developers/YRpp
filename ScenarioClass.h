@@ -267,3 +267,10 @@ public:
 	char LS800BkgdName [0x40];
 	char LS800BkgdPal [0x40];
 };
+
+class MapSelectClass
+{
+public:
+	bool SetNextScenario(ScenarioClass* pItem)
+		{ JMP_THIS(0x5AE100); }
+};
