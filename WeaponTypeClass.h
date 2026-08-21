@@ -42,6 +42,9 @@ public:
 	void CalculateSpeed()
 		{ JMP_THIS(0x7729F0); }
 
+	int GetSpeed(int distance)
+		{ JMP_THIS(0x773070); }
+
 	ThreatType AllowedThreats()
 		{ JMP_THIS(0x772A90); }
 
