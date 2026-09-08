@@ -219,7 +219,7 @@ public:
 	virtual bool IsInSameZoneAs(AbstractClass* pTarget) R0;          // Is the target reachable?
 	virtual DWORD vt_entry_2C8(DWORD dwUnk, DWORD dwUnk2) R0;
 	virtual bool IsInSameZoneAsCoords(const CoordStruct& coord) R0;  // Are the coords reachable?
-	virtual int GetCrewCount() const R0;
+	virtual int GetCrewCount() const JMP_THIS(0x6F3950);
 	virtual int GetAntiAirValue() const R0;
 	virtual int GetAntiArmorValue() const R0;
 	virtual int GetAntiInfantryValue() const R0;
@@ -576,6 +576,9 @@ public:
 	bool TargetingTimerFinished()
 		{ JMP_THIS(0x70F7E0); }
 
+	bool CanOpportunityFire()
+	{ JMP_THIS(0x709290); }
+
 	//Constructor
 	TechnoClass(HouseClass* pOwner) noexcept
 		: TechnoClass(noinit_t())
@@ -739,7 +742,7 @@ public:
 	bool             HasBeenAttacked; // ReceiveDamage when not HouseClass_IsAlly
 	bool             Cloakable;
 	bool             IsPrimaryFactory; // doubleclicking a warfac/barracks sets it as primary
-	bool             Spawned;
+	bool             IsALoaner;
 	bool             IsInPlayfield;
 	DECLARE_PROPERTY(RecoilData, TurretRecoil);
 	DECLARE_PROPERTY(RecoilData, BarrelRecoil);

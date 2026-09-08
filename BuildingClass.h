@@ -49,6 +49,7 @@ public:
 	//ObjectClass
 	//MissionClass
 	//TechnoClass
+	virtual int GetCrewCount() const override JMP_THIS(0x451330);
 	virtual void Destroyed(ObjectClass* Killer) RX;
 	virtual bool ForceCreate(CoordStruct& coord, DWORD dwUnk = 0) R0;
 

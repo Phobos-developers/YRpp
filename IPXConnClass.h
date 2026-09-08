@@ -21,9 +21,9 @@ public:
 		{ JMP_THIS(0x53F4E0); }
 
 	static int __fastcall Open_Socket(unsigned short socket)
-		{ JMP_THIS(0x53F5F0); }
+		{ JMP_STD(0x53F5F0); }
 	static void __fastcall Close_Socket(unsigned short socket)
-		{ JMP_THIS(0x53F630); }
+		{ JMP_STD(0x53F630); }
 
 	static int Start_Listening()
 		{ JMP_STD(0x53F540); }
@@ -31,7 +31,7 @@ public:
 		{ JMP_STD(0x53F5B0); }
 
 	static int __fastcall Broadcast(void* buf, int buflen)
-		{ JMP_THIS(0x53F830); }
+		{ JMP_STD(0x53F830); }
 
 protected:
 	virtual int Send(CommHeaderType* buf, int buflen, void* extrabuf, int extralen, bool isGlobalConn, short port) override

@@ -69,8 +69,7 @@ public:
 	virtual int Service()
 		{ JMP_THIS(0x48C3B0); }
 
-	// Returns the current time in 60ths of a second, which is the unit the
-	// retry logic works in.
+	// Returns the current time in 16-millisecond ticks, the retry logic's unit.
 	static unsigned int Time()
 		{ JMP_STD(0x48C600); }
 
@@ -98,6 +97,8 @@ public:
 	int MissedOverall;
 	int MissedMagic;
 	unsigned int MaxPacketLen; // includes the CommHeaderType
+	// Global connections append a 2-byte ProductID at +14: their payload
+	// starts at +16, not sizeof(CommHeaderType).
 	CommHeaderType* PacketBuf;
 	unsigned short MagicNum;
 	unsigned int RetryDelta; // delay before a packet is re-sent

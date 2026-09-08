@@ -1,7 +1,12 @@
 #pragma once
 
+#include <concepts>
+#include <cstddef>
+#include <ASMMacros.h>
 #include <Fundamentals.h>
 #include <Helpers/CompileTime.h>
+
+struct noinit_t;
 
 template<typename T>
 concept TimerType = std::convertible_to<T, int> && requires (T t)
@@ -18,16 +23,16 @@ struct FrameTimer
 
 struct SystemTimer
 {
-	static DWORD GetTime() JMP_STD(0x6C8C40);
+	static unsigned long GetTime() JMP_STD(0x6C8C40);
 	long operator()()const { return SystemTimer::GetTime(); }
 	operator long() const { return SystemTimer::GetTime(); }
 };
 
-// timeGetTime() straight, where SystemTimer shifts it down by four - so this one counts in whole
-// milliseconds and SystemTimer in sixteenths of one. The engine builds NetFrameTimer on it.
+// timeGetTime() in milliseconds. SystemTimer shifts it right by four, so each
+// SystemTimer tick is 16 milliseconds. The engine builds NetFrameTimer on MSTimer.
 struct MSTimer
 {
-	static DWORD GetTime() JMP_STD(0x5D5890);
+	static unsigned long GetTime() JMP_STD(0x5D5890);
 	long operator()()const { return MSTimer::GetTime(); }
 	operator long() const { return MSTimer::GetTime(); }
 };
@@ -134,8 +139,8 @@ using MSTimerClass = TimerStruct<MSTimer>;
 namespace GameTimers
 {
 	// The two timers a frame is waited out on in Main_Loop and Sync_Delay. Which one is used
-	// depends on the session: FrameTimer for a local game, NetFrameTimer for a networked one.
-	DEFINE_REFERENCE(SysTimerClass, FrameTimer, 0x887348u)
+	// depends on the session: GameFrameTimer for a local game, NetFrameTimer for a networked one.
+	DEFINE_REFERENCE(SysTimerClass, GameFrameTimer, 0x887348u)
 	DEFINE_REFERENCE(MSTimerClass, NetFrameTimer, 0x887328u)
 
 	// A static local of Queue_AI_Multiplayer, started from the frame the game began on. While it

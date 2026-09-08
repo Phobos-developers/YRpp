@@ -97,7 +97,7 @@ public:
 		JMP_THIS(0x6D2420);
 
 	// Handles per-frame tactical view housekeeping and commits the desired viewport.
-	void AI()
+	virtual void Update() override
 		JMP_THIS(0x6D2540);
 
 

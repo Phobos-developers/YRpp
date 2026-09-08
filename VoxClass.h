@@ -18,7 +18,8 @@ public:
 	DEFINE_REFERENCE(int, EVAIndex, 0xB1D4C8u)
 
 	// A taunt command packs a country in the high nibble and the taunt in the low one:
-	// (country << 4) | taunt. PlayTaunt silently does nothing for anything outside these ranges.
+	// (country << 4) | taunt. PlayTaunt masks both nibbles and ignores higher bits.
+	// IsValidTauntCommand additionally rejects higher bits to sanitize network input.
 	static constexpr int TauntsPerCountry = 8;   // taunt indices 1 - 8; 0 is not a taunt
 	static constexpr int TauntCountryCount = 10; // countries 0 - 9, in Rules' [Countries] order
 

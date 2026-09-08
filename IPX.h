@@ -21,8 +21,9 @@ class IPXAddressClass
 public:
 	unsigned char NetworkNumber[4];
 	unsigned char NodeAddress[6];
-	// YR carries UDP/IP endpoints in this struct as well as real IPX
-	// addresses, so the trailing two bytes are only meaningful in IP mode.
+	// In IP mode the port occupies NetworkNumber[0..1] and the IPv4 address
+	// occupies NodeAddress[0..3]. The trailing bytes are unused padding,
+	// copied with the 12-byte address but not initialized by the engine.
 	unsigned char field_A[2];
 };
 static_assert(sizeof(IPXAddressClass) == 12);
