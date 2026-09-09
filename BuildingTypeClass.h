@@ -33,6 +33,8 @@ public:
 
 	//Array
 	ABSTRACTTYPE_ARRAY(BuildingTypeClass, 0xA83C68u);
+	static BuildingTypeClass* __fastcall FindOrAllocate(const char* id)
+		{ JMP_STD(0x4653C0); }
 
 	//IPersist
 	virtual HRESULT __stdcall GetClassID(CLSID* pClassID) R0;
