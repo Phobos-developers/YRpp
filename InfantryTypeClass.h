@@ -40,6 +40,8 @@ public:
 
 	//Array
 	ABSTRACTTYPE_ARRAY(InfantryTypeClass, 0xA8E348u);
+	static InfantryTypeClass* __fastcall FindOrAllocate(const char* id)
+		{ JMP_STD(0x524CB0); }
 
 	//IPersist
 	virtual HRESULT __stdcall GetClassID(CLSID* pClassID) R0;
