@@ -652,6 +652,14 @@ namespace Unsorted
 	DEFINE_ARRAY_REFERENCE(TacticalSelectableStruct, [500], TacticalSelectables, 0xB0CEC8)
 	DEFINE_REFERENCE(bool, TypeSelecting, 0xB0FE65)
 
+	// Selection cycle state, written by Game's SetNavCycleMode (0x731D00) and zeroed by the
+	// game whenever the current selection changes (ObjectClass::Select, DeselectAllObjects,
+	// MapClass::UnselectAll). 0 = no cycle; vanilla's own commands (CombatantSelect,
+	// SelectSameType, HealthNav, VeterancyNav, CycleSelectType) use values 1-5 and compare it
+	// against their own value to tell an ongoing cycle apart from a fresh key press. Values
+	// >= 6 are left for extensions.
+	DEFINE_REFERENCE(int, NavCycleMode, 0xB0FE54)
+
 	struct ColorPacker
 	{
 		int _R_SHL;
