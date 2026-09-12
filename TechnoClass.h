@@ -286,7 +286,7 @@ public:
 	virtual bool InAuxiliarySearchRange(AbstractClass* pTarget) const R0;
 	virtual void Destroyed(ObjectClass* Killer) = 0;
 	virtual FireError GetFireErrorWithoutRange(AbstractClass* pTarget, int nWeaponIndex) const RT(FireError);
-	virtual FireError GetFireError(AbstractClass* pTarget, int nWeaponIndex, bool ignoreRange) const RT(FireError);
+	virtual FireError GetFireError(AbstractClass* pTarget, int nWeaponIndex, bool ignoreRange) const { JMP_THIS(0x6FC0B0); }
 	virtual AbstractClass* GreatestThreat(ThreatType threat, CoordStruct* pCoord, bool onlyTargetHouseEnemy) JMP_THIS(0x6F8DF0);
 	virtual void SetTarget(AbstractClass* pTarget) JMP_THIS(0x6FCDB0);
 	virtual BulletClass* Fire(AbstractClass* pTarget, int nWeaponIndex) R0;
