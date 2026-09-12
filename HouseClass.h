@@ -1065,9 +1065,11 @@ public:
 
 	unsigned int          ThreatPosedEstimates[130][130]; // BLARGH
 
-	char                  PlainName[21];    // this defaults to the owner country's name in SP or <human player><computer player> in MP. Used as owner for preplaced map objects
-	char                  UINameString[33]; // this contains the UIName= text from the INI! or
-	wchar_t               UIName [21];      // this contains the CSF string from UIName= above, or a copy of the country's UIName if not defined. Take note that this is shorter than the country's UIName can be...
+	char                  PlainName[21];    // Internal identifier for this house/faction
+											// In single-player campaigns: set by map author (e.g. "badguy1", "badguy2", not country names)
+											// In multiplayer games: format is <human player><computer player>
+	char                  UINameString[33]; // this contains the UIName= text from the INI!
+	wchar_t               UIName [21];      // player's custom name
 	int                   ColorSchemeIndex;
 	union
 	{
