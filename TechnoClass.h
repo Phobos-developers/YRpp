@@ -475,6 +475,12 @@ public:
 	int __fastcall ClearPlanningTokens(EventClass* pEvent)
 	{ JMP_STD(0x6386E0); }
 
+	// Vanilla's "player-owned, alive and type-name-matching" check - the predicate the game's
+	// own type selection uses. Ares hooks the type comparison inside it (0x7327AA), so Ares'
+	// GroupAs is honoured here as well.
+	bool __fastcall IsPlayerAliveUnitOf(const char* pID) const
+	{ JMP_STD(0x732770); }
+
 	void SetTargetForPassengers(AbstractClass* pTarget)
 	{ JMP_THIS(0x710550); }
 
