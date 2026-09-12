@@ -47,6 +47,8 @@ public:
 	virtual int	Size() const R0;
 
 	//ObjectClass
+	virtual void Flash(int duration) override JMP_THIS(0x456E00);
+
 	//MissionClass
 	//TechnoClass
 	virtual int GetCrewCount() const override JMP_THIS(0x451330);
