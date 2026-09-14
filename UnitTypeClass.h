@@ -12,6 +12,8 @@ public:
 
 	//Array
 	ABSTRACTTYPE_ARRAY(UnitTypeClass, 0xA83CE0u);
+	static UnitTypeClass* __fastcall FindOrAllocate(const char* id)
+		{ JMP_STD(0x7480D0); }
 
 	//IPersist
 	virtual HRESULT __stdcall GetClassID(CLSID* pClassID) R0;
