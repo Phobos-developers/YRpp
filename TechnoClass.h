@@ -741,7 +741,7 @@ public:
 	DECLARE_PROPERTY(FacingClass, SecondaryFacing);
 	int              CurrentBurstIndex;
 	DECLARE_PROPERTY(CDTimerClass, TargetLaserTimer);
-	short            unknown_short_3C8;
+	unsigned short   ReportRandomSeed;
 	WORD             unknown_3CA;
 	bool             CountedAsOwned; // is this techno contained in OwningPlayer->Owned... counts?
 	bool             IsSinking;
