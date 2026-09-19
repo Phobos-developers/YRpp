@@ -96,6 +96,10 @@ public:
 	void FocusOn(CoordStruct* pDest, int Velocity)
 		JMP_THIS(0x6D2420);
 
+	// Handles per-frame tactical view housekeeping and commits the desired viewport.
+	virtual void Update() override
+		JMP_THIS(0x6D2540);
+
 
 	// called when area needs to be marked for redrawing due to external factors
 	// - alpha lights, terrain changes like cliff destruction, etc
@@ -110,6 +114,9 @@ public:
 
 	void AddSelectable(TechnoClass* pTechno, int x, int y)
 		JMP_THIS(0x6D9EF0);
+
+	void RecalculateViewport()
+		JMP_THIS(0x6D8B30);
 
 	static void StartDrawActionLineTimer()
 		JMP_STD(0x70D150);

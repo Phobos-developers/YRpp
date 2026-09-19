@@ -1,3 +1,5 @@
+#pragma once
+
 #include <GeneralStructures.h>
 #include <BeaconClass.h>
 #include <FileFormats/SHP.h>
@@ -22,7 +24,7 @@ public:
 	void DeleteBeacon(int houseId, int houseBeaconId) JMP_THIS(0x4311C0)
 	void DeleteAllBeacons(int houseId) JMP_THIS(0x431410)
 	bool SelectBeacon(int X, int Y, int Z) JMP_THIS(0x430F70)
-	void EditBeaconMessage(wchar_t* message, int houseId, int houseBeaconId, bool unknownBool)  JMP_THIS(0x431450)
+	void EditBeaconMessage(const wchar_t* message, int houseId, int houseBeaconId, bool shouldBroadcast) JMP_THIS(0x431450)
 
 	// TODO rest of the functions
 
