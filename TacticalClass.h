@@ -27,6 +27,9 @@ public:
 	void SetTacticalPosition(CoordStruct* pCoord)
 		JMP_THIS(0x6D6070);
 
+	void SetTacticalPosition(Point2D* pPoint)
+		JMP_THIS(0x6D6000);
+
 	CellStruct* CoordsToCell(CellStruct* pDest, CoordStruct* pSource)
 		JMP_THIS(0x6D6590);
 
