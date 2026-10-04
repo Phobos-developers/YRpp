@@ -198,7 +198,11 @@ public:
 	int GameVersion;
 	DynamicVectorClass<class MultiMission*> MultiMission;
 	char ScenarioFilename[0x202]; // 0x6A8
-	PROTECTED_PROPERTY(char, unknown_8AA[0x1AAA]);
+	PROTECTED_PROPERTY(char, unknown_8AA[0x1626]);
+	bool PlayerChatEnabled[8]; // 0x1ED0, indexed by house array index
+	bool LANTaunts;
+	bool WOLTaunts;
+	PROTECTED_PROPERTY(char, unknown_1EDA[0x47A]);
 	CCFileClass RecordFile;
 	unsigned int Record  : 1;
 	unsigned int Play    : 1;
