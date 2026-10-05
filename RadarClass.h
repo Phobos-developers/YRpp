@@ -83,7 +83,7 @@ public:
 	DWORD unknown_1490;
 	DWORD unknown_1494;
 	DWORD unknown_1498;
-	RectangleStruct unknown_rect_149C;
+	RectangleStruct RadarRect;
 	DWORD unknown_14AC;
 	DWORD unknown_14B0;
 	DWORD unknown_14B4;
@@ -99,7 +99,7 @@ public:
 	bool IsAvailableNow;
 	bool unknown_bool_14D9;
 	bool unknown_bool_14DA;
-	RectangleStruct unknown_rect_14DC;
+	RectangleStruct RadarViewRect;
 	DWORD unknown_14EC;
 	DWORD unknown_14F0;
 	DWORD unknown_14F4;

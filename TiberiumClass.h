@@ -75,6 +75,9 @@ public:
 	void RegisterForGrowth(CellStruct* cell)
 		{ JMP_THIS(0x7235A0); }
 
+	void RegisterForSpread(CellStruct* cell)
+		{ JMP_THIS(0x722AF0); }
+
 	//Static helpers
 
 	static int FindIndex(int idxOverlayType) {

@@ -86,6 +86,7 @@ namespace GameStrings
 	GAMEMD_STRING(GUI_AIHard              , 0x831C4C);
 	GAMEMD_STRING(GUI_AINormal            , 0x831C58);
 	GAMEMD_STRING(GUI_AIEasy              , 0x831C68);
+	GAMEMD_STRING(TXT_NOTHING_SELECTED    , 0x845584);
 
 	// ....
 }

@@ -650,7 +650,7 @@ public:
 	WarheadTypeClass*			 MutateWarhead;
 	WarheadTypeClass*			 MutateExplosionWarhead;
 	WarheadTypeClass*			 EMPulseWarhead;
-	WarheadTypeClass*			 EMPulseProjectile;
+	BulletTypeClass*			 EMPulseProjectile;
 	WarheadTypeClass*			 C4Warhead;
 	WarheadTypeClass*			 CrushWarhead;
 	WarheadTypeClass*			 V3Warhead;

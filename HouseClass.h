@@ -744,7 +744,7 @@ public:
 		\date 01.03.10
 	*/
 	bool IsNeutral() const {
-		return this->Type->MultiplayPassive;
+		return this && this->Type->MultiplayPassive;
 	}
 
 	// Whether this house is equal to CurrentPlayer

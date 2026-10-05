@@ -47,8 +47,11 @@ public:
 	virtual int	Size() const R0;
 
 	//ObjectClass
+	virtual void Flash(int duration) override JMP_THIS(0x456E00);
+
 	//MissionClass
 	//TechnoClass
+	virtual int GetCrewCount() const override JMP_THIS(0x451330);
 	virtual void Destroyed(ObjectClass* Killer) RX;
 	virtual bool ForceCreate(CoordStruct& coord, DWORD dwUnk = 0) R0;
 

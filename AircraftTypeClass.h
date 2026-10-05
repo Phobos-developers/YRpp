@@ -10,6 +10,8 @@ public:
 
 	//Array
 	ABSTRACTTYPE_ARRAY(AircraftTypeClass, 0xA8B218u);
+	static AircraftTypeClass* __fastcall FindOrAllocate(const char* id)
+		{ JMP_STD(0x41CEF0); }
 
 	//IPersist
 	virtual HRESULT __stdcall GetClassID(CLSID* pClassID) R0;
