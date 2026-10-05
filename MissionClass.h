@@ -51,9 +51,9 @@ public:
 	virtual ~MissionClass() { /* ~ObjectClass() */ }
 
 	//MissionClass
-	virtual bool QueueMission(Mission mission, bool start_mission) R0;
-	virtual bool NextMission() R0;
-	virtual void ForceMission(Mission mission) RX;
+	virtual bool QueueMission(Mission mission, bool start_mission) JMP_THIS(0x5B35E0);
+	virtual bool NextMission() JMP_THIS(0x5B3570);
+	virtual void ForceMission(Mission mission) JMP_THIS(0x5B2FD0);
 
 	virtual void Override_Mission(Mission mission, AbstractClass* target, AbstractClass* destination) RX;
 	virtual bool Mission_Revert() R0;
