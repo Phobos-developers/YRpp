@@ -331,8 +331,8 @@ public:
 	virtual void DrawPipScalePips(Point2D* pLocation, Point2D* pOriginalLocation, RectangleStruct* pBounds) const RX;
 	virtual void DrawVeterancyPips(Point2D* pLocation, RectangleStruct* pBounds) const RX;
 	virtual void DrawExtraInfo(Point2D const& location, Point2D const& originalLocation, RectangleStruct const& bounds) const RX;
-	virtual void Uncloak(bool bPlaySound) RX;
-	virtual void Cloak(bool bPlaySound) RX;
+	virtual void Uncloak(bool bPlaySound) JMP_THIS(0x7036C0);
+	virtual void Cloak(bool bPlaySound) JMP_THIS(0x703770);
 	virtual int GetFlashingIntensity(int currentIntensity) const R0;
 	virtual void UpdateRefinerySmokeSystems() RX;
 	virtual DWORD DisguiseAs(AbstractClass* pTarget) JMP_THIS(0x70E280);
