@@ -56,7 +56,7 @@ protected:
 public:
 	DWORD unknown_11E8;
 	DWORD unknown_11EC;
-	DWORD unknown_11F0;
+	int RadarX;
 	DWORD unknown_11F4;
 	DWORD unknown_11F8;
 	DWORD unknown_11FC;
