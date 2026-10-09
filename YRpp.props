@@ -163,6 +163,8 @@
     <ClInclude Include="$(YRppDir)\ColorListClass.h" />
     <ClInclude Include="$(YRppDir)\ColorScheme.h" />
     <ClInclude Include="$(YRppDir)\CommandClass.h" />
+    <ClInclude Include="$(YRppDir)\CommBufferClass.h" />
+    <ClInclude Include="$(YRppDir)\ConnectionClass.h" />
     <ClInclude Include="$(YRppDir)\ControlClass.h" />
     <ClInclude Include="$(YRppDir)\Conversions.h" />
     <ClInclude Include="$(YRppDir)\ConvertClass.h" />
@@ -214,6 +216,8 @@
     <ClInclude Include="$(YRppDir)\Ion.h" />
     <ClInclude Include="$(YRppDir)\IonBlastClass.h" />
     <ClInclude Include="$(YRppDir)\IPX.h" />
+    <ClInclude Include="$(YRppDir)\IPXConnClass.h" />
+    <ClInclude Include="$(YRppDir)\IPXGlobalConnClass.h" />
     <ClInclude Include="$(YRppDir)\IPXManagerClass.h" />
     <ClInclude Include="$(YRppDir)\IsometricTileClass.h" />
     <ClInclude Include="$(YRppDir)\IsometricTileTypeClass.h" />
@@ -308,6 +312,7 @@
     <ClInclude Include="$(YRppDir)\TEventClass.h" />
     <ClInclude Include="$(YRppDir)\TextLabelClass.h" />
     <ClInclude Include="$(YRppDir)\Theater.h" />
+    <ClInclude Include="$(YRppDir)\TheirSync.h" />
     <ClInclude Include="$(YRppDir)\ThemeClass.h" />
     <ClInclude Include="$(YRppDir)\TiberiumClass.h" />
     <ClInclude Include="$(YRppDir)\Timer.h" />
