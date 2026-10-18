@@ -209,7 +209,6 @@
     <ClInclude Include="$(YRppDir)\IndexClass.h" />
     <ClInclude Include="$(YRppDir)\InfantryClass.h" />
     <ClInclude Include="$(YRppDir)\InfantryTypeClass.h" />
-    <ClInclude Include="$(YRppDir)\InputManagerClass.h" />
     <ClInclude Include="$(YRppDir)\Interfaces.h" />
     <ClInclude Include="$(YRppDir)\Ion.h" />
     <ClInclude Include="$(YRppDir)\IonBlastClass.h" />
@@ -338,7 +337,8 @@
     <ClInclude Include="$(YRppDir)\WeaponTypeClass.h" />
     <ClInclude Include="$(YRppDir)\WinsockInterfaceClass.h" />
     <ClInclude Include="$(YRppDir)\WOLAPIInterfaces.h" />
-    <ClInclude Include="$(YRppDir)\Wstring.h" /> 
+    <ClInclude Include="$(YRppDir)\Wstring.h" />
+    <ClInclude Include="$(YRppDir)\WWKeyboardClass.h" />
     <ClInclude Include="$(YRppDir)\WWMessageBox.h" />
     <ClInclude Include="$(YRppDir)\WWMouseClass.h" />
     <ClInclude Include="$(YRppDir)\YRAllocator.h" />
