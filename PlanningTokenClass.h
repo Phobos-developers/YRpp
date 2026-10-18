@@ -27,6 +27,12 @@ public:
 
 	DEFINE_REFERENCE(bool, PlanningModeActive, 0xAC4CF4u)
 
+	static void __cdecl DrawAllBackground()
+		JMP_STD(0x63B0A0);
+
+	static void __cdecl DrawAllForeground()
+		JMP_STD(0x63B150);
+
 	//===========================================================================
 	//===== Properties ==========================================================
 	//===========================================================================
