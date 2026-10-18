@@ -61,15 +61,14 @@ public:
 	//Static
 	DEFINE_REFERENCE(ScrollClass, Instance, 0x87F7E8u)
 
-	DWORD unknown_int_5548;
-	BYTE unknown_byte_554C;
+	int Inertia; // 0x5548
+	bool IsCoastScrollAllowed; // 0x554C
 	PROTECTED_PROPERTY(BYTE, align_554D[3]);
-	DWORD unknown_int_5550;
-	DWORD unknown_int_5554;
-	BYTE unknown_byte_5548;
-	BYTE unknown_byte_5549;
-	BYTE unknown_byte_554A;
-	PROTECTED_PROPERTY(BYTE, padding_554B);
+	Point2D RightPressPoint; // 0x5550
+	bool IsDragOperation; // 0x5558
+	bool EdgeScrollAllowed; // 0x5559
+	bool IsMouseDown; // 0x555A
+	PROTECTED_PROPERTY(BYTE, padding_555B);
 };
 
 class NOVTABLE MouseClass : public ScrollClass
