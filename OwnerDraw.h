@@ -843,6 +843,7 @@ public:
 	DEFINE_REFERENCE(COLORREF, SelectedTabTextColor, 0xAC4608);
 	DEFINE_REFERENCE(COLORREF, TooltipBackgroundColor, 0xAC48B0);
 	DEFINE_REFERENCE(COLORREF, UnusedDarkAccentColor, 0xAC1B90);
+	DEFINE_ARRAY_REFERENCE(wchar_t, [0x100], IMEInputString, 0xB730EC);
 	DEFINE_ARRAY_REFERENCE(wchar_t, [0x101], IMECompositionString, 0xB73318);
 	DEFINE_REFERENCE(int, IMECompositionStringLength, 0xB73564);
 	DEFINE_REFERENCE(int, IMECompositionCursorPos, 0xB73568);
