@@ -465,6 +465,10 @@ public:
 		JMP_THIS(0x706BD0);
 	}
 
+	// Draws one clipped action-line segment and its endpoint markers.
+	void DrawActionLineSegment(CoordStruct start, CoordStruct end, ColorStruct color, bool dashed, bool drawShadow)
+	{ JMP_THIS(0x7049C0); }
+
 	void DrawObject(SHPStruct* pSHP, int nFrame, Point2D* pLocation, RectangleStruct* pBounds,
 		int, int, int nZAdjust, ZGradient eZGradientDescIdx, int, int nBrightness, int TintColor,
 		SHPStruct* pZShape, int nZFrame, int nZOffsetX, int nZOffsetY, int);
