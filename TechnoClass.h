@@ -188,6 +188,7 @@ public:
 	static const auto AbsDerivateID = AbstractFlags::Techno;
 
 	DEFINE_REFERENCE(DynamicVectorClass<TechnoClass*>, Array, 0xA8EC78u)
+	DEFINE_REFERENCE(bool, ActionLinesEnabled, 0x843108u)
 
 	//IPersistStream
 	virtual HRESULT __stdcall Load(IStream* pStm) R0;
