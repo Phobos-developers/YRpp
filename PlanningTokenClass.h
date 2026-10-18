@@ -3,6 +3,7 @@
 #include <AbstractClass.h>
 
 class TechnoClass;
+class EventClass;
 
 class PlanningBranchClass;
 // static_assert(sizeof(PlanningBranchClass) == 0x78);
@@ -11,7 +12,7 @@ class PlanningMemberClass
 {
 public:
 	TechnoClass* Owner;
-	DWORD Packet;
+	EventClass* Order;
 	int field_8;
 	char field_C;
 };
