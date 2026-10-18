@@ -12,6 +12,12 @@ public:
 	byte Clear()
 		{ JMP_THIS(0x54F720); }
 
+	bool Put_Element(unsigned short value)
+		{ JMP_THIS(0x54F1C0); }
+
+	bool Put_Key_Message(unsigned short key, bool release = false)
+		{ JMP_THIS(0x54F200); }
+
 	bool Down(int key) const
 		{ JMP_THIS(0x54F5C0); }
 
