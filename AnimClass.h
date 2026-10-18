@@ -23,6 +23,9 @@ public:
 	//Static
 	DEFINE_REFERENCE(DynamicVectorClass<AnimClass*>, Array, 0xA8E9A8u)
 
+	// Local movement feedback animations, kept outside the synchronized Array.
+	DEFINE_REFERENCE(DynamicVectorClass<AnimClass*>, MoveFlashes, 0xA83E00u)
+
 	//IPersist
 	virtual HRESULT __stdcall GetClassID(CLSID* pClassID) R0;
 
