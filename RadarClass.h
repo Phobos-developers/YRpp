@@ -2,6 +2,17 @@
 
 #include <DisplayClass.h>
 struct RadarTrackingStruct;
+
+enum class RadarStateType : int
+{
+	Inactive = 0,
+	Active = 1,
+	Deactivating = 2,
+	Activating = 3,
+	NextMovie = 4,
+	MovieDone = 5
+};
+
 class NOVTABLE RadarClass : public DisplayClass
 {
 public:
@@ -84,7 +95,7 @@ public:
 	DWORD unknown_1494;
 	DWORD unknown_1498;
 	RectangleStruct RadarRect;
-	DWORD unknown_14AC;
+	RadarStateType RadarState;
 	DWORD unknown_14B0;
 	DWORD unknown_14B4;
 	DWORD unknown_14B8;
@@ -104,6 +115,6 @@ public:
 	DWORD unknown_14F0;
 	DWORD unknown_14F4;
 	DWORD unknown_14F8;
-	DWORD unknown_14FC;
-	CDTimerClass unknown_timer_1500;
+	int RadarAnimFrame; // 0x14FC
+	SysTimerClass RadarAnimTimer; // 0x1500
 };
