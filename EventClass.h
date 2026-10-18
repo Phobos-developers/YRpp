@@ -5,6 +5,13 @@
 #include <TargetClass.h>
 #include <Unsorted.h>
 
+enum class PlanningOrderState : unsigned char
+{
+	None = 0, // Ordinary order.
+	Adding = 1, // Add an order to the planned route.
+	Executing = 2 // Execute an order already stored in the route.
+};
+
 #pragma pack(push, 1)
 class EventClass
 {
@@ -186,7 +193,7 @@ public:
 			TargetClass Target;
 			TargetClass Destination;
 			TargetClass Follow;
-			bool IsPlanningEvent;
+			PlanningOrderState PlanningState;
 		} MegaMission;
 
 		struct MEGAMISSION_F
