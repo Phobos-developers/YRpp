@@ -15,7 +15,7 @@
     <ClInclude Include="$(YRppDir)\Blitters\BlitPlainXlatZRead.h" />
     <ClInclude Include="$(YRppDir)\Blitters\BlitPlainXlatZReadWrite.h" />
     <ClInclude Include="$(YRppDir)\Blitters\Blitter.h" />
-	<ClInclude Include="$(YRppDir)\Blitters\BlitTrans.h" />
+    <ClInclude Include="$(YRppDir)\Blitters\BlitTrans.h" />
     <ClInclude Include="$(YRppDir)\Blitters\BlitTransDarken.h" />
     <ClInclude Include="$(YRppDir)\Blitters\BlitTransDarkenZRead.h" />
     <ClInclude Include="$(YRppDir)\Blitters\BlitTransDarkenZReadWrite.h" />
@@ -169,7 +169,7 @@
     <ClInclude Include="$(YRppDir)\CopyProtection.h" />
     <ClInclude Include="$(YRppDir)\CRC.h" />
     <ClInclude Include="$(YRppDir)\CRT.h" />
-	<ClInclude Include="$(YRppDir)\Dictionary.h" /> 
+    <ClInclude Include="$(YRppDir)\Dictionary.h" />
     <ClInclude Include="$(YRppDir)\Dir.h" />
     <ClInclude Include="$(YRppDir)\DiscreteDistributionClass.h" />
     <ClInclude Include="$(YRppDir)\DiscreteSelectionClass.h" />
