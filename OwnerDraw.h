@@ -930,6 +930,7 @@ public:
 	static bool __fastcall DrawTooltip(bool captureBackground) { JMP_STD(0x610950); }
 	static bool RestoreTooltipBackground() { JMP_STD(0x610B50); }
 	static int __fastcall DrawBeveledBorder(Surface* pSurface, RectangleStruct* pRect, int thickness, int color) { JMP_STD(0x6208F0); }
+	static void __fastcall DrawEditText(Surface* pSurface, RectangleStruct* pRect, const wchar_t* pText, int caretIndex, BitFont* pFont, COLORREF color, int* pScrollStart, int hasFocus, int hideText, int fillBackground, int animationPosition) { JMP_STD(0x623880); }
 	static int __fastcall PrintTextFixedLength(unsigned int color, BitFont* pFont, RectangleStruct* pRect, const wchar_t* pText, int length, int horizontalAlign, int verticalAlign, Surface* pSurface, int animPos) { JMP_STD(0x6211D0); }
 	static bool __fastcall CopyDimmedBackground(RectangleStruct* pRect, HWND hWnd, unsigned int dimAlpha) { JMP_STD(0x6214B0); }
 	static void __fastcall BlendGradientRect(RectangleStruct* pRect, Surface* pSurface, unsigned short color, int widthScale) { JMP_STD(0x6217E0); }
