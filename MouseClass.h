@@ -38,6 +38,9 @@ struct TabDataClass
 	bool ValueChanged;
 	PROTECTED_PROPERTY(BYTE, align_B);
 	int ValueDelta;
+
+	TabDataClass()
+		{ JMP_THIS(0x4A2350); }
 };
 
 class TabClass : public SidebarClass, public INoticeSink
