@@ -90,7 +90,7 @@ public:
 	virtual MouseCursorType GetLastMouseCursor() override RT(MouseCursorType);
 
 	bool MouseCursorIsMini;
-	PROTECTED_PROPERTY(BYTE, unknown_byte_5559[3]);
+	PROTECTED_PROPERTY(BYTE, padding_555D[3]);
 	MouseCursorType MouseCursorIndex;
 	MouseCursorType MouseCursorLastIndex;
 	int MouseCursorCurrentFrame;

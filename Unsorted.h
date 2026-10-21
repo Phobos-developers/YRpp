@@ -634,7 +634,8 @@ namespace Unsorted
 	DEFINE_REFERENCE(bool, MoveFeedback, 0x822CF2)
 
 	DEFINE_REFERENCE(byte, ArmageddonMode, 0xA8ED6B)
-	DEFINE_REFERENCE(DynamicVectorClass<ObjectClass*>, ObjectsInLayers, 0x8A0360)
+	// NOTE: ObjectsInLayers@0x8A0360 is LayerClass[5] (stride 0x18), declared in MapClass.h as MapClass::ObjectsInLayers.
+	// A narrower single-vector view used to live here; removed to avoid a second source of truth.
 
 	// checkbox states, afaik
 	DEFINE_REFERENCE(byte, Bases, 0xA8B258)

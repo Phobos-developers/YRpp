@@ -57,8 +57,8 @@ public:
 	DEFINE_REFERENCE(DynamicVectorClass<MixFileClass*>, Maps, 0x884DA8u)
 	DEFINE_REFERENCE(DynamicVectorClass<MixFileClass*>, Movies, 0x884DE0u)
 
-	DEFINE_REFERENCE(MixFileClass, MULTIMD, 0x884DD8u)
-	DEFINE_REFERENCE(MixFileClass, MULTI, 0x884DDCu)
+	DEFINE_REFERENCE(MixFileClass*, MULTIMD, 0x884DD8u)
+	DEFINE_REFERENCE(MixFileClass*, MULTI, 0x884DDCu)
 
 	DEFINE_REFERENCE(GenericMixFiles, Generics, 0x884DF8u)
 
