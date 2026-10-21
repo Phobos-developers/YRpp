@@ -41,6 +41,8 @@ struct BuildType
 		{ JMP_STD(0x6A8420); }
 };
 
+static_assert(sizeof(BuildType) == 0x34);
+
 struct StripClass;
 
 // the per-cameo button; an array of 4 strips times 60 buttons, stride 0x38
@@ -123,6 +125,8 @@ struct StripClass
 	void RemoveButtons()
 		{ JMP_THIS(0x6A94B0); }
 };
+
+static_assert(sizeof(StripClass) == 0xF94);
 
 class NOVTABLE SidebarClass : public PowerClass
 {

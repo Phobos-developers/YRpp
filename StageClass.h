@@ -53,3 +53,5 @@ public:
 	int Rate { 0 }; // how many frames it takes to increment the stage value
 	int Step { 1 }; // added to the stage value every time the timer expires
 };
+
+static_assert(sizeof(StageClass) == 0x1C);
