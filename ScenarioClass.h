@@ -102,6 +102,9 @@ public:
 	static void __fastcall ResumeGame()
 		{ JMP_STD(0x683FB0); }
 
+	static void __fastcall SaveMap(const char* pFileName, bool bSnapshotMode = false)
+		{ JMP_STD(0x687CE0); }
+
 	static void __fastcall AssignHouses()
 		{ JMP_STD(0x687F10); }
 
