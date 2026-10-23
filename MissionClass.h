@@ -16,9 +16,6 @@ class MissionControlClass
 		// which FindIndex() iterates (strcmpi loop) and FindName() indexes. A previous "Names" declaration
 		// pointed at Array's own address.
 
-		static MissionControlClass* __fastcall Find(const char* pName)
-			{ JMP_STD(0x5B3910); }
-
 		static Mission __fastcall FindIndex(const char* pName)
 			{ JMP_STD(0x5B3910); }
 
