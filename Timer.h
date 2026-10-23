@@ -1,4 +1,13 @@
 #pragma once
+
+#include <concepts>
+#include <cstddef>
+#include <ASMMacros.h>
+#include <Fundamentals.h>
+#include <Helpers/CompileTime.h>
+
+struct noinit_t;
+
 template<typename T>
 concept TimerType = std::convertible_to<T, int> && requires (T t)
 {
@@ -14,9 +23,18 @@ struct FrameTimer
 
 struct SystemTimer
 {
-	static DWORD GetTime() JMP_STD(0x6C8C40);
+	static unsigned long GetTime() JMP_STD(0x6C8C40);
 	long operator()()const { return SystemTimer::GetTime(); }
 	operator long() const { return SystemTimer::GetTime(); }
+};
+
+// timeGetTime() in milliseconds. SystemTimer shifts it right by four, so each
+// SystemTimer tick is 16 milliseconds. The engine builds NetFrameTimer on MSTimer.
+struct MSTimer
+{
+	static unsigned long GetTime() JMP_STD(0x5D5890);
+	long operator()()const { return MSTimer::GetTime(); }
+	operator long() const { return MSTimer::GetTime(); }
 };
 
 template<TimerType Clock>
@@ -116,9 +134,23 @@ struct TimerStruct
 // Timer that counts down from specified value towards zero, counted in frames.
 using CDTimerClass = TimerStruct<FrameTimer>;
 using SysTimerClass = TimerStruct<SystemTimer>;
+using MSTimerClass = TimerStruct<MSTimer>;
+
+namespace GameTimers
+{
+	// The two timers a frame is waited out on in Main_Loop and Sync_Delay. Which one is used
+	// depends on the session: GameFrameTimer for a local game, NetFrameTimer for a networked one.
+	DEFINE_REFERENCE(SysTimerClass, GameFrameTimer, 0x887348u)
+	DEFINE_REFERENCE(MSTimerClass, NetFrameTimer, 0x887328u)
+
+	// A static local of Queue_AI_Multiplayer, started from the frame the game began on. While it
+	// still has time left the per-frame sync CRCs are gathered but not compared.
+	DEFINE_REFERENCE(CDTimerClass, QueueAIMultiplayerSkipCRC, 0xAFA450u)
+}
 
 static_assert(offsetof(CDTimerClass, TimeLeft) == 0x8);
 static_assert(sizeof(SysTimerClass) == 0xC);
+static_assert(sizeof(MSTimerClass) == 0xC);
 
 // Timer that counts down towards zero at specified rate, counted in frames.
 class RateTimer : public CDTimerClass
