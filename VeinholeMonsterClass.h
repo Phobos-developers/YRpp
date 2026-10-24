@@ -135,7 +135,7 @@ public:
 
 		if (IsCurrentPosAffected())
 		{
-			YRMemory::Deallocate(Make_Pointer<bool>(0xA83DC8u));
+			YRMemory::Deallocate(Make_Pointer<bool>(0xB1D2F0u));
 			IsCurrentPosAffected = nullptr;
 		}*/
 	}
