@@ -54,7 +54,7 @@ class NOVTABLE VeinholeMonsterClass : public ObjectClass
 public:
 	static const AbstractType AbsID = AbstractType::VeinholeMonster;
 
-	DEFINE_REFERENCE(bool*, IsCurrentPosAffected, 0xA83DC8u)
+	DEFINE_REFERENCE(bool*, IsCurrentPosAffected, 0xB1D2F0u)
 	DEFINE_REFERENCE(SHPStruct*, VeinSHPData, 0xB1D2ECu)
 	DEFINE_REFERENCE(DynamicVectorClass<VeinholeMonsterClass*>, Array, 0xB1D290u)
 
