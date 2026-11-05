@@ -19,13 +19,20 @@ struct SystemTimer
 	operator long() const { return SystemTimer::GetTime(); }
 };
 
+struct MillisecondSystemTimer
+{
+	static DWORD GetTime() JMP_STD(0x5D5890);
+	long operator()()const { return MillisecondSystemTimer::GetTime(); }
+	operator long() const { return MillisecondSystemTimer::GetTime(); }
+};
+
 template<TimerType Clock>
 struct TimerStruct
 {
 	int StartTime;
 	Clock CurrentTime;
 	int TimeLeft;
-
+	
 	constexpr TimerStruct() :StartTime { -1 }, TimeLeft { 0 } { };
 	explicit TimerStruct(const noinit_t&){ }
 	explicit TimerStruct(int duration) { this->Start(duration); }
@@ -141,3 +148,18 @@ public:
 		return rate ? static_cast<double>(rate - this->GetTimeLeft()) / static_cast<double>(rate) : 1.0;
 	}
 };
+
+// Used for both tick-based (campaign/skirmish) and millisecond-based (multiplayer) timing
+struct BasicTimerStruct
+{
+	DWORD StartTime;
+	DWORD CurrentTime;
+	int TimeLeft;
+};
+
+// Global game frame timers
+namespace Unsorted
+{
+	DEFINE_REFERENCE(BasicTimerStruct, NetworkFrameTimer, 0x887328);
+	DEFINE_REFERENCE(BasicTimerStruct, GameFrameTimer, 0x887348);
+}
