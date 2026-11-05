@@ -33,7 +33,7 @@ public:
 	virtual int Size() const R0;
 
 	//ParticleClass
-	virtual int vt_entry_1E8() R0;
+	virtual int GetShapeFrame() R0;
 
 	//Constructor
 	ParticleClass(
@@ -53,33 +53,28 @@ protected:
 
 public:
 
-	ParticleTypeClass* Type;
-	BYTE   unknown_B0;
-	BYTE   unknown_B1;
-	BYTE   unknown_B2;
-	DWORD  unknown_B4;
-	DWORD  unknown_B8;
-	DWORD  unknown_BC;
-	CoordStruct Velocity;
-	DWORD  unknown_CC;
-	double unknown_double_D0;
-	DWORD  unknown_D8;
-	DWORD  unknown_DC;
-	DWORD  unknown_E0;
-	float  Speed;
-	CoordStruct unknown_coords_E8; //Crd2 in CTOR
-	CoordStruct unknown_coords_F4; //Crd1 in CTOR
-	CoordStruct unknown_coords_100; //{ 0, 0, 0} in CTOR
-	Vector3D<float> unknown_vector3d_10C;
-	Vector3D<float> unknown_vector3d_118;
-	ParticleSystemClass*   ParticleSystem;
-	WORD   RemainingEC;
-	WORD   RemainingDC;
-	BYTE   StateAIAdvance;
-	BYTE   unknown_12D;
-	BYTE   StartStateAI;
-	BYTE   Translucency;
-	BYTE   unknown_130;
-	BYTE   unknown_131;
-	PROTECTED_PROPERTY(DWORD,        unused_134); //??
+	ParticleTypeClass*   Type;
+	ColorStruct          Color;
+	int                  ColorIndex;
+	double               ColorAccum;
+	CoordStruct          GasDrift;
+	Vector3D<float>      GasVelocity;
+	CoordStruct          unused_D8;
+	float                Speed;
+	CoordStruct          FireTarget;
+	CoordStruct          FireOrigin;
+	CoordStruct          FireMoveDelta;
+	Vector3D<float>      MovementDirection;
+	Vector3D<float>      PrecisePosition;
+	ParticleSystemClass* ParticleSystem;
+	WORD                 RemainingEC;
+	WORD                 RemainingDC;
+	BYTE                 StateAIAdvance;
+	bool                 IsBelowGround;
+	BYTE                 StartStateAI;
+	BYTE                 Translucency;
+	bool                 WasSaved; // Set to true after saving game but never read.
+	bool                 IsToDie;
 };
+
+static_assert(sizeof(ParticleClass) == 0x138);
