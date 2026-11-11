@@ -121,7 +121,7 @@ public:
 	ScriptTypeClass*  ScriptType;
 	TaskForceClass*   TaskForce;
 	int      IsGlobal;
-	int      field_EC;
+	MovementZone TaskForceMovementZone;
 	bool     field_F0;
 	bool     field_F1;
 	bool     AvoidThreats;
