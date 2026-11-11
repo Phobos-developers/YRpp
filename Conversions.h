@@ -65,4 +65,16 @@ public:
 		return Int2Highest(static_cast<DWORD>(v));
 	}
 
+	static unsigned int TranslateFixedPoint(size_t bitsFrom, size_t bitsTo, size_t value, size_t offset = 0)
+	{
+		size_t maskIn = ((1u << bitsFrom) - 1);
+		size_t maskOut = ((1u << bitsTo) - 1);
+
+		if (bitsFrom > bitsTo)
+			return (((((value & maskIn) >> (bitsFrom - bitsTo - 1)) + 1) >> 1) + offset) & maskOut;
+		else if (bitsFrom < bitsTo)
+			return (((value - offset) & maskIn) << (bitsTo - bitsFrom)) & maskOut;
+		else
+			return value & maskOut;
+	}
 };
