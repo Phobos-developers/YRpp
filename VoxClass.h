@@ -17,6 +17,22 @@ public:
 
 	DEFINE_REFERENCE(int, EVAIndex, 0xB1D4C8u)
 
+	// A taunt command packs a country in the high nibble and the taunt in the low one:
+	// (country << 4) | taunt. PlayTaunt masks both nibbles and ignores higher bits.
+	// IsValidTauntCommand additionally rejects higher bits to sanitize network input.
+	static constexpr int TauntsPerCountry = 8;   // taunt indices 1 - 8; 0 is not a taunt
+	static constexpr int TauntCountryCount = 10; // countries 0 - 9, in Rules' [Countries] order
+
+	static constexpr bool IsValidTauntCommand(int command)
+	{
+		const int taunt = command & 0xF;
+		const int country = (command >> 4) & 0xF;
+
+		return command == ((country << 4) | taunt)
+			&& taunt >= 1 && taunt <= TauntsPerCountry
+			&& country < TauntCountryCount;
+	}
+
 	static VoxClass* Find(const char* pName)
 	{
 		for(int i = 0; i < Array.Count; ++i) {
@@ -49,6 +65,11 @@ public:
 	// no idea what this does, but Super::Launch uses it on "SW Ready" events right after firing said SW
 	static void __fastcall SilenceIndex(int index)
 		{ JMP_STD(0x752A40); }
+
+	// Plays one of the taunt streams, keyed by a packed country/taunt command - see
+	// IsValidTauntCommand. Returns 0 when there is nothing to play.
+	static int __fastcall PlayTaunt(int command)
+		{ JMP_STD(0x752B70); }
 
 	static const char* GetName(int index)
 		{ JMP_STD(0x753330); }
