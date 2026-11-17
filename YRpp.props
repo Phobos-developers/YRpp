@@ -201,6 +201,7 @@
     <ClInclude Include="$(YRppDir)\GeneralStructures.h" />
     <ClInclude Include="$(YRppDir)\GenericList.h" />
     <ClInclude Include="$(YRppDir)\GetCDClass.h" />
+    <ClInclude Include="$(YRppDir)\GlobalPacketType.h" />
     <ClInclude Include="$(YRppDir)\GScreenClass.h" />
     <ClInclude Include="$(YRppDir)\HashTable.h" />
     <ClInclude Include="$(YRppDir)\HouseClass.h" />

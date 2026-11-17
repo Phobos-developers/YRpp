@@ -2,6 +2,7 @@
 
 #include <ArrayClasses.h>
 #include <GameModeOptionsClass.h>
+#include <GlobalPacketType.h>
 #include <GeneralDefinitions.h>
 #include <IPX.h>
 #include <MPGameModeClass.h>
@@ -127,12 +128,11 @@ public:
 	static void __fastcall Destroy_Connection(int id, int error)
 		{ JMP_STD(0x5DA750) }
 
-	// Incoming global-packet receive buffers, filled by
-	// IPXManagerClass::Get_Global_Message. GlobalReceivePacket is the raw packet
-	// (engine GlobalPacketType, 0x1C7 bytes; cast to the desired packet struct);
-	// GlobalReceiveAddress is the sender's address.
-	DEFINE_REFERENCE(char, GlobalReceivePacket, 0xA8D638)
+	// Incoming global packet, its length, sender address and product identifier.
+	DEFINE_REFERENCE(GlobalPacketType, GlobalReceivePacket, 0xA8D638)
+	DEFINE_REFERENCE(int, GlobalReceivePacketLength, 0xA8D800)
 	DEFINE_REFERENCE(IPXAddressClass, GlobalReceiveAddress, 0xA8D804)
+	DEFINE_REFERENCE(unsigned short, GlobalReceiveProductID, 0xA8D810)
 
 	GameMode GameMode;
 	MPGameModeClass* MPGameMode;
