@@ -171,6 +171,7 @@ public:
 
 	DEFINE_REFERENCE(HouseClass*, CurrentPlayer, 0xA83D4Cu) // House of player at this computer.
 	DEFINE_REFERENCE(HouseClass*, Observer, 0xAC1198u);     // House of player that is observer.
+	DEFINE_REFERENCE(bool, IsCurrentPlayerDefeatedObserver, 0xA8B538u)
 
 	//IConnectionPointContainer
 	virtual HRESULT __stdcall EnumConnectionPoints(IEnumConnectionPoints** ppEnum) R0;

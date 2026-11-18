@@ -627,9 +627,6 @@ struct MovieUnlockableInfo
 
 namespace Unsorted
 {
-	// if != 0, EVA_SWxxxActivated is skipped
-	DEFINE_REFERENCE(int, MuteSWLaunches, 0xA8B538)
-
 	// skip unit selection and move command voices?
 	DEFINE_REFERENCE(bool, MoveFeedback, 0x822CF2)
 
