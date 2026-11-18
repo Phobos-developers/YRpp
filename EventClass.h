@@ -352,7 +352,12 @@ public:
 
 		struct ADDPLAYER
 		{
-			void* unknownPointer;
+			// Local buffer allocated and filled by the network decoder.
+			void* Data;
+			unsigned int DataSize; // Buffer length in bytes.
+			// Compressed packets carry DataSize followed by the buffer bytes.
+			// Uncompressed packets append the bytes after the full EventClass.
+			// The receiver replaces Data with its own allocation in both formats.
 		} AddPlayer;
 
 		struct TIMING
